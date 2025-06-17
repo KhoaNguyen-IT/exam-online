@@ -43,10 +43,10 @@ class AuthenticateController extends Controller
             else if ($user->vaiTro == 'giangVien') 
             {
                 if ($user->doiMK == 1) {
-                    return redirect()->route('')->with('success', 'Xin chào ' . $user->hoTen);
+                    return redirect()->route('monhoc.index')->with('success', 'Xin chào ' . $user->hoTen);
                 } 
                 else {
-                    return redirect()->route('')->with('successful', 'Xin chào ' . $user->hoTen . '\nHãy đổi mật khẩu cho lần đăng nhập đầu tiên');
+                    return redirect()->route('monhoc.index')->with('successful', 'Xin chào ' . $user->hoTen . '\nHãy đổi mật khẩu cho lần đăng nhập đầu tiên');
                 }
             } 
             else if ($user->vaiTro == 'sinhVien') 
