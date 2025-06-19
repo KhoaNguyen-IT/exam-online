@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MonHocController;
 use App\Http\Controllers\KyThiController;
+use App\Http\Controllers\KetQuaThiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,3 +21,6 @@ Route::post('/kythi', [KyThiController::class, 'addKyThi'])->name('kythi.store')
 Route::get('/kythi/{id}', [KyThiController::class, 'show'])->name('kythi.show');
 Route::get('/kythi/{id}/edit', [KyThiController::class, 'edit'])->name('kythi.edit');
 Route::put('/kythi/{id}', [KyThiController::class, 'updateKyThi'])->name('kythi.update');
+
+Route::get('/ketquathi', [KetQuaThiController::class, 'index'])->name('ketquathi.index');
+Route::get('/ket-qua-thi/export-excel', [KetQuaThiController::class, 'exportExcel'])->name('ketQuaThi.exportExcel');
