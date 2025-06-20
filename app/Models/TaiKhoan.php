@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class TaiKhoan extends Model
+class TaiKhoan extends Authenticatable
 {
     protected $table = 'tai_khoan';
     protected $primaryKey = 'maTK';
