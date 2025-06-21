@@ -98,4 +98,8 @@ class TaiKhoan extends Authenticatable
     {
         $this->capQuyen = $capQuyen;
     }
+    public function getAuthPassword()
+    {
+        return $this->matKhau;
+    }
 }
