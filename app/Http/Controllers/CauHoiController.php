@@ -105,7 +105,7 @@ class CauHoiController extends Controller
         $cauHoi->setDung($request->input('dapAnDung'));
         $cauHoi->setDoKho($request->input('doKho'));
         $cauHoi->setMaMonHoc($request->input('maMonHoc'));
-        $cauHoi->setMaNguoiTao(1); // Mặc định là 1, có thể thay đổi sau
+        $cauHoi->setMaNguoiTao(auth()->user()->maTK);
         $cauHoi->setNgayTao(now());
         $cauHoi->save();
 

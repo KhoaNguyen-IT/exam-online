@@ -38,9 +38,10 @@
                                                     <td class="px-0">{{ $kyThi->getTenKT() }}</td>
                                                     <td class="px-0">{{ $kyThi->getMoTa() }}</td>
                                                     <td class="px-0 text-end">
+                                                        <a href="{{ route('kythi.edit', ['id' => $kyThi->getMaKT()]) }}"
+                                                            class=" btn btn-warning">Sửa</a>
                                                         <a href="{{ route('kythi.show', ['id' => $kyThi->getMaKT()]) }}"
                                                             class="btn btn-primary">Xem</a>
-                                                        <a href="{{ route('kythi.edit',['id'=>$kyThi->getMaKT()]) }}" class=" btn btn-warning">Sửa</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
