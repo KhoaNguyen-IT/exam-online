@@ -92,6 +92,14 @@
                 text: @json(session('errors')),
             });
         @endif
+
+        @if (session('authError'))
+            Swal.fire({
+                icon: 'warning',
+                title: 'Thông báo',
+                text: @json(session('authError')),
+            });
+        @endif
     </script>
 
     <!--===============================================================================================-->

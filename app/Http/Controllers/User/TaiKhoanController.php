@@ -16,10 +16,14 @@ class TaiKhoanController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public $viewData = [];
+
     public function index()
     {
-        $user = Auth::user();
-        return view('user.accountInfo')->with('user', $user);
+        $this->viewData['title'] = 'Trang tài khoản';
+        $this->viewData['user'] = Auth::user();
+        return view('user.accountInfo', ['viewData' => $this->viewData]);
     }
 
     public function update(Request $request, string $id)
@@ -29,6 +33,10 @@ class TaiKhoanController extends Controller
             'hoTen' => 'nullable|string|max:50',
             'matKhauCu' => 'nullable|string',
             'matKhauMoi' => 'nullable|string|min:8|confirmed',
+        ], 
+        [
+            'matKhauMoi.min' => 'Mật khẩu mới phải có ít nhất :min ký tự.',
+            'matKhauMoi.confirmed' => 'Xác nhận mật khẩu mới không khớp.',
         ]);
 
         $status = false;

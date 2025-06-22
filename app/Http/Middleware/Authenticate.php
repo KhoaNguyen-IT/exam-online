@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthenticateStudent
+class Authenticate
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,11 @@ class AuthenticateStudent
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->vaiTro == 'sinhVien') {
+        if(Auth::check())
+        {
             return $next($request);
         }
 
-        return redirect()->route('getLogin');
+        return redirect()->route('getLogin')->with('authError', 'Bạn chưa đăng nhập!');
     }
 }
