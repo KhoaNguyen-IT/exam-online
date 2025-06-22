@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Middleware\AuthenticateAdmin;
-use App\Http\Middleware\AuthenticateStudent;
-use App\Http\Middleware\AuthenticateTeacher;
+use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\CheckRole;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -14,9 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->group('auth.admin', [AuthenticateAdmin::class]);
-        $middleware->group('auth.teacher', [AuthenticateTeacher::class]);
-        $middleware->group('auth.student', [AuthenticateStudent::class]);
+        $middleware->alias([
+            'auth' => Authenticate::class,
+            'role' => CheckRole::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
