@@ -49,6 +49,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        // Thông báo đăng nhập thành công
         @if (session('success'))
             Swal.fire({
                 icon: 'success',
@@ -59,12 +60,19 @@
             });
         @endif
 
+        // Thông báo đăng nhập thành công, đồng thời yêu cầu đổi mật khẩu cho lần đăng nhập đầu tiên
         @if (session('successful'))
             Swal.fire({
                 icon: 'successful',
                 title: 'Đăng nhập thành công!',
                 html: @json(str_replace('\n', '<br>', session('successful'))),
                 showCancelButton: true,
+                showCloseButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#495057',
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Để lần sau',
             }).then((result) => {

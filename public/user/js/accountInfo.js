@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (avatarInput.files.length > 0) {
                 const file = avatarInput.files[0];
 
-                // ✅ Preview ảnh trước khi gửi
+                // Xem ảnh trước khi gửi
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     avatarPreview.src = e.target.result;

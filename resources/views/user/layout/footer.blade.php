@@ -4,13 +4,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
-                <p class="m-0">Copyright &copy; 2025 <a class="text-white" href="{{ route('user.home') }}">Ứng dụng thi
+                <p class="m-0">Copyright &copy; 2025 <a class="text-white" href="{{ route('user.home.index') }}">Ứng
+                        dụng thi
                         trắc nghiệm trực tuyến</a>. </p>
             </div>
             <div class="col-md-6 text-center text-md-right">
-                <p class="m-0"> <a class="text-white" href="{{ route('user.home') }}">Trang chủ</a> | <a
-                        class="text-white" href="{{ route('user.examList') }}">Bài thi kiểm tra</a> | <a
-                        class="text-white" href="{{ route('user.testHistory') }}">Lịch sử làm bài</a></p>
+                <p class="m-0"> <a class="text-white" href="{{ route('user.home.index') }}">Trang chủ</a> | <a
+                        class="text-white" href="{{ route('user.examList.index') }}">Bài thi kiểm tra</a> | <a
+                        class="text-white" href="{{ route('user.testHistory.getTestHistory') }}">Lịch sử làm bài</a></p>
             </div>
         </div>
     </div>
