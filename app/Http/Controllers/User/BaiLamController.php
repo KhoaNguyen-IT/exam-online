@@ -95,7 +95,10 @@ class BaiLamController extends Controller
     {
         $this->viewData['title'] = 'Trang lịch sử bài làm';
         $this->viewData['danhSachMonHoc'] = MonHoc::all();
-        $ketQuaThis = KetQuaThi::with(['deThi.monHoc', 'deThi.kyThis'])->paginate(4);
+
+        $userId = Auth::user()->maTK;
+
+        $ketQuaThis = KetQuaThi::with(['deThi.monHoc', 'deThi.kyThis'])->where('maTK', $userId)->orderByDesc('created_at')->paginate(4);
 
         foreach ($ketQuaThis as $kqt) {
             $kyThi = $kqt->deThi->kyThis->first();
