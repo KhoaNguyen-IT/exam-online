@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use DateTime;
+use Dom\Text;
 
 class TaiKhoan extends Authenticatable
 {

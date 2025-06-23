@@ -52,9 +52,9 @@ class AuthenticateController extends Controller
             else if ($user->vaiTro == 'sinhVien') 
             {
                 if ($user->doiMK == 1) {
-                    return redirect()->route('user.home')->with('success', 'Xin chào ' . $user->hoTen);
+                    return redirect()->route('user.home.index')->with('success', 'Xin chào ' . $user->hoTen);
                 } else {
-                    return redirect()->route('user.home')->with('successful', 'Xin chào ' . $user->hoTen . '\nHãy đổi mật khẩu cho lần đăng nhập đầu tiên');
+                    return redirect()->route('user.home.index')->with('successful', 'Xin chào ' . $user->hoTen . '\nHãy đổi mật khẩu cho lần đăng nhập đầu tiên');
                 }
             }
         }

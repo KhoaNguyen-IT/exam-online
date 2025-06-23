@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ChiTietKyThi extends Model
 {
     protected $table = 'chi_tiet_ky_thi';
+
     protected $fillable = [
         'maKT',
         'maDT',
@@ -22,11 +23,11 @@ class ChiTietKyThi extends Model
     {
         return $this->belongsTo(DeThi::class, 'maDT', 'maDT');
     }
-
     public function getMaKT()
     {
         return $this->maKT;
     }
+  
     public function getMaDT()
     {
         return $this->maDT;
