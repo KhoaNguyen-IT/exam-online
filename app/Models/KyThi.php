@@ -2,21 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use DateTime;
 use Dom\Text;
-use Illuminate\Database\Eloquent\Model;
 
 class KyThi extends Model
 {
     protected $table = 'ky_thi';
-
+  
     protected $primaryKey = 'maKT';
-
+  
     protected $fillable = [
         'maKT',
-        'tenKT',
         'moTa',
-        'ngayThi'  
+        'ngayThi',
+        'created_at',
+        'updated_at'
     ];
 
     public function getMaKT()
@@ -29,9 +30,9 @@ class KyThi extends Model
         return $this->tenKT;
     }
 
-    public function setTenKT(string $tkt)
+    public function setTenKT(string $nd)
     {
-        $this->tenKT = $tkt;
+        $this->tenKT = $nd;
     }
 
     public function getMoTa()
@@ -39,9 +40,9 @@ class KyThi extends Model
         return $this->moTa;
     }
 
-    public function setMoTa(Text $mt)
+    public function setMoTa(string $nd)
     {
-        $this->moTa = $mt;
+        $this->moTa = $nd;
     }
 
     public function getNgayThi()

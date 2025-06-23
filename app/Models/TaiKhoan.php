@@ -2,19 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use DateTime;
 use Dom\Text;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class TaiKhoan extends Authenticatable
 {
-    use Notifiable;
-
     protected $table = 'tai_khoan';
-
     protected $primaryKey = 'maTK';
-
     protected $fillable = [
         'maTK',
         'email',
@@ -24,102 +19,92 @@ class TaiKhoan extends Authenticatable
         'vaiTro',
         'doiMK',
         'ngayTao',
-        'maPQ',
-        'capQuyen'
     ];
 
-    public function getAuthPassword()
+    public function quyen()
     {
-        return $this->matKhau;
+        return $this->belongsToMany(PhanQuyen::class, 'phan_quyen_tai_khoan', 'maTK', 'maPQ');
     }
+
 
     public function getMaTK()
     {
         return $this->maTK;
     }
-
     public function getEmail()
     {
         return $this->email;
     }
-
+    public function setEmail(string $email)
+    {
+        $this->email = $email;
+    }
     public function getMatKhau()
     {
         return $this->matKhau;
     }
-
-    public function setMatKhau(string $mk)
+    public function setMatKhau(string $matKhau)
     {
-        $this->matKhau = $mk;
+        $this->matKhau = $matKhau;
     }
-
     public function getHoTen()
     {
         return $this->hoTen;
     }
-
-    public function setHoTen(string $ht)
+    public function setHoTen(string $hoTen)
     {
-        $this->hoTen = $ht;
+        $this->hoTen = $hoTen;
     }
-
     public function getAnhDaiDien()
     {
         return $this->anhDaiDien;
     }
-
-    public function setAnhDaiDien(string $avatar)
+    public function setAnhDaiDien(string $anhDaiDien)
     {
-        $this->anhDaiDien = $avatar;
+        $this->anhDaiDien = $anhDaiDien;
     }
-
     public function getVaiTro()
     {
         return $this->vaiTro;
     }
-
-    public function setVaiTro(string $vt)
+    public function setVaiTro(string $vaiTro)
     {
-        $this->vaiTro = $vt;
+        $this->vaiTro = $vaiTro;
     }
-
     public function getDoiMK()
     {
         return $this->doiMK;
     }
-
-    public function setDoiMK(int $dmk)
+    public function setDoiMK(bool $doiMK)
     {
-        $this->doiMK = $dmk;
+        $this->doiMK = $doiMK;
     }
-
     public function getNgayTao()
     {
         return $this->ngayTao;
     }
-
-    public function setNgayTao(DateTime $nt)
+    public function setNgayTao($ngayTao)
     {
-        $this->ngayTao = $nt;
+        $this->ngayTao = $ngayTao;
     }
-
     public function getMaPQ()
     {
         return $this->maPQ;
     }
-
-    public function setMaPQ(int $mpq)
+    public function setMaPQ(string $maPQ)
     {
-        $this->maPQ = $mpq;
+        $this->maPQ = $maPQ;
     }
-
     public function getCapQuyen()
     {
         return $this->capQuyen;
     }
-
-    public function setCapQuyen(Text $cq)
+    public function setCapQuyen(int $capQuyen)
     {
-        $this->capQuyen = $cq;
+        $this->capQuyen = $capQuyen;
+    }
+    public function getAuthPassword()
+    {
+        return $this->matKhau;
     }
 }

@@ -7,37 +7,30 @@ use Illuminate\Database\Eloquent\Model;
 class ChiTietDeThi extends Model
 {
     protected $table = 'chi_tiet_de_thi';
-
     protected $primaryKey = 'maCTDT';
 
     protected $fillable = [
-        'maCTDT',
         'maDT',
-        'maCH',  
+        'maCH',
+        'created_at',
+        'updated_at'
     ];
 
-    public function getMaCTDT()
+    public function deThi()
     {
-        return $this->maCTDT;
+        return $this->belongsTo(DeThi::class, 'maDT', 'maDT');
+    }
+    public function cauHoi()
+    {
+        return $this->belongsTo(CauHoi::class, 'maCH', 'maCH');
     }
 
     public function getMaDT()
     {
         return $this->maDT;
     }
-
-    public function setMaDT(int $mdt)
-    {
-        $this->maDT = $mdt;
-    }
-
+  
     public function getMaCH()
     {
         return $this->maCH;
     }
-
-    public function setMaCH(int $mch)
-    {
-        $this->maCH = $mch;
-    }
-}

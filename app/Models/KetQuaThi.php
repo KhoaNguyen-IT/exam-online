@@ -56,12 +56,12 @@ class KetQuaThi extends Model
     {
         $this->maTK = $mtk;
     }
-
+  
     public function getTongSoCau()
     {
         return $this->tongSoCau;
     }
-
+  
     public function setTongSoCau(int $tsc)
     {
         $this->tongSoCau = $tsc;
@@ -76,12 +76,12 @@ class KetQuaThi extends Model
     {
         $this->soCauDung = $scd;
     }
-
+  
     public function getNgayThi()
     {
         return $this->ngayThi;
     }
-
+  
     public function setNgayThi(DateTime $nt)
     {
         $this->ngayThi = $nt;

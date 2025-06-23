@@ -2,16 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use DateTime;
 use Dom\Text;
-use Illuminate\Database\Eloquent\Model;
 
 class DeThi extends Model
 {
     protected $table = 'de_thi';
-
     protected $primaryKey = 'maDT';
-
     protected $fillable = [
         'maDT',
         'maTK',
@@ -36,15 +34,15 @@ class DeThi extends Model
     {
         $this->maTK = $mtk;
     }
-
+  
     public function getTenDT()
     {
         return $this->tenDT;
     }
 
-    public function setTenDT(string $tdt)
+    public function setTenDT(string $nd)
     {
-        $this->tenDT = $tdt;
+        $this->tenDT = $nd;
     }
 
     public function getMaMH()
@@ -56,15 +54,15 @@ class DeThi extends Model
     {
         $this->maMH = $mmh;
     }
-
+  
     public function getThoiLuongPhut()
     {
         return $this->thoiLuongPhut;
     }
 
-    public function setThoiLuongPhut(int $tlp)
+    public function setThoiLuongPhut(int $m)
     {
-        $this->thoiLuongPhut = $tlp;
+        $this->thoiLuongPhut = $m;
     }
 
     public function getMoTa()
@@ -72,9 +70,9 @@ class DeThi extends Model
         return $this->moTa;
     }
 
-    public function setMoTa(Text $mt)
+    public function setMoTa(string $nd)
     {
-        $this->moTa = $mt;
+        $this->moTa = $nd;
     }
 
     public function getNgayTao()
@@ -82,14 +80,19 @@ class DeThi extends Model
         return $this->ngayTao;
     }
 
-    public function setNgayTao(DateTime $nt)
+    public function setNgayTao($nd)
     {
-        $this->ngayTao = $nt;
+        $this->ngayTao = $nd;
     }
 
     public function kyThis()
     {
         return $this->belongsToMany(KyThi::class, 'chi_tiet_ky_thi', 'maDT', 'maKT');
+    }
+  
+    public function taiKhoan()
+    {
+        return $this->belongsTo(TaiKhoan::class, 'maTK', 'maTK');
     }
 
     public function monHoc()

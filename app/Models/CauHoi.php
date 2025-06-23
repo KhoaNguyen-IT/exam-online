@@ -2,30 +2,36 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use DateTime;
 use Dom\Text;
-use Illuminate\Database\Eloquent\Model;
 
 class CauHoi extends Model
 {
     protected $table = 'cau_hoi';
 
     protected $primaryKey = 'maCH';
-
     protected $fillable = [
-        'maCH',
         'noiDung',
-        'dapAnA',  
-        'dapAnB',  
-        'dapAnC',  
-        'dapAnD',  
+        'dapAnA',
+        'dapAnB',
+        'dapAnC',
+        'dapAnD',
         'dapAnDung',
         'doKho',
         'ngayTao',
         'maNguoiTao',
-        'maMonHoc'  
+        'maMonHoc'
     ];
 
+    public function taiKhoan()
+    {
+        return $this->belongsTo(TaiKhoan::class, 'maNguoiTao', 'maTK');
+    }
+    public function monHoc()
+    {
+        return $this->belongsTo(MonHoc::class, 'maMonHoc', 'maMH');
+    }
     public function getMaCH()
     {
         return $this->maCH;
@@ -36,59 +42,59 @@ class CauHoi extends Model
         return $this->noiDung;
     }
 
-    public function setNoiDung(Text $nd)
+public function setNoiDung(string $nd)
     {
         $this->noiDung = $nd;
     }
 
-    public function getDapAnA()
+public function getA()
     {
         return $this->dapAnA;
     }
 
-    public function setDapAnA(Text $daa)
+public function setA(string $nd)
     {
-        $this->dapAnA = $daa;
+        $this->dapAnA = $nd;
     }
 
-    public function getDapAnB()
+    public function getB()
     {
         return $this->dapAnB;
     }
 
-    public function setDapAnB(Text $dab)
+public function setB(string $nd)
     {
-        $this->dapAnB = $dab;
+        $this->dapAnB = $nd;
     }
 
-    public function getDapAnC()
+    public function getC()
     {
         return $this->dapAnC;
     }
 
-    public function setDapAnC(Text $dac)
+public function setC(string $nd)
     {
-        $this->dapAnC = $dac;
+        $this->dapAnC = $nd;
     }
 
-    public function getDapAnD()
+    public function getD()
     {
         return $this->dapAnD;
     }
 
-    public function setDapAnD(Text $dad)
+public function setD(string $nd)
     {
-        $this->dapAnD = $dad;
+        $this->dapAnD = $nd;
     }
 
-    public function getDapAnDung()
+    public function getDung()
     {
         return $this->dapAnDung;
     }
 
-    public function setDapAnDung(string $dadung)
+public function setDung(string $nd)
     {
-        $this->dapAnDung = $dadung;
+        $this->dapAnDung = $nd;
     }
 
     public function getDoKho()
@@ -96,9 +102,9 @@ class CauHoi extends Model
         return $this->doKho;
     }
 
-    public function setDoKho(string $dk)
+public function setDoKho($doKho)
     {
-        $this->doKho = $dk;
+        $this->doKho = $doKho;
     }
 
     public function getNgayTao()
@@ -106,19 +112,9 @@ class CauHoi extends Model
         return $this->ngayTao;
     }
 
-    public function setNgayTao(DateTime $nt)
+public function setNgayTao($ngayTao)
     {
-        $this->ngayTao = $nt;
-    }
-
-    public function getMaNguoiTao()
-    {
-        return $this->maNguoiTao;
-    }
-
-    public function setMaNguoiTao(int $mnt)
-    {
-        $this->naNguoiTao = $mnt;
+        $this->ngayTao = $ngayTao;
     }
 
     public function getMaMonHoc()
@@ -126,11 +122,19 @@ class CauHoi extends Model
         return $this->maMonHoc;
     }
 
-    public function setMaMonHoc(int $mmh)
+    public function setMaMonHoc($maMonHoc)
     {
-        $this->maMonHoc = $mmh;
+        $this->maMonHoc = $maMonHoc;
     }
 
+    public function getMaNguoiTao()
+    {
+        return $this->maNguoiTao;
+    }
+    public function setMaNguoiTao($maNguoiTao)
+    {
+        $this->maNguoiTao = $maNguoiTao;
+    }
     public function deThis()
     {
         return $this->belongsToMany(DeThi::class, 'chi_tiet_de_thi', 'maCH', 'maDT');
