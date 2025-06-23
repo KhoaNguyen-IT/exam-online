@@ -18,9 +18,13 @@ class TaiKhoan extends Authenticatable
         'vaiTro',
         'doiMK',
         'ngayTao',
-        'maPQ',
-        'capQuyen',
     ];
+
+    public function quyen()
+    {
+        return $this->belongsToMany(PhanQuyen::class, 'phan_quyen_tai_khoan', 'maTK', 'maPQ');
+    }
+
 
     public function getMaTK()
     {
