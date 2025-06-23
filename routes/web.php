@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MonHocController;
 use App\Http\Controllers\User\BaiLamController;
 use App\Http\Controllers\User\HomeController;
-use App\Http\Controllers\User\KetQuaThiController;
-use App\Http\Controllers\User\KyThiController;
+use App\Http\Controllers\User\KetQuaThiController as ketQuaThiUser;
+use App\Http\Controllers\User\KyThiController as kyThiUser;
 use App\Http\Controllers\KyThiController;
 use App\Http\Controllers\KetQuaThiController;
 use App\Http\Controllers\CauHoiController;
@@ -68,17 +68,17 @@ Route::middleware(['auth', 'role:giangVien'])->group(function () {
 Route::middleware(['auth', 'role:sinhVien'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('user.home.index');
 
-    Route::get('/examList', [KyThiController::class, 'index'])->name('user.examList.index');
-    Route::get('/examList/filterId/{id}', [KyThiController::class, 'getKyThiByMaMH'])->name('user.examList.filterMaMH');
-    Route::get('/examList/filterName', [KyThiController::class, 'getKyThiByTenMH'])->name('user.examList.filterTenMH');
+    Route::get('/examList', [kyThiUser::class, 'index'])->name('user.examList.index');
+    Route::get('/examList/filterId/{id}', [kyThiUser::class, 'getKyThiByMaMH'])->name('user.examList.filterMaMH');
+    Route::get('/examList/filterName', [kyThiUser::class, 'getKyThiByTenMH'])->name('user.examList.filterTenMH');
 
     Route::get('/test/{id}', [BaiLamController::class, 'index'])->name('user.test.index');
     Route::post('/test/{id}', [BaiLamController::class, 'nopBai'])->name('user.test.nopBai');
 
     Route::get('/testHistory', [BaiLamController::class, 'getTestHistory'])->name('user.testHistory.getTestHistory');
 
-    Route::get('/testDetail/{id}', [KetQuaThiController::class, 'index'])->name('user.testDetail.index');
-    Route::post('/testDetail/{id}', [KetQuaThiController::class, 'guiNhanXet'])->name('user.testDetail.guiNhanXet');
+    Route::get('/testDetail/{id}', [ketQuaThiUser::class, 'index'])->name('user.testDetail.index');
+    Route::post('/testDetail/{id}', [ketQuaThiUser::class, 'guiNhanXet'])->name('user.testDetail.guiNhanXet');
 
     Route::get('/accountInfo', [TaiKhoanController::class, 'index'])->name('user.accountInfo.index');
     Route::put('/updateAccountInfo/{id}', [TaiKhoanController::class, 'update'])->name('user.accountInfo.update');
