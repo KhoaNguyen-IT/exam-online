@@ -3,6 +3,7 @@
 use App\Http\Middleware\AuthenticateAdmin;
 use App\Http\Middleware\AuthenticateStudent;
 use App\Http\Middleware\AuthenticateTeacher;
+use App\Http\Middleware\CheckPermission;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->group('auth.admin', [AuthenticateAdmin::class]);
         $middleware->group('auth.teacher', [AuthenticateTeacher::class]);
         $middleware->group('auth.student', [AuthenticateStudent::class]);
+        $middleware->alias(['check.permission' => CheckPermission::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

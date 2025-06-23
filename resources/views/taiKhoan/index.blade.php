@@ -28,8 +28,7 @@
                                             <tr>
                                                 <th scope="col" class="px-0 text-muted">Họ và tên</th>
                                                 <th scope="col" class="px-0 text-muted">Email</th>
-                                                <th scope="col" class="px-0 text-muted">Vai trò</th>
-                                                <th scope="col" class="px-0 text-muted text-end">Quyền</th>
+                                                <th scope="col" class="px-0 text-muted text">Vai trò</th>
                                                 <th scope="col" class="px-0 text-muted text-end">Hành động</th>
                                             </tr>
                                         </thead>
@@ -56,11 +55,10 @@
                                                             }
                                                         @endphp
                                                     </td>
-                                                    <td class="px-0 text-end">{{ $taiKhoan->getCapQuyen() }}</td>
                                                     <td class="px-0 text-end">
                                                         <div class="d-flex align-items-center justify-content-end gap-2">
-                                                            <a href="" class="btn btn-warning">Cấp quyền</a>
-                                                            <a href="" class="btn btn-primary">Xem</a>
+                                                            <a href="{{ route('phanquyen.create', ['id' => $taiKhoan->getMaTK()]) }}" class="btn btn-warning">Cấp quyền</a>
+                                                            <a href="{{ route('taikhoan.show', ['id' => $taiKhoan->getMaTK()]) }}" class="btn btn-primary">Xem</a>
                                                         </div>
                                                     </td>
                                             @endforeach
