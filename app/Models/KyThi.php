@@ -3,14 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DateTime;
+use Dom\Text;
 
 class KyThi extends Model
 {
     protected $table = 'ky_thi';
+  
     protected $primaryKey = 'maKT';
+  
     protected $fillable = [
         'maKT',
         'moTa',
+        'ngayThi',
         'created_at',
         'updated_at'
     ];
@@ -38,5 +43,20 @@ class KyThi extends Model
     public function setMoTa(string $nd)
     {
         $this->moTa = $nd;
+    }
+
+    public function getNgayThi()
+    {
+        return $this->ngayThi;
+    }
+
+    public function setNgayThi(DateTime $nt)
+    {
+        $this->ngayThi = $nt;
+    }
+
+    public function deThis()
+    {
+        return $this->belongsToMany(DeThi::class, 'chi_tiet_ky_thi', 'maKT', 'maDT');
     }
 }

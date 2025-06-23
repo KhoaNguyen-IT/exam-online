@@ -4,6 +4,10 @@ use App\Http\Controllers\Authenticate\AuthenticateController;
 use App\Http\Controllers\User\TaiKhoanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MonHocController;
+use App\Http\Controllers\User\BaiLamController;
+use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\KetQuaThiController as ketQuaThiUser;
+use App\Http\Controllers\User\KyThiController as kyThiUser;
 use App\Http\Controllers\KyThiController;
 use App\Http\Controllers\KetQuaThiController;
 use App\Http\Controllers\CauHoiController;
@@ -11,11 +15,12 @@ use App\Http\Controllers\DeThiController;
 use App\Http\Controllers\TaiKhoanController as account;
 use App\Http\Controllers\PhanQuyenController;
 
-Route::get('/', [AuthenticateController::class, 'getLogin'])->name('getLogin');
+Route::get('/', fn() => redirect()->route('getLogin'));
+Route::get('/login', [AuthenticateController::class, 'getLogin'])->name('getLogin');
 Route::post('/login', [AuthenticateController::class, 'postLogin'])->name('postLogin');
 Route::get('/logout', [AuthenticateController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth.admin'])->group(function () {
+Route::middleware(['auth', 'role:quanTri'])->group(function () {
     Route::get('/taikhoan', [account::class, 'index'])->name('taikhoan.index');
     Route::get('/taikhoan/create', [account::class, 'create'])->name('taikhoan.create');
     Route::post('/taikhoan/store', [account::class, 'addTaiKhoan'])->name('taikhoan.store');
@@ -26,7 +31,7 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::post('/phanquyen/{id}/store', [PhanQuyenController::class, 'themQuyenChoTaiKhoan'])->name('phanquyen.store');
 });
 
-Route::middleware(['auth.teacher'])->group(function () {
+Route::middleware(['auth', 'role:giangVien'])->group(function () {
     Route::get('/monhoc', [MonHocController::class, 'index'])->name('monhoc.index');
     Route::get('/monhoc/{id}/edit', [MonHocController::class, 'edit'])->name('monhoc.edit');
     Route::put('/monhoc/{id}', [MonHocController::class, 'updateMonHoc'])->name('monhoc.update');
@@ -60,26 +65,20 @@ Route::middleware(['auth.teacher'])->group(function () {
     Route::put('/dethi/{id}', [DeThiController::class, 'updateDeThi'])->name('dethi.update');
 });
 
-Route::middleware(['auth.student'])->group(function () {
-    Route::get('/home', function () {
-        return view('user.home');
-    })->name('user.home');
+Route::middleware(['auth', 'role:sinhVien'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('user.home.index');
 
-    Route::get('/examList', function () {
-        return view('user.examList');
-    })->name('user.examList');
+    Route::get('/examList', [kyThiUser::class, 'index'])->name('user.examList.index');
+    Route::get('/examList/filterId/{id}', [kyThiUser::class, 'getKyThiByMaMH'])->name('user.examList.filterMaMH');
+    Route::get('/examList/filterName', [kyThiUser::class, 'getKyThiByTenMH'])->name('user.examList.filterTenMH');
 
-    Route::get('/test', function () {
-        return view('user.test');
-    })->name('user.test');
+    Route::get('/test/{id}', [BaiLamController::class, 'index'])->name('user.test.index');
+    Route::post('/test/{id}', [BaiLamController::class, 'nopBai'])->name('user.test.nopBai');
 
-    Route::get('/testHistory', function () {
-        return view('user.testHistory');
-    })->name('user.testHistory');
+    Route::get('/testHistory', [BaiLamController::class, 'getTestHistory'])->name('user.testHistory.getTestHistory');
 
-    Route::get('/testDetail', function () {
-        return view('user.testDetail');
-    })->name('user.testDetail');
+    Route::get('/testDetail/{id}', [ketQuaThiUser::class, 'index'])->name('user.testDetail.index');
+    Route::post('/testDetail/{id}', [ketQuaThiUser::class, 'guiNhanXet'])->name('user.testDetail.guiNhanXet');
 
     Route::get('/accountInfo', [TaiKhoanController::class, 'index'])->name('user.accountInfo.index');
     Route::put('/updateAccountInfo/{id}', [TaiKhoanController::class, 'update'])->name('user.accountInfo.update');

@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DateTime;
+use Dom\Text;
 
 class CauHoi extends Model
 {
     protected $table = 'cau_hoi';
+
     protected $primaryKey = 'maCH';
     protected $fillable = [
         'noiDung',
@@ -29,7 +32,6 @@ class CauHoi extends Model
     {
         return $this->belongsTo(MonHoc::class, 'maMonHoc', 'maMH');
     }
-
     public function getMaCH()
     {
         return $this->maCH;
@@ -40,17 +42,17 @@ class CauHoi extends Model
         return $this->noiDung;
     }
 
-    public function setNoiDung(string $nd)
+public function setNoiDung(string $nd)
     {
         $this->noiDung = $nd;
     }
 
-    public function getA()
+public function getA()
     {
         return $this->dapAnA;
     }
 
-    public function setA(string $nd)
+public function setA(string $nd)
     {
         $this->dapAnA = $nd;
     }
@@ -60,7 +62,7 @@ class CauHoi extends Model
         return $this->dapAnB;
     }
 
-    public function setB(string $nd)
+public function setB(string $nd)
     {
         $this->dapAnB = $nd;
     }
@@ -70,7 +72,7 @@ class CauHoi extends Model
         return $this->dapAnC;
     }
 
-    public function setC(string $nd)
+public function setC(string $nd)
     {
         $this->dapAnC = $nd;
     }
@@ -80,7 +82,7 @@ class CauHoi extends Model
         return $this->dapAnD;
     }
 
-    public function setD(string $nd)
+public function setD(string $nd)
     {
         $this->dapAnD = $nd;
     }
@@ -90,7 +92,7 @@ class CauHoi extends Model
         return $this->dapAnDung;
     }
 
-    public function setDung(string $nd)
+public function setDung(string $nd)
     {
         $this->dapAnDung = $nd;
     }
@@ -100,7 +102,7 @@ class CauHoi extends Model
         return $this->doKho;
     }
 
-    public function setDoKho($doKho)
+public function setDoKho($doKho)
     {
         $this->doKho = $doKho;
     }
@@ -110,7 +112,7 @@ class CauHoi extends Model
         return $this->ngayTao;
     }
 
-    public function setNgayTao($ngayTao)
+public function setNgayTao($ngayTao)
     {
         $this->ngayTao = $ngayTao;
     }
@@ -132,5 +134,9 @@ class CauHoi extends Model
     public function setMaNguoiTao($maNguoiTao)
     {
         $this->maNguoiTao = $maNguoiTao;
+    }
+    public function deThis()
+    {
+        return $this->belongsToMany(DeThi::class, 'chi_tiet_de_thi', 'maCH', 'maDT');
     }
 }

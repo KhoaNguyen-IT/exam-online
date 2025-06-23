@@ -27,4 +27,9 @@ class MonHoc extends Model
     {
         $this->tenMH = $nd;
     }
+
+    public function deThis()
+    {
+        return $this->hasMany(DeThi::class, 'maMH', 'maMH');
+    }
 }
