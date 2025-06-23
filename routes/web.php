@@ -8,12 +8,17 @@ use App\Http\Controllers\KyThiController;
 use App\Http\Controllers\KetQuaThiController;
 use App\Http\Controllers\CauHoiController;
 use App\Http\Controllers\DeThiController;
+use App\Http\Controllers\TaiKhoanController as account;
 
 Route::get('/', [AuthenticateController::class, 'getLogin'])->name('getLogin');
 Route::post('/login', [AuthenticateController::class, 'postLogin'])->name('postLogin');
 Route::get('/logout', [AuthenticateController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth.admin'])->group(function () { });
+Route::middleware(['auth.admin'])->group(function () {
+    Route::get('/taikhoan', [account::class, 'index'])->name('taikhoan.index');
+    Route::get('/taikhoan/create', [account::class, 'create'])->name('taikhoan.create');
+    Route::post('/taikhoan/store', [account::class, 'addTaiKhoan'])->name('taikhoan.store');
+});
 
 Route::middleware(['auth.teacher'])->group(function () {
     Route::get('/monhoc', [MonHocController::class, 'index'])->name('monhoc.index');
