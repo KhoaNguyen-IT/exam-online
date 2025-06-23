@@ -22,6 +22,11 @@ class KetQuaThi extends Model
         'ngayThi'  
     ];
 
+    public function taiKhoan()
+    {
+        return $this->belongsTo(TaiKhoan::class, 'maTK', 'maTK');
+    }
+
     public function getMaKQT()
     {
         return $this->maKQT;

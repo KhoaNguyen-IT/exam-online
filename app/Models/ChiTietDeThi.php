@@ -29,8 +29,9 @@ class ChiTietDeThi extends Model
     {
         return $this->maDT;
     }
-  
+
     public function getMaCH()
     {
         return $this->maCH;
     }
+}
