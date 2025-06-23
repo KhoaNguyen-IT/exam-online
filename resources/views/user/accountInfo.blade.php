@@ -48,7 +48,7 @@
                 <div class="avatar-section">
                     <img src="{{ asset('storage/' . $viewData['user']->anhDaiDien) }}" alt="{{ $viewData['user']->hoTen }}"
                         class="profile_avatar" id="preview-avatar">
-                    <button type="button" class="change-avatar-button">Đổi ảnh đại diện</button>
+                    <button type="button" class="change-avatar-button">{{ $viewData['user']->anhDaiDien ? 'Đổi ảnh đại diện' : 'Thêm ảnh đại diện' }}</button>
                     <input type="file" name="anhDaiDien" id="avatar-input" accept="image/*" style="display: none;">
                 </div>
 

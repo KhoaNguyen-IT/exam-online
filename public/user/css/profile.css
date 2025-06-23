@@ -1,0 +1,187 @@
+/*===================================== Css accountInfo =====================================*/
+/* Styling for the profile page container */
+.profile-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Điều chỉnh min-height để nó không quá cao nếu nội dung trang ngắn */
+    min-height: calc(100vh - var(--navbar-height, 60px) - var(--footer-height, 60px));
+    background-color: #f8f9fa;
+    /* Nền nhẹ nhàng */
+    font-family: 'Roboto', sans-serif;
+    padding: 30px 15px;
+    /* Padding tổng thể */
+    margin-left: 18%;
+}
+
+.profile-card {
+    background-color: #ffeef2;
+    /* Màu hồng nhạt từ hình ảnh */
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 600px;
+    /* Chiều rộng tối đa của card */
+    text-align: center;
+    z-index: 100;
+}
+
+/* Avatar Section - Căn giữa ảnh đại diện và nút */
+.avatar-section {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    /* Xếp theo cột */
+    align-items: center;
+    /* Căn giữa theo chiều ngang */
+}
+
+.profile_avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    /* Hình tròn */
+    object-fit: cover;
+    border: 3px solid #333;
+    /* Border màu cam */
+    margin-bottom: 15px;
+    /* Khoảng cách giữa ảnh và nút */
+}
+
+.change-avatar-button {
+    background-color: #FFB83C;
+    /* Màu cam */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(252, 167, 93, 0.2);
+}
+
+.change-avatar-button:hover {
+    background-color: green;
+}
+
+/* Form styling */
+.profile-form {
+    text-align: left;
+    /* Căn chỉnh các trường form */
+}
+
+/* Điều chỉnh form-group-row để label và input nằm trên cùng một hàng và căn chỉnh */
+.form-group-row {
+    margin-bottom: 18px;
+    /* Khoảng cách giữa các hàng form */
+    display: flex;
+    align-items: center;
+    /* Căn chỉnh theo chiều dọc */
+}
+
+.form-label {
+    flex: 0 0 150px;
+    /* Chiều rộng cố định cho label */
+    /* margin-right: 15px; */
+    /* Bỏ margin-right vì input sẽ tự sát vào */
+    font-weight: 700;
+    color: #333;
+    /* Màu chữ đen */
+    font-size: 1em;
+    text-align: right;
+    /* Căn phải label */
+    padding-right: 15px;
+    /* Khoảng cách giữa label và input */
+}
+
+.form-input {
+    flex: 1;
+    /* Input chiếm hết phần còn lại */
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #495057;
+    background-color: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-input.disabled-input {
+    /* Class riêng cho input disabled/readonly */
+    background-color: #e9ecef;
+    /* Màu nền xám cho input không thể chỉnh sửa */
+    cursor: not-allowed;
+    opacity: 0.8;
+    /* Làm mờ nhẹ */
+}
+
+.form-input:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+/* Update Button - Màu xanh và căn giữa */
+.update-profile-button {
+    background-color: #007bff;
+    /* Màu xanh dương của Bootstrap primary */
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+    /* Shadow dựa trên màu xanh */
+    display: block;
+    width: fit-content;
+    margin: 30px auto 0 auto;
+    /* Căn giữa nút */
+}
+
+.update-profile-button:hover {
+    background-color: #0056b3;
+    /* Màu xanh đậm hơn khi hover */
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-card {
+        padding: 30px 20px;
+    }
+
+    .form-group-row {
+        flex-direction: column;
+        /* Xếp label và input thành cột trên mobile */
+        align-items: flex-start;
+        /* Căn chỉnh về bên trái */
+    }
+
+    .form-label {
+        flex: none;
+        /* Bỏ chiều rộng cố định */
+        width: 100%;
+        /* Chiếm toàn bộ chiều rộng */
+        margin-right: 0;
+        margin-bottom: 8px;
+        /* Khoảng cách dưới label */
+        text-align: left;
+        /* Căn trái label trên mobile */
+        padding-right: 0;
+    }
+
+    .form-input {
+        width: 100%;
+        /* Input chiếm toàn bộ chiều rộng */
+    }
+
+    .update-profile-button {
+        width: 100%;
+        /* Nút chiếm toàn bộ chiều rộng trên mobile */
+    }
+}

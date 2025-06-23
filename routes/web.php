@@ -29,6 +29,9 @@ Route::middleware(['auth', 'role:quanTri'])->group(function () {
     Route::get('/phanquyen',[PhanQuyenController::class, 'index'])->name('phanquyen.index');
     Route::get('/phanquyen/{id}/create', [PhanQuyenController::class, 'create'])->name('phanquyen.create');
     Route::post('/phanquyen/{id}/store', [PhanQuyenController::class, 'themQuyenChoTaiKhoan'])->name('phanquyen.store');
+
+    Route::get('/adminProfile', [account::class, 'getProfileAdmin'])->name('admin.getProfileAdmin');
+    Route::put('/updateAdminProfile/{id}', [account::class, 'updateProfile'])->name('admin.updateProfile');
 });
 
 Route::middleware(['auth', 'role:giangVien'])->group(function () {
@@ -63,6 +66,9 @@ Route::middleware(['auth', 'role:giangVien'])->group(function () {
     Route::post('/dethi/store', [DeThiController::class, 'addDeThi'])->name('dethi.store');
     Route::get('/dethi/{id}/edit', [DeThiController::class, 'edit'])->name('dethi.edit')->middleware('check.permission:Biên soạn đề thi');
     Route::put('/dethi/{id}', [DeThiController::class, 'updateDeThi'])->name('dethi.update');
+
+    Route::get('/teacherProfile', [account::class, 'getProfileTeacher'])->name('teacher.getProfileTeacher');
+    Route::put('/updateTeacherProfile/{id}', [account::class, 'updateProfile'])->name('teacher.updateProfile');
 });
 
 Route::middleware(['auth', 'role:sinhVien'])->group(function () {
