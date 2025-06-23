@@ -19,16 +19,14 @@ class CauHoiExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'noi_dung',
-            'dap_an_a',
-            'dap_an_b',
-            'dap_an_c',
-            'dap_an_d',
-            'dap_an_dung',
-            'do_kho',
-            'ngay_tao',
-            'nguoi_tao',
-            'mon_hoc',
+            'Nội dung',
+            'Đáp án A',
+            'Đáp án B',
+            'Đáp án C',
+            'Đáp án D',
+            'Đáp án đúng',
+            'Độ khó',
+            'Môn học',
         ];
     }
 }
