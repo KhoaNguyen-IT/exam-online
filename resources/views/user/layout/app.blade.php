@@ -53,7 +53,7 @@
         @if (session('successLogin'))
             Swal.fire({
                 icon: 'success',
-                title: 'Đăng nhập thành công!',
+                title: 'Đăng nhập thành công',
                 text: @json(session('successLogin')),
                 timer: 3000,
                 showConfirmButton: false
@@ -64,7 +64,7 @@
         @if (session('successfulLogin'))
             Swal.fire({
                 icon: 'success',
-                title: 'Đăng nhập thành công!',
+                title: 'Đăng nhập thành công',
                 html: @json(str_replace('\n', '<br>', session('successfulLogin'))),
                 showCancelButton: true,
                 showCloseButton: false,

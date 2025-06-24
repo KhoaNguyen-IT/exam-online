@@ -29,7 +29,7 @@
         @if (session('updateInfoSuccess'))
             Swal.fire({
                 icon: 'success',
-                title: 'Cập nhật thành công!',
+                title: 'Cập nhật thành công',
                 text: @json(session('updateInfoSuccess')),
                 timer: 3000,
                 showConfirmButton: false
