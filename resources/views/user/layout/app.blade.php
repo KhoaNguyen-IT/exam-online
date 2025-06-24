@@ -50,22 +50,22 @@
 
     <script>
         // Thông báo đăng nhập thành công
-        @if (session('success'))
+        @if (session('successLogin'))
             Swal.fire({
                 icon: 'success',
-                title: 'Đăng nhập thành công!',
-                text: @json(session('success')),
+                title: 'Đăng nhập thành công',
+                text: @json(session('successLogin')),
                 timer: 3000,
                 showConfirmButton: false
             });
         @endif
 
         // Thông báo đăng nhập thành công, đồng thời yêu cầu đổi mật khẩu cho lần đăng nhập đầu tiên
-        @if (session('successful'))
+        @if (session('successfulLogin'))
             Swal.fire({
-                icon: 'successful',
-                title: 'Đăng nhập thành công!',
-                html: @json(str_replace('\n', '<br>', session('successful'))),
+                icon: 'success',
+                title: 'Đăng nhập thành công',
+                html: @json(str_replace('\n', '<br>', session('successfulLogin'))),
                 showCancelButton: true,
                 showCloseButton: false,
                 allowOutsideClick: false,
