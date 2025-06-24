@@ -135,3 +135,18 @@
     
 })(jQuery);
 
+document.addEventListener('DOMContentLoaded', function () {
+    const userDropdown = document.querySelector('.user-profile-dropdown');
+    const dropdownMenu = userDropdown.querySelector('.dropdown-menu');
+
+    userDropdown.addEventListener('click', function (e) {
+        dropdownMenu.classList.toggle('show');
+        e.stopPropagation(); // Ngăn sự kiện lan ra ngoài
+    });
+
+    // Click ra ngoài thì ẩn menu
+    document.addEventListener('click', function () {
+        dropdownMenu.classList.remove('show');
+    });
+});
+

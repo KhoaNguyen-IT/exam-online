@@ -23,8 +23,10 @@
             </div>
             <ul class="user-profile-dropdown">
                 <span class="username-text">{{ request()->cookie('userName') }}</span>
-                <img src="{{ asset('storage/' . request()->cookie('userAvatar')) }}"
+                @if (request()->cookie('userAvatar'))
+                    <img src="{{ asset('storage/' . request()->cookie('userAvatar')) }}"
                     alt="{{ request()->cookie('userName') }}" class="profile-avatar">
+                @endif
 
                 <ul class="dropdown-menu">
                     <li><a href="{{ route('user.accountInfo.index') }}"><i class="fas fa-info-circle"></i> Thông tin

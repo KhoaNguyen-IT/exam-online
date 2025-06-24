@@ -10017,7 +10017,7 @@ h6,
   /* Initially hidden */
   position: absolute;
   /* Positioned relative to .user-profile-dropdown */
-  top: calc(100% + 3px);
+  top: calc(100% + 5px);
   /* Place below the UL, with some space */
   left: 0;
   background-color: #fff;
@@ -10037,10 +10037,6 @@ h6,
   border-radius: 15px;
 }
 
-.dropdown-menu li {
-  /* No specific styles needed here, as anchors handle styling */
-}
-
 .dropdown-menu li a {
   color: black;
   padding: 12px 16px;
@@ -10053,10 +10049,4 @@ h6,
 .dropdown-menu li a:hover {
   background-color: #f1f1f1;
   color: #007bff;
-}
-
-/* The key rule: show dropdown-menu when user-profile-dropdown is hovered */
-.user-profile-dropdown:hover .dropdown-menu {
-  display: block;
-  /* Show the dropdown menu */
 }

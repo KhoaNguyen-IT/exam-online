@@ -4,56 +4,23 @@
 
 @section('js')
     <script src="{{ asset('user/js/test.js') }}"></script>
+    <script>
+        const routeTestDetail = "{{ route('user.testDetail.index', ['id' => 'PLACEHOLDER']) }}";
+        const routeExamList = "{{ route('user.examList.index') }}";
+    </script>
 
     @if (session('nopBaiThanhCongVaXemKetQua'))
         <script>
             // Thông báo nộp bài thành công và cho xem kết quả bài làm
-            document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Bạn đã hoàn thành bài thi',
-                    html: {!! json_encode(session('nopBaiThanhCongVaXemKetQua')) !!},
-                    showCancelButton: true,
-                    showCloseButton: false,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false,
-                    confirmButtonColor: '#28a745',
-                    cancelButtonColor: '#495057',
-                    confirmButtonText: 'Xem kết quả',
-                    cancelButtonText: 'Về danh sách bài thi kiểm tra',
-                    reverseButtons: true
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = "{{ route('user.testDetail.index', ['id' => session('maKQT')]) }}";
-                    } else if (result.dismiss === Swal.DismissReason.cancel) {
-                        window.location.href = "{{ route('user.examList.index') }}";
-                    }
-                });
-            });
+            sessionStorage.setItem('ketQuaSauKhiNop', 'true');
+            sessionStorage.setItem('maKQT', '{{ session('maKQT') }}');
+            sessionStorage.setItem('noiDungKetQua', {!! json_encode(session('nopBaiThanhCongVaXemKetQua')) !!});
         </script>
-    @endif
-
-
-    @if (session('nopBaiThanhCong'))
+    @elseif (session('nopBaiThanhCong'))
         <script>
             // Thông báo nộp bài thành công
-            document.addEventListener('DOMContentLoaded', function() {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Bạn đã hoàn thành bài thi',
-                    html: {!! json_encode(session('nopBaiThanhCong')) !!},
-                    showCloseButton: false,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false,
-                    confirmButtonText: 'Về danh sách bài thi kiểm tra'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = "{{ route('user.examList.index') }}";
-                    }
-                });
-            });
+            sessionStorage.setItem('nopBaiThanhCong', 'true');
+            sessionStorage.setItem('noiDungNopBai', {!! json_encode(session('nopBaiThanhCong')) !!});
         </script>
     @endif
 @endsection

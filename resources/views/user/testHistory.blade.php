@@ -43,7 +43,7 @@
 @section('content')
     <div class="completed-exams-page-container">
         <div class="section-title text-center position-relative mb-5">
-            <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Danh Sách Các Bài Thi Kiểm Tra
+            <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Danh Sách Các Bài Làm Đã Hoàn Thành
             </h6>
         </div>
 
