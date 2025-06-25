@@ -80,6 +80,9 @@ class KyThiController extends Controller
         $kyThi->setTenKT($request->input('tenKT'));
         $mota = $request->input('moTa');
         $kyThi->setMoTa($mota ?? '');
+        $ngayThiInput = $request->input('ngayThi');
+        $thoiGianThiInput = $request->input('thoiGianThi');;
+        $kyThi->setNgayThi(\Carbon\Carbon::parse($ngayThiInput . ' ' . $thoiGianThiInput));
         $kyThi->save();
 
         // Lưu chi tiết kỳ thi cho từng đề thi đã chọn

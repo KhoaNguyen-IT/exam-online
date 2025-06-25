@@ -51,6 +51,13 @@
                                     </div>
                                     <div class="table-responsive mt-4">
                                         <div class="ms-4 d-flex align-items-center">
+                                            <label for="ngayThi" class="me-0 mb-0" style="min-width: 120px;"><strong>Chọn ngày thi:</strong></label>
+                                            <input type="date" id="ngayThi" name="ngayThi" class="form-control" value="{{ old('ngayThi') }}" required>
+                                            <input type="time" id="thoiGianThi" name="thoiGianThi" class="form-control" value="{{ old('thoiGianThi') }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive mt-4">
+                                        <div class="ms-4 d-flex align-items-center">
                                             <label for="moTa" class="me-0 mb-0" style="min-width: 120px;"><strong>Mô tả:</strong></label>
                                             <textarea id="moTa" name="moTa" class="form-control">{{ old('moTa') }}</textarea>
                                         </div>
