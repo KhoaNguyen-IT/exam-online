@@ -21,7 +21,8 @@ class CauHoi extends Model
         'doKho',
         'ngayTao',
         'maNguoiTao',
-        'maMonHoc'
+        'maMonHoc',
+        'maChuong',
     ];
 
     public function taiKhoan()
@@ -138,5 +139,17 @@ public function setNgayTao($ngayTao)
     public function deThis()
     {
         return $this->belongsToMany(DeThi::class, 'chi_tiet_de_thi', 'maCH', 'maDT');
+    }
+    public function chuong()
+    {
+        return $this->belongsTo(Chuong::class, 'maChuong', 'maChuong');
+    }
+    public function setMaChuong($maChuong)
+    {
+        $this->maChuong = $maChuong;
+    }
+    public function getMaChuong()
+    {
+        return $this->maChuong;
     }
 }

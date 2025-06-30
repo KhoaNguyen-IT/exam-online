@@ -1,58 +1,89 @@
 @extends('layout.app')
 
 @section('sidebar')
-@include('layout.sidebarGiangVien')
-
-@section('content')
+    @include('layout.sidebarGiangVien')
+@endsection
 
 @section('content')
     <div class="body-wrapper">
-        <div class="body-wrapper-inner">
-            <div class="container-fluid">
-                @include('layout.noice')
-                <!--  Row 1 -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-md-flex align-items-center justify-content-between">
-                                    <div>
-                                        <h4 class="card-title">{{ $viewData['title'] }}</h4>
-                                    </div>
-                                    <div>
-                                        <a href="{{ route('kythi.create') }}" class="btn btn-success m-1">Tạo mới</a>
-                                    </div>
-                                </div>
-                                <div class="table-responsive mt-4">
-                                    <table class="table mb-0 text-nowrap varient-table align-middle fs-3">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="px-0 text-muted">Tên kỳ thi</th>
-                                                <th scope="col" class="px-0 text-muted">Mô tả</th>
-                                                <th scope="col" class="px-0 text-muted text-end">Hành động</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($viewData['kyThi'] as $kyThi)
-                                                <tr>
-                                                    <td class="px-0">{{ $kyThi->getTenKT() }}</td>
-                                                    <td class="px-0">{{ $kyThi->getMoTa() }}</td>
-                                                    <td class="px-0 text-end">
-                                                        <a href="{{ route('kythi.edit', ['id' => $kyThi->getMaKT()]) }}"
-                                                            class=" btn btn-warning">Sửa</a>
-                                                        <a href="{{ route('kythi.show', ['id' => $kyThi->getMaKT()]) }}"
-                                                            class="btn btn-primary">Xem</a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="container-fluid mt-5">
+            @include('layout.noice')
+
+            <div class="d-md-flex align-items-center justify-content-between mb-3">
+                <h4 class="card-title">{{ $viewData['title'] }}</h4>
+                <div>
+                    <a href="{{ route('kythi.exportExcel') }}" class="btn btn-success me-2">Xuất file định dạng</a>
+                    <a href="{{ route('kythi.create') }}" class="btn btn-success">Tạo mới</a>
                 </div>
+            </div>
+
+            <!-- Ô tìm kiếm -->
+            <div class="mb-3">
+                <input type="text" id="searchInput" class="form-control" placeholder="Tìm tên kỳ thi...">
+            </div>
+
+            <!-- Bảng danh sách kỳ thi -->
+            <div class="table-responsive">
+                <table class="table table-striped align-middle" id="kyThiTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên kỳ thi</th>
+                            <th>Mô tả</th>
+                            <th class="text-end">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        @forelse($viewData['kyThi'] as $kyThi)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td class="ten-kt">{{ $kyThi->getTenKT() }}</td>
+                                <td>{{ $kyThi->getMoTa() }}</td>
+                                <td class="text-end">
+                                    <a href="{{ route('kythi.show', ['id' => $kyThi->getMaKT()]) }}"
+                                        class="btn btn-sm btn-primary">Xem</a>
+                                    <a href="{{ route('kythi.edit', ['id' => $kyThi->getMaKT()]) }}"
+                                        class="btn btn-sm btn-warning">Sửa</a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr id="noResult">
+                                <td colspan="4" class="text-center">Không có kỳ thi nào.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 @endsection
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchInput');
+        const table = document.getElementById('kyThiTable');
+        const noResultRow = document.getElementById('noResult');
+
+        searchInput.addEventListener('keyup', function () {
+            const keyword = this.value.trim().toLowerCase();
+            let hasVisibleRow = false;
+
+            const rows = table.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const tenKTCell = row.querySelector('.ten-kt');
+                if (!tenKTCell) return;
+
+                const tenKTText = tenKTCell.textContent.trim().toLowerCase();
+                const visible = tenKTText.includes(keyword);
+
+                row.style.display = visible ? '' : 'none';
+
+                if (visible) hasVisibleRow = true;
+            });
+
+            if (noResultRow) {
+                noResultRow.style.display = hasVisibleRow ? 'none' : '';
+            }
+        });
+    });
+</script>

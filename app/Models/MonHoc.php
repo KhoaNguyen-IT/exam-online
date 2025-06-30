@@ -32,4 +32,9 @@ class MonHoc extends Model
     {
         return $this->hasMany(DeThi::class, 'maMH', 'maMH');
     }
+
+    public function chuong()
+    {
+        return $this->hasMany(Chuong::class, 'maMonHoc', 'maMonHoc');
+    }
 }

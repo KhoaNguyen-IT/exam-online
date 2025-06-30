@@ -15,7 +15,7 @@
     <!--  Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed">
-        
+
         <!-- Sidebar Start -->
         @yield('sidebar')
         <!--  Sidebar End -->
@@ -31,6 +31,13 @@
     <script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/libs/simplebar/dist/simplebar.js') }}"></script>
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+    <script src="{{ asset('assets/js/loadChuong.js') }}"></script>
+    <script src="{{ asset('assets/js/fillterMonHoc.js') }}"></script>
+    <script src="{{ asset('assets/js/fillterTenSV.js') }}"></script>
+    <script src="{{ asset('assets/js/fillterNgayThi.js') }}"></script>
+    <script src="{{ asset('assets/js/fillterDeThi.js') }}"></script>
+    <script src="{{ asset('assets/js/fillterCauHoi.js') }}"></script>
+
     <!-- solar icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 

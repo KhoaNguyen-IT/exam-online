@@ -54,9 +54,4 @@ class KyThi extends Model
     {
         $this->ngayThi = $nt;
     }
-
-    public function deThis()
-    {
-        return $this->belongsToMany(DeThi::class, 'chi_tiet_ky_thi', 'maKT', 'maDT');
-    }
 }
