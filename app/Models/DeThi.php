@@ -15,6 +15,7 @@ class DeThi extends Model
         'maTK',
         'tenDT',
         'maMH',
+        'maKT',
         'thoiLuongPhut',
         'moTa',
         'ngayTao'
@@ -84,11 +85,6 @@ class DeThi extends Model
     {
         $this->ngayTao = $nd;
     }
-
-    public function kyThis()
-    {
-        return $this->belongsToMany(KyThi::class, 'chi_tiet_ky_thi', 'maDT', 'maKT');
-    }
   
     public function taiKhoan()
     {
@@ -104,4 +100,10 @@ class DeThi extends Model
     {
         return $this->belongsToMany(CauHoi::class, 'chi_tiet_de_thi', 'maDT', 'maCH');
     }
+
+    public function kyThi()
+    {
+        return $this->belongsTo(KyThi::class, 'maKT', 'maKT');
+    }
+
 }

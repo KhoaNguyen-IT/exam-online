@@ -22,7 +22,7 @@ class KyThiController extends Controller
 
         $monHocs = MonHoc::all();
 
-        $deThis = DeThi::with(['kyThis', 'monHoc'])->paginate(4);
+        $deThis = DeThi::with(['kyThis', 'monHoc'])->has('kyThis')->paginate(4);
 
         foreach ($deThis as $deThi) {
             $kyThi = $deThi->kyThis->first();
@@ -67,6 +67,7 @@ class KyThiController extends Controller
         $monHocSelected = MonHoc::where('maMH', $id)->value('tenMH');
 
         $deThis = DeThi::where('maMH', $id)
+            ->has('kyThis')
             ->with(['kyThis', 'monHoc'])
             ->paginate(4);
 
@@ -123,6 +124,7 @@ class KyThiController extends Controller
         $monHocSelected = $monHoc->tenMH;
 
         $deThis = DeThi::where('maMH', $monHoc->maMH)
+            ->has('kyThis')
             ->with(['monHoc', 'kyThis'])
             ->paginate(4);
 
