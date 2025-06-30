@@ -43,25 +43,6 @@
                                                 }
                                             @endphp
                                     </div>
-                                    <label class="ms-2 mb-2 fw-bold" style="margin-top: 2%;"><strong>Danh sách các
-                                            quyền:</strong></label>
-                                    @if(count($viewData['chiTietPhanQuyen']) > 0)
-                                        <table class="table ms-2 mb-0 text-nowrap varient-table align-middle fs-3">
-                                            <tbody>
-                                                @foreach($viewData['chiTietPhanQuyen'] as $phanQuyen)
-                                                    <tr>
-                                                        <th scope="row" class="text-nowrap" style="width:1%;">Quyền thứ
-                                                            {{ $loop->iteration }}:
-                                                        </th>
-                                                        <td class="ps-2">{{ $phanQuyen->phanQuyen->getTenQuyen() }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    @else
-                                        <div class="ms-2 mb-0 text-danger fw-bold text-center">Tài khoản chưa được cấp quyền</div>
-                                    @endif
-                                    </table>
                                 </div>
                             </div>
                         </div>
