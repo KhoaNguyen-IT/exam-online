@@ -105,10 +105,4 @@ class DeThi extends Model
     {
         return $this->belongsToMany(CauHoi::class, 'chi_tiet_de_thi', 'maDT', 'maCH');
     }
-
-    public function kyThi()
-    {
-        return $this->belongsTo(KyThi::class, 'maKT', 'maKT');
-    }
-
 }

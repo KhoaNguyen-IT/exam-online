@@ -8,12 +8,12 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link " href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            <h2 style="font-size: .7em; font-weight: 600; margin-right: 5px;">
-                                {{ request()->cookie('userName') }}
-                            </h2>
                             @if (request()->cookie('userAvatar'))
                                 <img src="{{ asset('storage/' . request()->cookie('userAvatar')) }}"
                                     alt="{{ request()->cookie('userName') }}" width="35" height="35" class="rounded-circle">
+                            @else
+                                <img src="{{ asset('assets/images/profile/user-1.jpg') }}"
+                                    alt="Ảnh đại diện" width="35" height="35" class="rounded-circle">
                             @endif
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">

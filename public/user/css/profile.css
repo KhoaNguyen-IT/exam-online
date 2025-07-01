@@ -5,8 +5,8 @@
     justify-content: center;
     align-items: center;
     /* Điều chỉnh min-height để nó không quá cao nếu nội dung trang ngắn */
-    min-height: calc(100vh - var(--navbar-height, 60px) - var(--footer-height, 60px));
-    background-color: #f8f9fa;
+    min-height: calc(115vh - var(--navbar-height, 60px) - var(--footer-height, 60px));
+    background-color: #ececec;
     /* Nền nhẹ nhàng */
     font-family: 'Roboto', sans-serif;
     padding: 30px 15px;
@@ -15,16 +15,17 @@
 }
 
 .profile-card {
-    background-color: #ffeef2;
-    /* Màu hồng nhạt từ hình ảnh */
+    background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid silver;
     padding: 40px 30px;
     width: 100%;
     max-width: 600px;
     /* Chiều rộng tối đa của card */
     text-align: center;
-    z-index: 100;
+    position: fixed;
+    z-index: 20;
 }
 
 /* Avatar Section - Căn giữa ảnh đại diện và nút */
@@ -184,4 +185,67 @@
         width: 100%;
         /* Nút chiếm toàn bộ chiều rộng trên mobile */
     }
+}
+
+/* Css cho icon mắt hiển thị mật khẩu */
+.form-group-row {
+    position: relative;
+    /* Đặt vị trí tương đối cho container của input */
+    margin-bottom: 15px;
+    /* Khoảng cách giữa các hàng */
+    display: flex;
+    /* Sử dụng flexbox để căn chỉnh label và input */
+    align-items: center;
+    /* Căn chỉnh các mục theo chiều dọc */
+}
+
+.form-label {
+    flex: 0 0 180px;
+    /* Độ rộng cố định cho label, có thể điều chỉnh */
+    padding-right: 15px;
+    /* Khoảng cách giữa label và input */
+    text-align: right;
+    /* Căn phải label */
+    font-weight: bold;
+}
+
+.form-input {
+    flex-grow: 1;
+    /* Input sẽ chiếm phần không gian còn lại */
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    /* Bao gồm padding và border trong kích thước */
+}
+
+/* Adjust padding for inputs that have a toggle icon */
+.form-group-row .form-input[type="password"] {
+    padding-right: 40px;
+    /* Để chừa chỗ cho icon mắt */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    /* Khoảng cách từ bên phải input */
+    top: 50%;
+    /* Căn giữa theo chiều dọc */
+    transform: translateY(-50%);
+    /* Dịch lên 50% chiều cao của nó */
+    cursor: pointer;
+    color: #888;
+    /* Màu sắc của icon */
+    font-size: 1.1em;
+    /* Kích thước icon */
+    z-index: 2;
+    /* Đảm bảo icon nằm trên input */
+    /* Nếu bạn có một biểu tượng "symbol" cố định bên trái,
+       hãy điều chỉnh 'right' để không bị chồng chéo.
+       Với cấu trúc hiện tại, 'right: 15px' sẽ hoạt động tốt. */
+}
+
+.toggle-password:hover {
+    color: #333;
+    /* Thay đổi màu khi hover */
 }

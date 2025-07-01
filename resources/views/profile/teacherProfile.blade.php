@@ -11,8 +11,13 @@
             @csrf
             @method('PUT')
             <div class="avatar-section">
-                <img src="{{ asset('storage/' . $viewData['user']->anhDaiDien) }}" alt="{{ $viewData['user']->hoTen }}"
+                @if ($viewData['user']->anhDaiDien)
+                    <img src="{{ asset('storage/' . $viewData['user']->anhDaiDien) }}" alt="{{ $viewData['user']->hoTen }}"
                     class="profile_avatar" id="preview-avatar">
+                @else
+                    <img src="{{ asset('assets/images/profile/user-1.jpg') }}" alt="Ảnh đại diện"
+                    class="profile_avatar" id="preview-avatar">
+                @endif
                 <button type="button" class="change-avatar-button">{{ $viewData['user']->anhDaiDien ? 'Đổi ảnh đại diện' : 'Thêm ảnh đại diện' }}</button>
                 <input type="file" name="anhDaiDien" id="avatar-input" accept="image/*" style="display: none;">
             </div>
@@ -33,18 +38,27 @@
                 <label for="current-password" class="form-label">Mật khẩu hiện tại:</label>
                 <input type="password" id="current-password" name="matKhauCu" placeholder="Nhập mật khẩu hiện tại"
                     class="form-input">
+                <span class="toggle-password">
+                    <i class="fa fa-eye" aria-hidden="true" id="toggleCurrentPassword"></i>
+                </span>
             </div>
 
             <div class="form-group-row">
                 <label for="new-password" class="form-label">Mật khẩu mới:</label>
                 <input type="password" id="new-password" name="matKhauMoi" placeholder="Nhập mật khẩu mới"
                     class="form-input">
+                <span class="toggle-password">
+                    <i class="fa fa-eye" aria-hidden="true" id="toggleNewPassword"></i>
+                </span>
             </div>
 
             <div class="form-group-row">
                 <label for="confirm-new-password" class="form-label">Xác nhận mật khẩu mới:</label>
                 <input type="password" id="confirm-new-password" name="matKhauMoi_confirmation"
                     placeholder="Nhập lại mật khẩu mới" class="form-input">
+                <span class="toggle-password">
+                    <i class="fa fa-eye" aria-hidden="true" id="toggleConfirmNewPassword"></i>
+                </span>
             </div>
 
             <button type="submit" class="update-profile-button">Cập nhật</button>
