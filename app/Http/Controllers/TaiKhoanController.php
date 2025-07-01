@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TaiKhoan;
-use App\Models\PhanQuyenTaiKhoan;
-use App\Models\PhanQuyen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +25,6 @@ class TaiKhoanController extends Controller
     {
         $this->viewData['title'] = 'Chi tiết tài khoản';
         $this->viewData['taiKhoan'] = TaiKhoan::findOrFail($id);
-        $this->viewData['chiTietPhanQuyen'] = PhanQuyenTaiKhoan::where('maTK', $id)->get();
 
         return view('taikhoan.detail', ['viewData' => $this->viewData]);
     }

@@ -57,7 +57,6 @@
                                                     </td>
                                                     <td class="px-0 text-end">
                                                         <div class="d-flex align-items-center justify-content-end gap-2">
-                                                            <a href="{{ route('phanquyen.create', ['id' => $taiKhoan->getMaTK()]) }}" class="btn btn-warning">Cấp quyền</a>
                                                             <a href="{{ route('taikhoan.show', ['id' => $taiKhoan->getMaTK()]) }}" class="btn btn-primary">Xem</a>
                                                         </div>
                                                     </td>

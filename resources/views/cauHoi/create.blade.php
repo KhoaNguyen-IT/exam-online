@@ -16,10 +16,63 @@
                                     <div>
                                         <h4 class="card-title">{{ $viewData['title'] }}</h4>
                                     </div>
+                                    <div>
+                                        <a href="{{ route('cauhoi.index', ['maMH' => $viewData['monHocChon'] ?? '']) }}" class="btn btn-secondary me-2">Quay về</a>
+                                    </div>
                                 </div>
                                 @include('layout.noice')
                                 <form action="{{ route('cauhoi.store') }}" method="POST" class="form-horizontal">
                                     @csrf
+                                    <div class="row mt-4 ms-4">
+                                        <div class="col-md-6 mb-3 d-flex align-items-center">
+                                            <label for="maMonHoc" class="me-2 mb-0" style="min-width: 80px;"><strong>Môn
+                                                    học:</strong></label>
+                                            <select id="maMonHoc" name="maMonHoc" class="form-select flex-grow-1"
+                                                style="min-width: 220px; max-width: 260px;">
+                                                <option value="">-- Chọn --</option>
+                                                @foreach($viewData['monHoc'] as $monHoc)
+                                                    <option value="{{ $monHoc->maMH }}" {{ old('maMonHoc', $viewData['monHocChon'] ?? '') == $monHoc->maMH ? 'selected' : '' }}>
+                                                        {{ $monHoc->tenMH }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3 d-flex align-items-center">
+                                            <label for="maChuong" class="me-2 mb-0"
+                                                style="min-width: 80px;"><strong>Chương:</strong></label>
+                                            <select id="maChuong" name="maChuong" class="form-select flex-grow-1"
+                                                style="min-width: 180px; max-width: 300px;">
+                                                @foreach($viewData['chuong'] as $chuong)
+                                                    <option value="{{ $chuong->maChuong }}" data-mamh="{{ $chuong->maMH }}" {{ old('maChuong') == $chuong->maChuong ? 'selected' : '' }}>
+                                                        {{ $chuong->tenChuong }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-4 ms-4">
+                                        <div class="col-md-6 mb-3 d-flex align-items-center">
+                                            <label for="dapAnDung" class="me-2 mb-0" style="min-width: 80px;"><strong>Đáp án
+                                                    đúng:</strong></label>
+                                            <select id="dapAnDung" name="dapAnDung" class="form-select flex-grow-1"
+                                                style="min-width: 60px; max-width: 80px;">
+                                                <option value="A" {{ old('dapAnDung') == 'A' ? 'selected' : '' }}>A</option>
+                                                <option value="B" {{ old('dapAnDung') == 'B' ? 'selected' : '' }}>B</option>
+                                                <option value="C" {{ old('dapAnDung') == 'C' ? 'selected' : '' }}>C</option>
+                                                <option value="D" {{ old('dapAnDung') == 'D' ? 'selected' : '' }}>D</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3 d-flex align-items-center">
+                                            <label for="doKho" class="me-2 mb-0" style="min-width: 60px;"><strong>Độ
+                                                    khó:</strong></label>
+                                            <select id="doKho" name="doKho" class="form-select flex-grow-1"
+                                                style="min-width: 180px; max-width: 200px;">
+                                                <option value="Dễ" {{ old('doKho') == 'Dễ' ? 'selected' : '' }}>Dễ</option>
+                                                <option value="Trung bình" {{ old('doKho') == 'Trung bình' ? 'selected' : '' }}>Trung bình</option>
+                                                <option value="Khó" {{ old('doKho') == 'Khó' ? 'selected' : '' }}>Khó</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="table-responsive mt-4">
                                         <div class="ms-4 d-flex align-items-center">
                                             <label for="noiDung" class="me-0 mb-0" style="min-width: 120px;"><strong>Nội
@@ -58,39 +111,6 @@
                                                     D:</strong></label>
                                             <input type="text" id="dapAnD" name="dapAnD" class="form-control"
                                                 value="{{ old('dapAnD') }}">
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="mt-4 ms-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
-                                        <div class="flex-fill me-3 d-flex align-items-center" style="min-width: 220px;">
-                                            <label for="dapAnDung" class="me-2 mb-0" style="min-width: 120px;"><strong>Đáp
-                                                    án đúng:</strong></label>
-                                            <select id="dapAnDung" name="dapAnDung" class="form-select w-auto flex-grow-1">
-                                                <option value="A" {{ old('dapAnDung') == 'A' ? 'selected' : '' }}>A</option>
-                                                <option value="B" {{ old('dapAnDung') == 'B' ? 'selected' : '' }}>B</option>
-                                                <option value="C" {{ old('dapAnDung') == 'C' ? 'selected' : '' }}>C</option>
-                                                <option value="D" {{ old('dapAnDung') == 'D' ? 'selected' : '' }}>D</option>
-                                            </select>
-                                        </div>
-                                        <div class="flex-fill me-3 d-flex align-items-center" style="min-width: 220px;">
-                                            <label for="doKho" class="me-2 mb-0" style="min-width: 120px;"><strong>Độ
-                                                    khó:</strong></label>
-                                            <select id="doKho" name="doKho" class="form-select w-auto flex-grow-1">
-                                                <option value="Dễ" {{ old('doKho') == 'Dễ' ? 'selected' : '' }}>Dễ</option>
-                                                <option value="Trung bình" {{ old('doKho') == 'Trung bình' ? 'selected' : '' }}>Trung bình</option>
-                                                <option value="Khó" {{ old('doKho') == 'Khó' ? 'selected' : '' }}>Khó</option>
-                                            </select>
-                                        </div>
-                                        <div class="flex-fill me-3 d-flex align-items-center" style="min-width: 220px;">
-                                            <label for="maMonHoc" class="me-2 mb-0" style="min-width: 120px;"><strong>Môn
-                                                    học:</strong></label>
-                                            <select id="maMonHoc" name="maMonHoc" class="form-select w-auto flex-grow-1">
-                                                @foreach($viewData['monHoc'] as $monHoc)
-                                                    <option value="{{ $monHoc->maMH }}" {{ old('maMonHoc') == $monHoc->maMH ? 'selected' : '' }}>
-                                                        {{ $monHoc->tenMH }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
                                         </div>
                                     </div>
                                     <div class="mt-4 ms-4 d-flex justify-content-end">

@@ -21,7 +21,8 @@ class CauHoi extends Model
         'doKho',
         'ngayTao',
         'maNguoiTao',
-        'maMonHoc'
+        'maMonHoc',
+        'maChuong',
     ];
 
     public function taiKhoan()
@@ -42,17 +43,17 @@ class CauHoi extends Model
         return $this->noiDung;
     }
 
-public function setNoiDung(string $nd)
+    public function setNoiDung(string $nd)
     {
         $this->noiDung = $nd;
     }
 
-public function getA()
+    public function getA()
     {
         return $this->dapAnA;
     }
 
-public function setA(string $nd)
+    public function setA(string $nd)
     {
         $this->dapAnA = $nd;
     }
@@ -62,7 +63,7 @@ public function setA(string $nd)
         return $this->dapAnB;
     }
 
-public function setB(string $nd)
+    public function setB(string $nd)
     {
         $this->dapAnB = $nd;
     }
@@ -72,7 +73,7 @@ public function setB(string $nd)
         return $this->dapAnC;
     }
 
-public function setC(string $nd)
+    public function setC(string $nd)
     {
         $this->dapAnC = $nd;
     }
@@ -82,7 +83,7 @@ public function setC(string $nd)
         return $this->dapAnD;
     }
 
-public function setD(string $nd)
+    public function setD(string $nd)
     {
         $this->dapAnD = $nd;
     }
@@ -92,7 +93,7 @@ public function setD(string $nd)
         return $this->dapAnDung;
     }
 
-public function setDung(string $nd)
+    public function setDung(string $nd)
     {
         $this->dapAnDung = $nd;
     }
@@ -102,7 +103,7 @@ public function setDung(string $nd)
         return $this->doKho;
     }
 
-public function setDoKho($doKho)
+    public function setDoKho($doKho)
     {
         $this->doKho = $doKho;
     }
@@ -112,7 +113,7 @@ public function setDoKho($doKho)
         return $this->ngayTao;
     }
 
-public function setNgayTao($ngayTao)
+    public function setNgayTao($ngayTao)
     {
         $this->ngayTao = $ngayTao;
     }
@@ -142,5 +143,17 @@ public function setNgayTao($ngayTao)
     public function chiTietBaiLams()
     {
         return $this->hasMany(ChiTietBaiLam::class, 'maCH', 'maCH');
+    }
+    public function chuong()
+    {
+        return $this->belongsTo(Chuong::class, 'maChuong', 'maChuong');
+    }
+    public function setMaChuong($maChuong)
+    {
+        $this->maChuong = $maChuong;
+    }
+    public function getMaChuong()
+    {
+        return $this->maChuong;
     }
 }

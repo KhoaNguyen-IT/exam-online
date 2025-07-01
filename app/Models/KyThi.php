@@ -54,7 +54,7 @@ class KyThi extends Model
     {
         $this->ngayThi = $nt;
     }
-
+  
     public function quanLyThis()
     {
         return $this->hasMany(QuanLyThi::class, 'maKT', 'maKT');

@@ -17,7 +17,7 @@
                                         <h4 class="card-title">{{ $viewData['title'] }}</h4>
                                     </div>
                                     <div>
-                                        <a href="{{ route('cauhoi.index') }}" class="btn btn-success m-1">Quay lại</a>
+                                        <a href="{{ route('cauhoi.index') }}" class="btn btn-secondary m-1">Quay lại</a>
                                     </div>
                                 </div>
                                 <div class="table-responsive mt-4">
