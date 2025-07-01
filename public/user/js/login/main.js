@@ -51,6 +51,19 @@
 
         $(thisAlert).removeClass('alert-validate');
     }
+
+    // JavaScript để xử lý chuyển đổi hiển thị mật khẩu
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#id_password');
+
+    togglePassword.addEventListener('click', function (e) {
+        // Chuyển đổi type của input
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // Chuyển đổi icon
+        this.classList.toggle('fa-eye-slash');
+        this.classList.toggle('fa-eye');
+    });
     
     
 

@@ -1,8 +1,8 @@
 <!-- Navbar Start -->
-<div class="container-fluid p-0">
+<div class="container-fluid p-0 navbarcustom">
     <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
         <a href="{{ route('user.home.index') }}" class="navbar-brand ml-lg-3">
-            <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-book-reader mr-3"></i>Exam Online</h1>
+            <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-book-reader mr-3"></i>TRẮC NGHIỆM</h1>
         </a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -12,6 +12,8 @@
                 <a href="{{ route('user.home.index') }}"
                     class="nav-item nav-link {{ Route::currentRouteNamed('user.home.index') ? 'active' : '' }}">Trang
                     chủ</a>
+                <a href="{{ route('user.about') }}"
+                    class="nav-item nav-link {{ Route::currentRouteNamed('user.about') ? 'active' : '' }}">Giới thiệu</a>
                 <a href="{{ route('user.examList.index') }}"
                     class="nav-item nav-link {{ Route::currentRouteNamed('user.examList.index') ? 'active' : '' }}">Bài
                     thi
@@ -22,19 +24,19 @@
                     làm bài</a>
             </div>
             <ul class="user-profile-dropdown">
-                <span class="username-text">{{ request()->cookie('userName') }}</span>
                 @if (request()->cookie('userAvatar'))
                     <img src="{{ asset('storage/' . request()->cookie('userAvatar')) }}"
-                    alt="{{ request()->cookie('userName') }}" class="profile-avatar">
+                        alt="Ảnh đại diện" class="profile-avatar">
+                @else
+                    <img src="{{ asset('user/images/img_user.jpg') }}"
+                        alt="Ảnh đại diện" class="profile-avatar">
                 @endif
-
+            
                 <ul class="dropdown-menu">
-                    <li><a href="{{ route('user.accountInfo.index') }}"><i class="fas fa-info-circle"></i> Thông tin
-                            tài khoản</a></li>
-                    <li><a href="{{ route('logout') }}" id="logout-link"><i class="fas fa-sign-out-alt"></i> <i
-                                class="fas fa-right-from-bracket"></i> Đăng xuất</a></li>
+                    <li><a href="{{ route('user.accountInfo.index') }}"><i class="fas fa-info-circle"></i> Thông tin tài khoản</a></li>
+                    <li><a href="{{ route('logout') }}" id="logout-link"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
                 </ul>
-            </ul>
+            </ul>            
         </div>
     </nav>
 </div>

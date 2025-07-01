@@ -26,6 +26,11 @@ class TaiKhoan extends Authenticatable
         return $this->belongsToMany(PhanQuyen::class, 'phan_quyen_tai_khoan', 'maTK', 'maPQ');
     }
 
+    public function quanLyThis()
+    {
+        return $this->hasMany(QuanLyThi::class, 'maTK', 'maTK');
+    }
+
 
     public function getMaTK()
     {
@@ -103,6 +108,7 @@ class TaiKhoan extends Authenticatable
     {
         $this->capQuyen = $capQuyen;
     }
+
     public function getAuthPassword()
     {
         return $this->matKhau;

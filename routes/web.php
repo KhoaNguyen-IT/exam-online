@@ -7,7 +7,7 @@ use App\Http\Controllers\MonHocController;
 use App\Http\Controllers\User\BaiLamController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\KetQuaThiController as ketQuaThiUser;
-use App\Http\Controllers\User\KyThiController as kyThiUser;
+use App\Http\Controllers\User\DeThiController as deThiUser;
 use App\Http\Controllers\KyThiController;
 use App\Http\Controllers\KetQuaThiController;
 use App\Http\Controllers\CauHoiController;
@@ -73,10 +73,11 @@ Route::middleware(['auth', 'role:giangVien'])->group(function () {
 
 Route::middleware(['auth', 'role:sinhVien'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('user.home.index');
+    Route::get('/about', function(){ return view('user.about'); })->name('user.about');
 
-    Route::get('/examList', [kyThiUser::class, 'index'])->name('user.examList.index');
-    Route::get('/examList/filterId/{id}', [kyThiUser::class, 'getKyThiByMaMH'])->name('user.examList.filterMaMH');
-    Route::get('/examList/filterName', [kyThiUser::class, 'getKyThiByTenMH'])->name('user.examList.filterTenMH');
+    Route::get('/examList', [deThiUser::class, 'index'])->name('user.examList.index');
+    Route::get('/examList/filterId/{id}', [deThiUser::class, 'getKyThiByMaMH'])->name('user.examList.filterMaMH');
+    Route::get('/examList/filterName', [deThiUser::class, 'getKyThiByTenMH'])->name('user.examList.filterTenMH');
 
     Route::get('/test/{id}', [BaiLamController::class, 'index'])->name('user.test.index');
     Route::post('/test/{id}', [BaiLamController::class, 'nopBai'])->name('user.test.nopBai');

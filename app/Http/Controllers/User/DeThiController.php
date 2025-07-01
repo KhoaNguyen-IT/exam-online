@@ -5,14 +5,14 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\BaiLam;
 use App\Models\DeThi;
-use App\Models\KyThi;
+use App\Models\KetQuaThi;
 use App\Models\MonHoc;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class KyThiController extends Controller
+class DeThiController extends Controller
 {
     public $viewData = [];
 
@@ -22,23 +22,26 @@ class KyThiController extends Controller
 
         $monHocs = MonHoc::all();
 
-        $deThis = DeThi::with(['kyThis', 'monHoc'])->has('kyThis')->paginate(4);
+        $deThis = DeThi::with(['kyThi', 'monHoc'])
+            ->whereHas('kyThi', function ($query) use ($userId) {
+                $query->whereDate('ngayThi', '<=', Carbon::now())
+                    ->whereHas('quanLyThis', function ($q) use ($userId) {
+                        $q->where('maTK', $userId);
+                    });
+            })
+            ->paginate(4);
 
         foreach ($deThis as $deThi) {
-            $kyThi = $deThi->kyThis->first();
+            $kyThi = $deThi->kyThi;
 
             if ($kyThi && $kyThi->ngayThi && $deThi->thoiLuongPhut) {
                 $thoiGianBatDau = Carbon::parse($kyThi->ngayThi);
                 $thoiGianKetThuc = $thoiGianBatDau->copy()->addMinutes($deThi->thoiLuongPhut);
 
-                $deThi->maKT = $kyThi->maKT;
-                $deThi->tenKT = $kyThi->tenKT;
                 $deThi->ngayThi = $kyThi->ngayThi;
                 $deThi->thoiGianBatDau = $thoiGianBatDau;
                 $deThi->thoiGianKetThuc = $thoiGianKetThuc;
             } else {
-                $deThi->maKT = '';
-                $deThi->tenKT = '';
                 $deThi->ngayThi = null;
                 $deThi->thoiGianBatDau = null;
                 $deThi->thoiGianKetThuc = null;
@@ -48,10 +51,11 @@ class KyThiController extends Controller
 
             $deThi->daLamBai = BaiLam::where('maDT', $deThi->maDT)
                 ->where('maTK', $userId)
+                ->where('trangThai', 'Đã hoàn thành')
                 ->exists();
         }
 
-        $this->viewData['title'] = 'Trang bài thi kiểm tra';
+        $this->viewData['title'] = 'Trang bài thi kiểm tra | Trắc nghiệm';
         $this->viewData['monHocs'] = $monHocs;
         $this->viewData['deThis'] = $deThis;
 
@@ -67,25 +71,27 @@ class KyThiController extends Controller
         $monHocSelected = MonHoc::where('maMH', $id)->value('tenMH');
 
         $deThis = DeThi::where('maMH', $id)
-            ->has('kyThis')
-            ->with(['kyThis', 'monHoc'])
+            ->whereHas('kyThi', function ($query) use ($userId) {
+                $query->whereDate('ngayThi', '<=', Carbon::now())
+                    ->whereHas('quanLyThis', function ($q) use ($userId) 
+                    {
+                        $q->where('maTK', $userId);
+                    });
+            })
+            ->with(['kyThi', 'monHoc'])
             ->paginate(4);
 
         foreach ($deThis as $deThi) {
-            $kyThi = $deThi->kyThis->first();
+            $kyThi = $deThi->kyThi;
 
             if ($kyThi && $kyThi->ngayThi && $deThi->thoiLuongPhut) {
                 $thoiGianBatDau = Carbon::parse($kyThi->ngayThi);
                 $thoiGianKetThuc = $thoiGianBatDau->copy()->addMinutes($deThi->thoiLuongPhut);
 
-                $deThi->maKT = $kyThi->maKT;
-                $deThi->tenKT = $kyThi->tenKT;
                 $deThi->ngayThi = $kyThi->ngayThi;
                 $deThi->thoiGianBatDau = $thoiGianBatDau;
                 $deThi->thoiGianKetThuc = $thoiGianKetThuc;
             } else {
-                $deThi->maKT = '';
-                $deThi->tenKT = '';
                 $deThi->ngayThi = null;
                 $deThi->thoiGianBatDau = null;
                 $deThi->thoiGianKetThuc = null;
@@ -95,10 +101,11 @@ class KyThiController extends Controller
 
             $deThi->daLamBai = BaiLam::where('maDT', $deThi->maDT)
                 ->where('maTK', $userId)
+                ->where('trangThai', 'Đã hoàn thành')
                 ->exists();
         }
 
-        $this->viewData['title'] = 'Trang bài thi kiểm tra';
+        $this->viewData['title'] = 'Trang bài thi kiểm tra | Trắc nghiệm';
         $this->viewData['monHocs'] = $monHocs;
         $this->viewData['monHocSelected'] = $monHocSelected;
         $this->viewData['deThis'] = $deThis;
@@ -124,25 +131,27 @@ class KyThiController extends Controller
         $monHocSelected = $monHoc->tenMH;
 
         $deThis = DeThi::where('maMH', $monHoc->maMH)
-            ->has('kyThis')
-            ->with(['monHoc', 'kyThis'])
+            ->whereHas('kyThi', function ($query) use ($userId) {
+                $query->whereDate('ngayThi', '<=', Carbon::now())
+                    ->whereHas('quanLyThis', function ($q) use ($userId) 
+                    {
+                        $q->where('maTK', $userId);
+                    });
+            })
+            ->with(['monHoc', 'kyThi'])
             ->paginate(4);
 
         foreach ($deThis as $deThi) {
-            $kyThi = $deThi->kyThis->first();
+            $kyThi = $deThi->kyThi;
 
             if ($kyThi && $kyThi->ngayThi && $deThi->thoiLuongPhut) {
                 $thoiGianBatDau = Carbon::parse($kyThi->ngayThi);
                 $thoiGianKetThuc = $thoiGianBatDau->copy()->addMinutes($deThi->thoiLuongPhut);
 
-                $deThi->maKT = $kyThi->maKT;
-                $deThi->tenKT = $kyThi->tenKT;
                 $deThi->ngayThi = $kyThi->ngayThi;
                 $deThi->thoiGianBatDau = $thoiGianBatDau;
                 $deThi->thoiGianKetThuc = $thoiGianKetThuc;
             } else {
-                $deThi->maKT = '';
-                $deThi->tenKT = '';
                 $deThi->ngayThi = null;
                 $deThi->thoiGianBatDau = null;
                 $deThi->thoiGianKetThuc = null;
@@ -152,10 +161,11 @@ class KyThiController extends Controller
 
             $deThi->daLamBai = BaiLam::where('maDT', $deThi->maDT)
                 ->where('maTK', $userId)
+                ->where('trangThai', 'Đã hoàn thành')
                 ->exists();
         }
 
-        $this->viewData['title'] = 'Trang bài thi kiểm tra';
+        $this->viewData['title'] = 'Trang bài thi kiểm tra | Trắc nghiệm';
         $this->viewData['monHocs'] = $monHocs;
         $this->viewData['monHocSelected'] = $monHocSelected;
         $this->viewData['deThis'] = $deThis;

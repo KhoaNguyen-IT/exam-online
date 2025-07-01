@@ -139,4 +139,8 @@ public function setNgayTao($ngayTao)
     {
         return $this->belongsToMany(DeThi::class, 'chi_tiet_de_thi', 'maCH', 'maDT');
     }
+    public function chiTietBaiLams()
+    {
+        return $this->hasMany(ChiTietBaiLam::class, 'maCH', 'maCH');
+    }
 }

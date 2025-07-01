@@ -29,6 +29,7 @@
 </head>
 
 <body>
+    @include('user.layout.topbar')
     @include('user.layout.navbar')
     @yield('header')
     @yield('content')

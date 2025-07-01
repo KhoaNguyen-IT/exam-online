@@ -21,7 +21,7 @@ class TaiKhoanController extends Controller
 
     public function index()
     {
-        $this->viewData['title'] = 'Trang tài khoản';
+        $this->viewData['title'] = 'Trang thông tin tài khoản | Trắc nghiệm';
         $this->viewData['user'] = Auth::user();
         return view('user.accountInfo', ['viewData' => $this->viewData]);
     }

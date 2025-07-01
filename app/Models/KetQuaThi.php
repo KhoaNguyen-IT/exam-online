@@ -57,11 +57,11 @@ class KetQuaThi extends Model
         return $this->diemSo;
     }
 
-    public function setDiemSo(Decimal $mtk)
+    public function setDiemSo(Decimal $diem)
     {
-        $this->maTK = $mtk;
+        $this->diemSo = $diem;
     }
-  
+
     public function getTongSoCau()
     {
         return $this->tongSoCau;
@@ -97,8 +97,8 @@ class KetQuaThi extends Model
         return $this->belongsTo(DeThi::class, 'maDT', 'maDT');
     }
 
-    public function baiLams()
+    public function baiLam()
     {
-        return $this->hasMany(BaiLam::class, 'maKQT', 'maKQT');
+        return $this->hasOne(BaiLam::class, 'maKQT', 'maKQT');
     }
 }

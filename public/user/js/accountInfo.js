@@ -21,4 +21,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // JavaScript để xử lý chuyển đổi hiển thị mật khẩu cho cả 3 trường
+    function setupPasswordToggle(inputId, toggleId) {
+        const passwordInput = document.getElementById(inputId);
+        const toggleIcon = document.getElementById(toggleId);
+
+        if (passwordInput && toggleIcon) {
+            toggleIcon.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye-slash');
+                this.classList.toggle('fa-eye');
+            });
+        }
+    }
+
+    setupPasswordToggle('current-password', 'toggleCurrentPassword');
+    setupPasswordToggle('new-password', 'toggleNewPassword');
+    setupPasswordToggle('confirm-new-password', 'toggleConfirmNewPassword');
 });

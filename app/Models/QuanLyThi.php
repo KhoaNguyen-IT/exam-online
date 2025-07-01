@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ChiTietKyThi extends Model
+class QuanLyThi extends Model
 {
-    protected $table = 'chi_tiet_ky_thi';
+    protected $table = 'quan_ly_thi';
 
     protected $fillable = [
         'maKT',
-        'maDT',
+        'maTK',
         'created_at',
         'updated_at'
     ];
@@ -19,15 +19,15 @@ class ChiTietKyThi extends Model
     {
         return $this->belongsTo(KyThi::class, 'maKT', 'maKT');
     }
-    public function deThi()
+    public function taiKhoan()
     {
-        return $this->belongsTo(DeThi::class, 'maDT', 'maDT');
+        return $this->belongsTo(TaiKhoan::class, 'maTK', 'maTK');
     }
     public function getMaKT()
     {
         return $this->maKT;
     }
-  
+
     public function getMaDT()
     {
         return $this->maDT;

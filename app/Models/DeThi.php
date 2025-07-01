@@ -85,9 +85,9 @@ class DeThi extends Model
         $this->ngayTao = $nd;
     }
 
-    public function kyThis()
+    public function kyThi()
     {
-        return $this->belongsToMany(KyThi::class, 'chi_tiet_ky_thi', 'maDT', 'maKT');
+        return $this->belongsTo(KyThi::class, 'maKT', 'maKT');
     }
   
     public function taiKhoan()
