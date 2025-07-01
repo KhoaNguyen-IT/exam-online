@@ -13,10 +13,8 @@ class BaiLam extends Model
     protected $fillable = [
         'maBL',
         'maDT',
-        'maCH',
         'maTK',
-        'maKQT',
-        'dapAnChon'  
+        'maKQT'  
     ];
 
     public function getMaBL()
@@ -32,16 +30,6 @@ class BaiLam extends Model
     public function setMaDT(int $mdt)
     {
         $this->maDT = $mdt;
-    }
-
-    public function getMaCH()
-    {
-        return $this->maCH;
-    }
-
-    public function setMaCH(int $mch)
-    {
-        $this->maCH = $mch;
     }
 
     public function getMaTK()
@@ -64,23 +52,23 @@ class BaiLam extends Model
         $this->maKQT = $mkqt;
     }
 
-    public function getDapAnChon()
-    {
-        return $this->dapAnChon;
-    }
-
-    public function setDapAnChon(string $dac)
-    {
-        $this->dapAnChon = $dac;
-    }
-
     public function taiKhoan()
     {
         return $this->belongsTo(TaiKhoan::class, 'maTK', 'maTK');
     }
 
-    public function cauHoi()
+    public function deThi()
     {
-        return $this->belongsTo(CauHoi::class, 'maCH', 'maCH');
+        return $this->belongsTo(DeThi::class, 'maDT', 'maDT');
+    }
+
+    public function ketQuaThi()
+    {
+        return $this->belongsTo(KetQuaThi::class, 'maKQT', 'maKQT');
+    }
+
+    public function chiTietBaiLams()
+    {
+        return $this->hasMany(ChiTietBaiLam::class, 'maBL', 'maBL');
     }
 }

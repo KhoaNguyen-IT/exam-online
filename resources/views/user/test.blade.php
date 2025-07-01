@@ -22,51 +22,103 @@
             sessionStorage.setItem('nopBaiThanhCong', 'true');
             sessionStorage.setItem('noiDungNopBai', {!! json_encode(session('nopBaiThanhCong')) !!});
         </script>
+    @elseif (session('daHoanThanhBaiThi'))
+        <script>
+            // Thông báo đã hoàn thành bài thi
+            sessionStorage.setItem('daHoanThanhBaiThi', 'true');
+            sessionStorage.setItem('noiDungHoanThanh', {!! json_encode(session('daHoanThanhBaiThi')) !!});
+        </script>
     @endif
 @endsection
 
 @section('content')
-    <div class="quiz-page-container">
-        @if ($viewData['baiLam']->kyThis->isNotEmpty())
-            <h2 class="quiz-title">{{ $viewData['baiLam']->kyThis->first()->tenKT }}</h2>
-        @endif
-        <p class="quiz-instruction">Thời gian làm bài: {{ $viewData['baiLam']->thoiLuongPhut }} phút</p>
-
-        <div class="countdown-timer">
-            Thời gian còn lại: <span id="timer" data-duration="{{ $viewData['baiLam']->thoiLuongPhut }}"
-                data-ngay-thi="{{ \Carbon\Carbon::parse($viewData['baiLam']->kyThis->first()->ngayThi)->timestamp }}">{{ $viewData['baiLam']->thoiLuongPhut }}:00</span>
-        </div>
-
-        <form id="quiz-form" method="POST" action="{{ route('user.test.nopBai', ['id' => $viewData['baiLam']->maDT]) }}">
-            @csrf
-            <div class="question-list">
-                <input type="hidden" name="ngayThiKetQuaThi" value="{{ $viewData['baiLam']->kyThis->first()->ngayThi }}">
-                @foreach ($viewData['baiLam']->cauHois as $cauHoi)
-                    <div class="question-card">
-                        <h3 class="question-text">Câu {{ $loop->iteration }}: {{ $cauHoi->noiDung }}</h3>
-                        <div class="options-group">
-                            <label class="option-item">
-                                <input type="radio" name="question[{{ $cauHoi->maCH }}]" value="A"> A.
-                                {{ $cauHoi->dapAnA }}
-                            </label>
-                            <label class="option-item">
-                                <input type="radio" name="question[{{ $cauHoi->maCH }}]" value="B"> B.
-                                {{ $cauHoi->dapAnB }}
-                            </label>
-                            <label class="option-item">
-                                <input type="radio" name="question[{{ $cauHoi->maCH }}]" value="C"> C.
-                                {{ $cauHoi->dapAnC }}
-                            </label>
-                            <label class="option-item">
-                                <input type="radio" name="question[{{ $cauHoi->maCH }}]" value="D"> D.
-                                {{ $cauHoi->dapAnD }}
-                            </label>
-                        </div>
-                    </div>
-                @endforeach
+    <div class="exam-page-container">
+        <div class="exam-sidebar-left">
+            <div class="exam-info-section">
+                @if ($viewData['deThi']->kyThi)
+                    <h2 class="exam-title">{{ $viewData['deThi']->tenDT }}</h2>
+                    <span style="font-size: 0.9em;">Bắt đầu lúc: {{ \Carbon\Carbon::parse($viewData['deThi']->kyThi->ngayThi)->format('d/m/Y - H \g\i\ờ i \p\h\ú\t') }}</span>
+                    <p class="exam-instruction-text mt-1">Thời gian làm bài: {{ $viewData['deThi']->thoiLuongPhut }} phút</p>
+                @endif
+                <div class="exam-timer-display">
+                    Thời gian còn lại: <span id="exam-timer" data-duration="{{ $viewData['deThi']->thoiLuongPhut }}"
+                        data-ngay-thi="{{ \Carbon\Carbon::parse($viewData['deThi']->kyThi->ngayThi)->timestamp }}">00:00</span>
+                </div>
             </div>
+    
+            <div class="exam-action-buttons">
+                <button type="submit" form="exam-quiz-form" class="exam-btn-submit-main">Nộp bài</button>
+            </div>
+        </div>
+    
+        <div class="exam-question-main-area">
+            <form id="exam-quiz-form" method="POST"
+                action="{{ route('user.test.nopBai', ['id' => $viewData['deThi']->maDT]) }}">
+                @csrf
+                <input type="hidden" name="ngayThiKetQuaThi"
+                    value="{{ $viewData['deThi']->kyThi->ngayThi }}">
 
-            <button type="submit" class="submit-quiz-button">Nộp bài</button>
-        </form>
+                <input type="hidden" name="maBaiLam"
+                    value="{{ $viewData['baiLam']->maBL }}">
+    
+                <div class="exam-question-list" style="min-height: 400px;">
+                    @foreach ($viewData['chiTietBaiLams'] as $index => $ct)
+                        <div class="exam-question-card {{ $loop->first ? 'is-active-question' : '' }}"
+                            data-question-index="{{ $index }}">
+                            <div class="exam-question-header-row">
+                                <h3 class="exam-question-number-text">Câu {{ $loop->iteration }}</h3>
+                            </div>
+
+                            <div class="exam-question-content-body">
+                                <p class="exam-question-text-content">{{ $ct->cauHoi->noiDung }}</p>
+
+                                @if (!empty($ct->cauHoi->hinhAnh))
+                                    <div class="exam-question-image-container">
+                                        <img src="{{ asset('storage/' . $ct->cauHoi->hinhAnh) }}" alt="Hình ảnh câu hỏi" class="exam-question-image">
+                                    </div>
+                                @endif
+
+                                <div class="exam-options-group">
+                                    <label class="exam-option-item">
+                                        <input type="radio" name="question[{{ $ct->maCH }}]" value="{{ $ct->hienThiA }}" class="exam-option-radio"> A.
+                                        {{ $ct->cauHoi->{'dapAn' . $ct->hienThiA} }}
+                                    </label>
+                                    <label class="exam-option-item">
+                                        <input type="radio" name="question[{{ $ct->maCH }}]" value="{{ $ct->hienThiB }}" class="exam-option-radio"> B.
+                                        {{ $ct->cauHoi->{'dapAn' . $ct->hienThiB} }}
+                                    </label>
+                                    <label class="exam-option-item">
+                                        <input type="radio" name="question[{{ $ct->maCH }}]" value="{{ $ct->hienThiC }}" class="exam-option-radio"> C.
+                                        {{ $ct->cauHoi->{'dapAn' . $ct->hienThiC} }}
+                                    </label>
+                                    <label class="exam-option-item">
+                                        <input type="radio" name="question[{{ $ct->maCH }}]" value="{{ $ct->hienThiD }}" class="exam-option-radio"> D.
+                                        {{ $ct->cauHoi->{'dapAn' . $ct->hienThiD} }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </form>
+        </div>
+    
+        <div class="exam-sidebar-right">
+            <div class="exam-navigator-section">
+                <h4 class="exam-sidebar-title">Mục lục câu hỏi</h4>
+                <div class="exam-question-navigator-grid">
+                    @foreach ($viewData['chiTietBaiLams'] as $index => $ct)
+                        <div class="exam-question-number-item {{ $loop->first ? 'is-current' : '' }}"
+                            data-question-index="{{ $index }}">
+                            {{ $loop->iteration }}
+                        </div>
+                    @endforeach
+                </div>
+                <div class="exam-navigation-controls">
+                    <button type="button" id="exam-prev-question" class="exam-nav-button">Câu trước</button>
+                    <button type="button" id="exam-next-question" class="exam-nav-button">Câu kế tiếp</button>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

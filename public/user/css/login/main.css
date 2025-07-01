@@ -6,22 +6,22 @@
 [ FONT ]*/
 
 @font-face {
-  font-family: Poppins-Regular;
+  font-family: Arial, sans-serif;
   src: url('../fonts/poppins/Poppins-Regular.ttf'); 
 }
 
 @font-face {
-  font-family: Poppins-Bold;
+  font-family: Arial, sans-serif;
   src: url('../fonts/poppins/Poppins-Bold.ttf'); 
 }
 
 @font-face {
-  font-family: Poppins-Medium;
+  font-family: Arial, sans-serif;
   src: url('../fonts/poppins/Poppins-Medium.ttf'); 
 }
 
 @font-face {
-  font-family: Montserrat-Bold;
+  font-family: Arial, sans-serif;
   src: url('../fonts/montserrat/Montserrat-Bold.ttf'); 
 }
 
@@ -36,12 +36,12 @@
 
 body, html {
 	height: 100%;
-	font-family: Poppins-Regular, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 /*---------------------------------------------*/
 a {
-	font-family: Poppins-Regular;
+  font-family: Arial, sans-serif;
 	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
@@ -67,7 +67,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 p {
-	font-family: Poppins-Regular;
+  font-family: Arial, sans-serif;
 	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
@@ -134,14 +134,14 @@ iframe {
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
 .txt1 {
-  font-family: Poppins-Regular;
+  font-family: Arial, sans-serif;
   font-size: 13px;
   line-height: 1.5;
   color: #999999;
 }
 
 .txt2 {
-  font-family: Poppins-Regular;
+  font-family: Arial, sans-serif;
   font-size: 13px;
   line-height: 1.5;
   color: #666666;
@@ -209,8 +209,9 @@ iframe {
 }
 
 .login100-form-title {
-  font-family: Poppins-Bold;
+  font-family: Arial, sans-serif;
   font-size: 24px;
+  font-weight: bold;
   color: #333333;
   line-height: 1.2;
   text-align: center;
@@ -230,7 +231,7 @@ iframe {
 }
 
 .input100 {
-  font-family: Poppins-Medium;
+  font-family: Arial, sans-serif;
   font-size: 15px;
   line-height: 1.5;
   color: #666666;
@@ -323,7 +324,7 @@ iframe {
 }
 
 .login100-form-btn {
-  font-family: Montserrat-Bold;
+  font-family: Arial, sans-serif;
   font-size: 15px;
   line-height: 1.5;
   color: #fff;
@@ -418,7 +419,7 @@ iframe {
   right: 8px;
   pointer-events: none;
 
-  font-family: Poppins-Medium;
+  font-family: Arial, sans-serif;
   color: #c80000;
   font-size: 13px;
   line-height: 1.4;
@@ -435,12 +436,13 @@ iframe {
 
 .alert-validate::after {
   content: "\f06a";
-  font-family: FontAwesome;
+  font-family: 'FontAwesome';
   display: block;
   position: absolute;
   color: #c80000;
   font-size: 15px;
   top: 50%;
+  z-index: 10000;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -452,6 +454,7 @@ iframe {
 .alert-validate:hover:before {
   visibility: visible;
   opacity: 1;
+  z-index: 9999;
 }
 
 @media (max-width: 992px) {
@@ -459,4 +462,32 @@ iframe {
     visibility: visible;
     opacity: 1;
   }
+}
+
+/* CSS bổ sung để định vị icon con mắt */
+.wrap-input100.password-field {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 35px;
+  /* Điều chỉnh vị trí phù hợp với thiết kế của bạn */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 10;
+  /* Đảm bảo icon nằm trên input */
+  color: #999;
+  /* Màu sắc của icon */
+}
+
+.toggle-password:hover {
+  color: #333;
+}
+
+/* Tăng kích thước input để icon không bị che khuất bởi padding */
+.wrap-input100 .input100 {
+  padding-right: 45px;
+  /* Đảm bảo đủ không gian cho icon */
 }
