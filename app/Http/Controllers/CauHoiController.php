@@ -7,18 +7,26 @@ use Illuminate\Http\Request;
 use App\Models\CauHoi;
 use App\Models\MonHoc;
 use App\Models\DeThi;
+use App\Models\Chuong;
 use App\Exports\CauHoiExport;
 use App\Imports\CauHoiImport;
 use Maatwebsite\Excel\Facades\Excel;
 class CauHoiController extends Controller
 {
     public $viewData = [];
-    public function index()
+    public function index(Request $request)
     {
-        $this->viewData['title'] = "Danh sách câu hỏi";
-        $this->viewData['cauHoi'] = CauHoi::all();
-        return view('cauHoi.index', ['viewData' => $this->viewData]);
+        if ($request->has('maMH')) {
+            $maMH = $request->query('maMH');
+            $this->viewData['monHocChon'] = MonHoc::find($maMH);
+            $this->viewData['cauHoi'] = CauHoi::where('maMonHoc', $maMH)->with(['taiKhoan', 'monHoc'])->get();
+            return view('cauHoi.dsTheoMon', ['viewData' => $this->viewData]);
+        }
+
+        $this->viewData['monHoc'] = MonHoc::all();
+        return view('cauHoi.danhSachMonHoc', ['viewData' => $this->viewData]);
     }
+
 
     public function show($id)
     {
@@ -29,23 +37,32 @@ class CauHoiController extends Controller
 
     public function edit($id)
     {
+        $chiTietCauHoi = CauHoi::findOrFail($id);
         $this->viewData['title'] = "Chỉnh sửa câu hỏi";
-        $this->viewData['chiTietCauHoi'] = CauHoi::findOrFail($id);
+        $this->viewData['chiTietCauHoi'] = $chiTietCauHoi;
 
-        // Lấy danh sách môn học
+        $this->viewData['monHocChon'] = $chiTietCauHoi->getMaMonHoc();
+
+        // Tất cả môn học
         $this->viewData['monHoc'] = MonHoc::all();
+
+        $this->viewData['chuong'] = Chuong::select('maChuong', 'tenChuong', 'maMH')->get();
 
         return view('cauHoi.update', ['viewData' => $this->viewData]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $maMH = $request->query('maMH');
+
         $this->viewData['title'] = "Thêm câu hỏi mới";
         $this->viewData['monHoc'] = MonHoc::all();
-        $this->viewData['deThi'] = DeThi::all();
+        $this->viewData['monHocChon'] = $maMH;
+        $this->viewData['chuong'] = $maMH ? Chuong::where('maMH', $maMH)->get() : Chuong::all();
 
         return view('cauHoi.create', ['viewData' => $this->viewData]);
     }
+
 
     public function updateCauHoi(Request $request, $id)
     {
@@ -57,9 +74,11 @@ class CauHoiController extends Controller
             'dapAnD' => 'required|string',
             'dapAnDung' => 'required|in:A,B,C,D',
             'doKho' => 'required|in:Dễ,Trung bình,Khó',
+            'maChuong' => 'required|exists:chuong,maChuong',
         ], [
             'required' => 'Trường :attribute không được để trống.',
             'in' => 'Trường :attribute không hợp lệ.',
+            'exists' => 'Chương không tồn tại.',
         ]);
 
         $cauHoi = CauHoi::findOrFail($id);
@@ -73,6 +92,7 @@ class CauHoiController extends Controller
         $cauHoi->setDung($request->input('dapAnDung'));
         $cauHoi->setDoKho($request->input('doKho'));
         $cauHoi->setMaMonHoc($request->input('maMonHoc'));
+        $cauHoi->setMaChuong($request->input('maChuong'));
         $cauHoi->save();
 
         return redirect()->route('cauhoi.edit', ['id' => $id])->with('success', 'Cập nhật câu hỏi thành công!');
@@ -89,13 +109,13 @@ class CauHoiController extends Controller
             'dapAnDung' => 'required|in:A,B,C,D',
             'doKho' => 'required|in:Dễ,Trung bình,Khó',
             'maMonHoc' => 'required|exists:mon_hoc,maMH',
+            'maChuong' => 'required|exists:chuong,maChuong',
         ], [
             'required' => 'Trường :attribute không được để trống.',
             'in' => 'Trường :attribute không hợp lệ.',
-            'exists' => 'Môn học không tồn tại.',
+            'exists' => 'Giá trị :attribute không tồn tại trong hệ thống.',
         ]);
 
-        // Tạo mới câu hỏi
         $cauHoi = new CauHoi();
         $cauHoi->setNoiDung($request->input('noiDung'));
         $cauHoi->setA($request->input('dapAnA'));
@@ -105,11 +125,11 @@ class CauHoiController extends Controller
         $cauHoi->setDung($request->input('dapAnDung'));
         $cauHoi->setDoKho($request->input('doKho'));
         $cauHoi->setMaMonHoc($request->input('maMonHoc'));
+        $cauHoi->maChuong = $request->input('maChuong');
         $cauHoi->setMaNguoiTao(auth()->user()->maTK);
-        $cauHoi->setNgayTao(now());
-        $cauHoi->save();
+        $cauHoi->setNgayTao(now());        $cauHoi->save();
 
-        return redirect()->route('cauhoi.index')->with('success', 'Thêm câu hỏi mới thành công!');
+        return redirect()->route('cauhoi.index', ['maMH' => $request->input('maMonHoc')])->with('success', 'Thêm câu hỏi mới thành công!');
     }
 
     public function exportExcel()

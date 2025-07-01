@@ -13,7 +13,6 @@ use App\Http\Controllers\KetQuaThiController;
 use App\Http\Controllers\CauHoiController;
 use App\Http\Controllers\DeThiController;
 use App\Http\Controllers\TaiKhoanController as account;
-use App\Http\Controllers\PhanQuyenController;
 
 Route::get('/', fn() => redirect()->route('getLogin'));
 Route::get('/login', [AuthenticateController::class, 'getLogin'])->name('getLogin');
@@ -26,16 +25,13 @@ Route::middleware(['auth', 'role:quanTri'])->group(function () {
     Route::post('/taikhoan/store', [account::class, 'addTaiKhoan'])->name('taikhoan.store');
     Route::get('/taikhoan/{id}', [account::class, 'show'])->name('taikhoan.show');
 
-    Route::get('/phanquyen',[PhanQuyenController::class, 'index'])->name('phanquyen.index');
-    Route::get('/phanquyen/{id}/create', [PhanQuyenController::class, 'create'])->name('phanquyen.create');
-    Route::post('/phanquyen/{id}/store', [PhanQuyenController::class, 'themQuyenChoTaiKhoan'])->name('phanquyen.store');
-
     Route::get('/adminProfile', [account::class, 'getProfileAdmin'])->name('admin.getProfileAdmin');
     Route::put('/updateAdminProfile/{id}', [account::class, 'updateProfile'])->name('admin.updateProfile');
 });
 
 Route::middleware(['auth', 'role:giangVien'])->group(function () {
     Route::get('/monhoc', [MonHocController::class, 'index'])->name('monhoc.index');
+    Route::get('/monhoc/{id}/show', [MonHocController::class, 'show'])->name('monhoc.show');
     Route::get('/monhoc/{id}/edit', [MonHocController::class, 'edit'])->name('monhoc.edit');
     Route::put('/monhoc/{id}', [MonHocController::class, 'updateMonHoc'])->name('monhoc.update');
     Route::get('/monhoc/create', [MonHocController::class, 'create'])->name('monhoc.create');
@@ -47,24 +43,25 @@ Route::middleware(['auth', 'role:giangVien'])->group(function () {
     Route::get('/kythi/{id}', [KyThiController::class, 'show'])->name('kythi.show');
     Route::get('/kythi/{id}/edit', [KyThiController::class, 'edit'])->name('kythi.edit');
     Route::put('/kythi/{id}', [KyThiController::class, 'updateKyThi'])->name('kythi.update');
+    Route::get('/ky-thi/export-excel', [KyThiController::class, 'exportExcel'])->name('kythi.exportExcel');
 
     Route::get('/ketquathi', [KetQuaThiController::class, 'index'])->name('ketquathi.index');
     Route::get('/ket-qua-thi/export-excel', [KetQuaThiController::class, 'exportExcel'])->name('ketQuaThi.exportExcel');
 
     Route::get('/cauhoi', [CauHoiController::class, 'index'])->name('cauhoi.index');
-    Route::get('/cauhoi/create', [CauHoiController::class, 'create'])->name('cauhoi.create')->middleware('check.permission:Biên soạn câu hỏi');
+    Route::get('/cauhoi/create', [CauHoiController::class, 'create'])->name('cauhoi.create');
     Route::post('/cauhoi/store', [CauHoiController::class, 'addCauHoi'])->name('cauhoi.store');
-    Route::get('/cauhoi/{id}/edit', [CauHoiController::class, 'edit'])->name('cauhoi.edit')->middleware('check.permission:Biên soạn câu hỏi');
+    Route::get('/cauhoi/{id}/edit', [CauHoiController::class, 'edit'])->name('cauhoi.edit');
     Route::put('/cauhoi/{id}', [CauHoiController::class, 'updateCauHoi'])->name('cauhoi.update');
     Route::get('/cauhoi/{id}', [CauHoiController::class, 'show'])->name('cauhoi.show');
-    Route::get('/cau-hoi/export-excel', [CauHoiController::class, 'exportExcel'])->name('cauhoi.exportExcel')->middleware('check.permission:Biên soạn câu hỏi');
-    Route::post('/cau-hoi/import-excel', [CauHoiController::class, 'importExcel'])->name('cauhoi.importExcel')->middleware('check.permission:Biên soạn câu hỏi');
+    Route::get('/cau-hoi/export-excel', [CauHoiController::class, 'exportExcel'])->name('cauhoi.exportExcel');
+    Route::post('/cau-hoi/import-excel', [CauHoiController::class, 'importExcel'])->name('cauhoi.importExcel');
 
     Route::get('/dethi', [DeThiController::class, 'index'])->name('dethi.index');
     Route::get('/dethi/{id}', [DeThiController::class, 'show'])->name('dethi.show');
-    Route::get('/de-thi/create', [DeThiController::class, 'create'])->name('dethi.create')->middleware('check.permission:Biên soạn đề thi');
+    Route::get('/de-thi/create', [DeThiController::class, 'create'])->name('dethi.create');
     Route::post('/dethi/store', [DeThiController::class, 'addDeThi'])->name('dethi.store');
-    Route::get('/dethi/{id}/edit', [DeThiController::class, 'edit'])->name('dethi.edit')->middleware('check.permission:Biên soạn đề thi');
+    Route::get('/dethi/{id}/edit', [DeThiController::class, 'edit'])->name('dethi.edit');
     Route::put('/dethi/{id}', [DeThiController::class, 'updateDeThi'])->name('dethi.update');
 
     Route::get('/teacherProfile', [account::class, 'getProfileTeacher'])->name('teacher.getProfileTeacher');
