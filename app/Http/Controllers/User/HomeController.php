@@ -23,6 +23,9 @@ class HomeController extends Controller
             'Python' => 'python.png',
             'PHP' => 'php.png',
             'Laravel' => 'php.png',
+            'C#' => 'c-sharp.png',
+            'Dot net core' => 'c-sharp.png',
+            '.net core' => 'c-sharp.png',
 
             // Lập trình web
             'Web' => 'web.png',

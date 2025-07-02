@@ -58,7 +58,7 @@
                 <input type="hidden" name="ngayThiKetQuaThi"
                     value="{{ $viewData['deThi']->kyThi->ngayThi }}">
 
-                <input type="hidden" name="maBaiLam"
+                <input type="hidden" name="maBaiLam" id="maBaiLamBackup"
                     value="{{ $viewData['baiLam']->maBL }}">
     
                 <div class="exam-question-list" style="min-height: 400px;">
@@ -80,19 +80,19 @@
 
                                 <div class="exam-options-group">
                                     <label class="exam-option-item">
-                                        <input type="radio" name="question[{{ $ct->maCH }}]" value="{{ $ct->hienThiA }}" class="exam-option-radio"> A.
+                                        <input type="radio" name="question[{{ $ct->maCH }}]" value="{{ $ct->hienThiA }}" class="exam-option-radio" onchange="luuTamBaiLam({{$ct->maCH}}, '{{ $ct->hienThiA }}')"> A.
                                         {{ $ct->cauHoi->{'dapAn' . $ct->hienThiA} }}
                                     </label>
                                     <label class="exam-option-item">
-                                        <input type="radio" name="question[{{ $ct->maCH }}]" value="{{ $ct->hienThiB }}" class="exam-option-radio"> B.
+                                        <input type="radio" name="question[{{ $ct->maCH }}]" value="{{ $ct->hienThiB }}" class="exam-option-radio" onchange="luuTamBaiLam({{$ct->maCH}}, '{{ $ct->hienThiB }}')"> B.
                                         {{ $ct->cauHoi->{'dapAn' . $ct->hienThiB} }}
                                     </label>
                                     <label class="exam-option-item">
-                                        <input type="radio" name="question[{{ $ct->maCH }}]" value="{{ $ct->hienThiC }}" class="exam-option-radio"> C.
+                                        <input type="radio" name="question[{{ $ct->maCH }}]" value="{{ $ct->hienThiC }}" class="exam-option-radio" onchange="luuTamBaiLam({{$ct->maCH}}, '{{ $ct->hienThiC }}')"> C.
                                         {{ $ct->cauHoi->{'dapAn' . $ct->hienThiC} }}
                                     </label>
                                     <label class="exam-option-item">
-                                        <input type="radio" name="question[{{ $ct->maCH }}]" value="{{ $ct->hienThiD }}" class="exam-option-radio"> D.
+                                        <input type="radio" name="question[{{ $ct->maCH }}]" value="{{ $ct->hienThiD }}" class="exam-option-radio" onchange="luuTamBaiLam({{$ct->maCH}}, '{{ $ct->hienThiD }}')"> D.
                                         {{ $ct->cauHoi->{'dapAn' . $ct->hienThiD} }}
                                     </label>
                                 </div>
