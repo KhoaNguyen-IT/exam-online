@@ -89,12 +89,12 @@
             }
         });
 
-        // Khi hover vào thì dừng
+        // Khi hover vào thì dừng autoplay
         $carousel.on('mouseenter', function () {
             $carousel.trigger('stop.owl.autoplay');
         });
 
-        // Khi rời chuột thì chạy tiếp
+        // Khi rời chuột thì chạy tiếp autoplay
         $carousel.on('mouseleave', function () {
             $carousel.trigger('play.owl.autoplay');
         });
