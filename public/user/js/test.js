@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentQuestionIndex = 0;
     const answeredQuestions = new Set();
 
-    // --- Hàm cập nhật câu hỏi và sidebar câu hỏi ---
+    // --- Function to update question display and sidebar ---
     function updateQuestionDisplay() {
         questionCards.forEach((card, index) => {
             if (index === currentQuestionIndex) {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
         nextButton.disabled = currentQuestionIndex === questionCards.length - 1;
     }
 
-    // --- Hàm đánh dấu câu hỏi đã làm và cập nhật trang thái sidebar câu hỏi ---
+    // --- Function to mark a question as answered and update sidebar ---
     function markQuestionAsAnswered(questionIndex) {
         if (questionIndex >= 0 && questionIndex < questionCards.length) {
             const currentCard = questionCards[questionIndex];
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // --- Bắt sự kiện cho các nút radio để đánh dấu câu hỏi đã làm ---
+    // --- Event listeners for radio buttons to mark questions as answered ---
     questionCards.forEach((card, index) => {
         const radioButtons = card.querySelectorAll('.exam-option-radio');
         radioButtons.forEach(radio => {
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // --- Bắt sự kiện cho các nút điều hướng ---
+    // --- Event listeners for navigation buttons ---
     prevButton.addEventListener('click', () => {
         if (currentQuestionIndex > 0) {
             currentQuestionIndex--;
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // --- Bắt sự kiện cho các số câu hỏi trên sidebar câu hỏi ---
+    // --- Event listeners for sidebar question numbers ---
     questionNumberItems.forEach(item => {
         item.addEventListener('click', () => {
             const indexToGo = parseInt(item.dataset.questionIndex);
@@ -100,36 +100,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Xử lý khôi phục kết quả
-    const maBL = document.getElementById('maBaiLamBackup').value;
-    let baiLamAll = JSON.parse(localStorage.getItem('baiLamAll'));
-    let baiLam = baiLamAll ? baiLamAll[maBL] : null;
-
-    if (baiLam) {
-        for (let maCH in baiLam) {
-            let dapAnChon = baiLam[maCH];
-            let radio = document.querySelector(`input[name="question[${maCH}]"][value="${dapAnChon}"]`);
-            if (radio) {
-                radio.checked = true;
-            }
-        }
-    
-        // Xử lý cập nhật sidebar câu hỏi và số câu đã làm
-        questionCards.forEach((card, index) => {
-            markQuestionAsAnswered(index);
-        });
-    }
-
-    // Cờ hiệu xác định người dùng đã tương tác với trang hay chưa
     let daTuongTac = false;
-
-    // Hàm xử lý cảnh báo trước khi rời trang và tải lại trang
     let beforeUnloadHandler = function (e) {
         e.preventDefault();
         e.returnValue = '';
     };
 
-    // --- Hàm xử lý thông báo khi đã nộp bài và tắt cảnh báo rời hoặc tải lại trang ---
+    // --- Existing Timer and Submission Logic (adapted) ---
     if (sessionStorage.getItem('daNopBai') === 'true') {
         if (sessionStorage.getItem('ketQuaSauKhiNop') === 'true') {
             Swal.fire({
@@ -153,27 +130,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     sessionStorage.removeItem('maKQT');
                     const finalRoute = routeTestDetail.replace('PLACEHOLDER', maKQT);
                     sessionStorage.removeItem('daNopBai');
-                    
-                    // Xóa dữ liệu lưu tạm của bài làm
-                    const maBL = document.getElementById('maBaiLamBackup').value;
-                    let baiLamAll = JSON.parse(localStorage.getItem('baiLamAll'));
-                    if (baiLamAll && baiLamAll[maBL]) {
-                        delete baiLamAll[maBL];
-                        localStorage.setItem('baiLamAll', JSON.stringify(baiLamAll));
-                    }
-
                     window.location.href = finalRoute;
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     sessionStorage.removeItem('daNopBai');
-                    
-                    // Xóa dữ liệu lưu tạm của bài làm
-                    const maBL = document.getElementById('maBaiLamBackup').value;
-                    let baiLamAll = JSON.parse(localStorage.getItem('baiLamAll'));
-                    if (baiLamAll && baiLamAll[maBL]) {
-                        delete baiLamAll[maBL];
-                        localStorage.setItem('baiLamAll', JSON.stringify(baiLamAll));
-                    }
-
                     window.location.href = routeExamList;
                 }
             });
@@ -194,15 +153,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 sessionStorage.removeItem('noiDungNopBai');
                 if (result.isConfirmed) {
                     sessionStorage.removeItem('daNopBai');
-                    
-                    // Xóa dữ liệu lưu tạm của bài làm
-                    const maBL = document.getElementById('maBaiLamBackup').value;
-                    let baiLamAll = JSON.parse(localStorage.getItem('baiLamAll'));
-                    if (baiLamAll && baiLamAll[maBL]) {
-                        delete baiLamAll[maBL];
-                        localStorage.setItem('baiLamAll', JSON.stringify(baiLamAll));
-                    }
-
                     window.location.href = routeExamList;
                 }
             });
@@ -223,25 +173,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 sessionStorage.removeItem('noiDungHoanThanh');
                 if (result.isConfirmed) {
                     sessionStorage.removeItem('daNopBai');
-                    
-                    // Xóa dữ liệu lưu tạm của bài làm
-                    const maBL = document.getElementById('maBaiLamBackup').value;
-                    let baiLamAll = JSON.parse(localStorage.getItem('baiLamAll'));
-                    if (baiLamAll && baiLamAll[maBL]) {
-                        delete baiLamAll[maBL];
-                        localStorage.setItem('baiLamAll', JSON.stringify(baiLamAll));
-                    }
-
                     window.location.href = routeExamList;
                 }
             });
         }
 
+        //quizForm.querySelectorAll('input, button, select, textarea').forEach(el => el.disabled = true);
         window.removeEventListener('beforeunload', beforeUnloadHandler);
         return;
     }
 
-    // Xử lý bật cờ hiệu khi người dùng đã tương tác với trang
     document.addEventListener('click', function () {
         if (!daTuongTac) {
             window.addEventListener('beforeunload', beforeUnloadHandler);
@@ -262,17 +203,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Giá trị data-duration hoặc data-ngay-thi không hợp lệ');
         return;
     }
-
-    // Tính thời gian kết thúc để xóa dữ liệu bài làm lưu tạm
-    const endTime = ngayThiTimestamp * 1000 + durationMinutes * 60 * 1000;
-    if (Date.now() >= endTime) {
-        const maBL = document.getElementById('maBaiLamBackup').value;
-        let baiLamAll = JSON.parse(localStorage.getItem('baiLamAll'));
-        if (baiLamAll && baiLamAll[maBL]) {
-            delete baiLamAll[maBL];
-            localStorage.setItem('baiLamAll', JSON.stringify(baiLamAll));
-        }
-    }    
 
     const totalDurationSeconds = durationMinutes * 60;
     const secondsPassed = nowTimestamp - ngayThiTimestamp;
@@ -331,20 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    updateQuestionDisplay(); // Gọi hàm để thiết lập hiển thị câu hỏi ban đầu
-    updateTimer(); // Gọi hàm để thiết lập thời gian đếm ngược
+    // Call updateQuestionDisplay initially to set up the first question and its height
+    updateQuestionDisplay(); 
+    updateTimer(); // Initial call for timer display
 });
-
-// Hàm lưu tạm kết quả bài làm
-function luuTamBaiLam(maCH, dapAnChon) {
-    const maBL = document.getElementById('maBaiLamBackup').value;
-    let baiLamAll = JSON.parse(localStorage.getItem('baiLamAll')) || {};
-
-    if (!baiLamAll[maBL]) {
-        baiLamAll[maBL] = {};
-    }
-
-    baiLamAll[maBL][maCH] = dapAnChon;
-
-    localStorage.setItem('baiLamAll', JSON.stringify(baiLamAll));
-}

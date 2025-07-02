@@ -65,40 +65,32 @@
 
 
     // Team carousel
-    if ($(".team-carousel .team-item").length <= 2) {
-        // Tắt Owl và dùng flex khi không đủ số lượng
-        $(".team-carousel").addClass("d-flex justify-content-center gap-3");
-    } else {
-        // Bật Owl khi đủ số lượng
-        let $carousel = $(".team-carousel").owlCarousel({
-            autoplay: true,
-            smartSpeed: 1000,
-            margin: 30,
-            dots: false,
-            loop: $(".team-carousel .team-item").length > 3,
-            nav: $(".team-carousel .team-item").length > 3,
-            navText: [
-                '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-                '<i class="fa fa-angle-right" aria-hidden="true"></i>'
-            ],
-            responsive: {
-                0: { items: 1 },
-                576: { items: 1 },
-                768: { items: 2 },
-                992: { items: 3 }
+    $(".team-carousel").owlCarousel({
+        autoplay: true,
+        smartSpeed: 1000,
+        margin: 30,
+        dots: false,
+        loop: true,
+        nav : true,
+        navText : [
+            '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+        ],
+        responsive: {
+            0:{
+                items:1
+            },
+            576:{
+                items:1
+            },
+            768:{
+                items:2
+            },
+            992:{
+                items:3
             }
-        });
-
-        // Khi hover vào thì dừng
-        $carousel.on('mouseenter', function () {
-            $carousel.trigger('stop.owl.autoplay');
-        });
-
-        // Khi rời chuột thì chạy tiếp
-        $carousel.on('mouseleave', function () {
-            $carousel.trigger('play.owl.autoplay');
-        });
-    }
+        }
+    });
 
 
     // Testimonials carousel
