@@ -30,13 +30,13 @@
         <div class="container-login100">
             <div class="wrap-login100">
                 <div class="login100-pic js-tilt" data-tilt>
-                    <img src="{{ asset('user/images/login/img-01.png') }}" alt="IMG">
+                    <img src="{{ asset('user/images/login/img-03.png') }}" alt="IMG">
                 </div>
 
                 <form class="login100-form validate-form" action="{{ route('postLogin') }}" method="post">
                     @csrf
                     <span class="login100-form-title">
-                        Đăng Nhập Hệ Thống
+                        ĐĂNG NHẬP
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
@@ -47,11 +47,14 @@
                         </span>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                        <input class="input100" type="password" name="matKhau" placeholder="Mật khẩu">
+                    <div class="wrap-input100 validate-input password-field" data-validate = "Password is required">
+                        <input class="input100" type="password" name="matKhau" placeholder="Mật khẩu" id="id_password">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                        <span class="toggle-password">
+                            <i class="fa fa-eye" aria-hidden="true" id="togglePassword"></i>
                         </span>
                     </div>
 

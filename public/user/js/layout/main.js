@@ -141,12 +141,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
     userDropdown.addEventListener('click', function (e) {
         dropdownMenu.classList.toggle('show');
-        e.stopPropagation(); // Ngăn sự kiện lan ra ngoài
+        e.stopPropagation();
     });
 
-    // Click ra ngoài thì ẩn menu
     document.addEventListener('click', function () {
         dropdownMenu.classList.remove('show');
     });
 });
+
+
+function updateDateTime() {
+    const now = new Date();
+  
+    const days = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
+    const dayName = days[now.getDay()];
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+  
+    const hour = String(now.getHours()).padStart(2, '0');
+    const minute = String(now.getMinutes()).padStart(2, '0');
+  
+    const formatted = `${dayName}, ${day}/${month}/${year}, ${hour}:${minute}`;
+    document.getElementById('datetime').textContent = formatted;
+  }
+  
+  // Gọi lần đầu
+  updateDateTime();
+  
+  // Cập nhật đúng đầu phút
+  const now = new Date();
+  const msToNextMinute = (60 - now.getSeconds()) * 1000;
+  setTimeout(() => {
+    updateDateTime();
+    setInterval(updateDateTime, 60000);
+  }, msToNextMinute);
 

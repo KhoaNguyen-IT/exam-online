@@ -15,16 +15,15 @@ class KetQuaThiController extends Controller
 
     public function index(string $id)
     {
-        $this->viewData['title'] = 'Trang kết quả bài thi';
+        $this->viewData['title'] = 'Trang kết quả bài thi | Trắc nghiệm';
 
         $ketQuaThi = KetQuaThi::with([
             'deThi.monHoc',
-            'deThi.cauHois',
-            'deThi.kyThis',
-            'baiLams.cauHoi'
+            'deThi.kyThi',
+            'baiLam.chiTietBaiLams.cauHoi'
         ])->where('maKQT', $id)->firstOrFail();
 
-        $kyThi = $ketQuaThi->deThi->kyThis->first();
+        $kyThi = $ketQuaThi->deThi->kyThi;
         $thoiLuong = $ketQuaThi->deThi->thoiLuongPhut;
 
         if ($kyThi && $thoiLuong) {

@@ -38,6 +38,22 @@
     </script>
 @endsection
 
+@section('header')
+    <!-- Botbar Start -->
+    <div class="container-fluid bg-dark">
+        <div class="row py-2 px-lg-5">
+            <div class="col text-left">
+                <div class="d-inline-flex flex-wrap">
+                    <a href="{{ route('user.home.index') }}" class="text-white mx-2">Trang chủ</a>
+                    <span class="text-white mx-2">/</span>
+                    <a href="{{ route('user.accountInfo.index') }}" class="text-white mx-2">Thông tin tài khoản</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Botbar End -->
+@endsection
+
 @section('content')
     <div class="profile-page-container">
         <div class="profile-card">
@@ -46,9 +62,15 @@
                 @csrf
                 @method('PUT')
                 <div class="avatar-section">
-                    <img src="{{ asset('storage/' . $viewData['user']->anhDaiDien) }}" alt="{{ $viewData['user']->hoTen }}"
-                        class="profile_avatar" id="preview-avatar">
-                    <button type="button" class="change-avatar-button">{{ $viewData['user']->anhDaiDien ? 'Đổi ảnh đại diện' : 'Thêm ảnh đại diện' }}</button>
+                    @if ($viewData['user']->anhDaiDien)
+                        <img src="{{ asset('storage/' . $viewData['user']->anhDaiDien) }}"
+                            alt="{{ $viewData['user']->hoTen }}" class="profile_avatar" id="preview-avatar">
+                    @else
+                        <img src="{{ asset('user/images/img_user.jpg') }}" alt="{{ $viewData['user']->hoTen }}"
+                            class="profile_avatar" id="preview-avatar">
+                    @endif
+
+                    <button type="button" class="change-avatar-button">Đổi ảnh đại diện</button>
                     <input type="file" name="anhDaiDien" id="avatar-input" accept="image/*" style="display: none;">
                 </div>
 
@@ -68,18 +90,27 @@
                     <label for="current-password" class="form-label">Mật khẩu hiện tại:</label>
                     <input type="password" id="current-password" name="matKhauCu" placeholder="Nhập mật khẩu hiện tại"
                         class="form-input">
+                    <span class="toggle-password">
+                        <i class="fa fa-eye" aria-hidden="true" id="toggleCurrentPassword"></i>
+                    </span>
                 </div>
 
                 <div class="form-group-row">
                     <label for="new-password" class="form-label">Mật khẩu mới:</label>
                     <input type="password" id="new-password" name="matKhauMoi" placeholder="Nhập mật khẩu mới"
                         class="form-input">
+                    <span class="toggle-password">
+                        <i class="fa fa-eye" aria-hidden="true" id="toggleNewPassword"></i>
+                    </span>
                 </div>
 
                 <div class="form-group-row">
                     <label for="confirm-new-password" class="form-label">Xác nhận mật khẩu mới:</label>
                     <input type="password" id="confirm-new-password" name="matKhauMoi_confirmation"
                         placeholder="Nhập lại mật khẩu mới" class="form-input">
+                    <span class="toggle-password">
+                        <i class="fa fa-eye" aria-hidden="true" id="toggleConfirmNewPassword"></i>
+                    </span>
                 </div>
 
                 <button type="submit" class="update-profile-button">Cập nhật</button>

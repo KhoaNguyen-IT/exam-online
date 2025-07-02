@@ -43,7 +43,7 @@
 }
 
 html {
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -55,7 +55,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family: Arial, sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -176,7 +176,7 @@ pre,
 code,
 kbd,
 samp {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: Arial, sans-serif;
   font-size: 1em;
 }
 
@@ -238,7 +238,7 @@ select,
 optgroup,
 textarea {
   margin: 0;
-  font-family: inherit;
+  font-family: Arial, sans-serif;
   font-size: inherit;
   line-height: inherit;
 }
@@ -362,7 +362,7 @@ template {
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-bottom: 0.5rem;
-  font-family: "Jost", sans-serif;
+  font-family: Arial, sans-serif;
   font-weight: 500;
   line-height: 1.2;
   color: #120F2D;
@@ -593,6 +593,10 @@ pre code {
 .pre-scrollable {
   max-height: 340px;
   overflow-y: scroll;
+}
+
+.navbarcustom{
+  border-bottom: solid 1px #000;
 }
 
 .container,
@@ -5828,7 +5832,7 @@ a.close.disabled {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family: Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -5941,7 +5945,7 @@ a.close.disabled {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: "Open Sans", sans-serif;
+  font-family: Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -9406,7 +9410,7 @@ button.bg-dark:focus {
 }
 
 .text-monospace {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+  font-family: Arial, sans-serif;
 }
 
 .text-justify {
@@ -9735,7 +9739,7 @@ h6,
 }
 
 .btn {
-  font-family: 'Jost', sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 .btn-square {
@@ -9779,10 +9783,10 @@ h6,
 }
 
 .navbar-light .navbar-nav .nav-link {
-  font-family: 'Jost', sans-serif;
+  font-family: Arial, sans-serif;
   padding: 30px 15px;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
   color: #120F2D;
   outline: none;
 }
@@ -9799,8 +9803,9 @@ h6,
 }
 
 .jumbotron {
-  background: linear-gradient(rgba(40, 120, 235, 0.9), rgba(40, 120, 235, 0.9)), url(../../images/layout/header.jpg), no-repeat center center;
+  background: linear-gradient(rgba(40, 120, 235, 0.5), rgba(40, 120, 235, 0.5)), url(../../images/layout/header3.jpg), no-repeat center center;
   background-size: cover;
+  background-position: center center;
 }
 
 .jumbotron.page-header {
@@ -9963,87 +9968,55 @@ h6,
 
 .user-profile-dropdown {
   list-style: none;
-  /* Removes default bullet points */
-  padding: 10px 15px;
-  /* Padding for the visible area */
+  padding: 0;
   margin: 0;
   position: relative;
-  /* Essential for positioning the dropdown menu */
-  display: flex;
-  /* Use flexbox to align text and image */
-  align-items: center;
-  /* Vertically align items */
-  background-color: #2878EB;
-  border: 1px solid #ccc;
-  border-radius: 50px;
-  width: fit-content;
-  /* Adjust width to fit content */
+  display: inline-block;
   cursor: pointer;
-  /* Indicates it's interactive */
-  font-family: Arial, sans-serif;
-  transition: background-color 0.3s ease;
-  /* Smooth transition for hover */
-}
-
-.user-profile-dropdown:hover {
-  background-color: #333;
-  /* Change background on hover */
-}
-
-.user-profile-dropdown .username-text {
-  /* Class for the username text */
-  font-weight: bold;
-  margin-right: 10px;
-  /* Space between text and image */
-  color: #fff;
 }
 
 .user-profile-dropdown .profile-avatar {
-  /* Class for the image */
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
-  /* Make image round */
   object-fit: cover;
-  /* Ensure image covers the area without distortion */
   border: 2px solid #007bff;
-  /* Blue border for the avatar */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
 }
 
-/* Styles for the dropdown menu */
+.user-profile-dropdown .profile-avatar:hover {
+  transform: scale(1.1);
+  /* Phóng nhẹ khi hover cho đẹp */
+}
+
 .dropdown-menu {
   display: none;
-  /* Initially hidden */
   position: absolute;
-  /* Positioned relative to .user-profile-dropdown */
-  top: calc(100% + 5px);
-  /* Place below the UL, with some space */
-  left: 0;
+  top: calc(100% + 8px);
+  left: 20%;
+  transform: translateX(-50%);
+  /* Đưa menu ra giữa avatar */
   background-color: #fff;
-  min-width: 180px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  border-radius: 4px;
-  overflow: hidden;
-  /* Ensures content stays within border-radius */
-  list-style: none;
-  /* Remove list style for the nested UL */
+  border-radius: 10px;
   padding: 0;
-  /* Remove padding for the nested UL */
   margin: 0;
-  /* Remove margin for the nested UL */
-  width: 100%;
-  border-radius: 15px;
+  list-style: none;
+}
+
+.dropdown-menu.show {
+  display: block;
 }
 
 .dropdown-menu li a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
+  color: #333;
+  padding: 10px 15px;
   display: block;
-  /* Make the whole area clickable */
-  transition: background-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  border-radius: 10px;
 }
 
 .dropdown-menu li a:hover {
