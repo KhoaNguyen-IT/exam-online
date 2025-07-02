@@ -153,8 +153,15 @@ class CauHoiController extends Controller
             'file' => 'required|mimes:xlsx,xls,csv'
         ]);
 
+        $maMH = $request->query('maMH');
+
+        // Kiểm tra tồn tại mã môn học
+        if (!$maMH || !MonHoc::where('maMH', $maMH)->exists()) {
+            return back()->with('error', 'Mã môn học không hợp lệ hoặc không tồn tại.');
+        }
+
         try {
-            Excel::import(new CauHoiImport, $request->file('file'));
+            Excel::import(new CauHoiImport($maMH), $request->file('file'));
             return back()->with('success', 'Import thành công!');
         } catch (\Exception $e) {
             return back()->with('error', 'Import thất bại: ' . $e->getMessage());

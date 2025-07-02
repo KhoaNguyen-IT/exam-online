@@ -121,30 +121,36 @@
         const monHocSelect = document.getElementById('monHocSelect');
         const deThiContainer = document.getElementById('deThiByMonHoc');
 
-        const allDeThi = @json($viewData['deThi']);
-        const oldChecked = @json(old('de_thi_ids', $viewData['deThiList'] ?? []));
+        // Dữ liệu từ Laravel
+        const allDeThi = @json($viewData['deThi']); // Toàn bộ đề thi
+        const checkedDeThiIds = @json(old('de_thi_ids', $viewData['deThiList'] ?? [])); // Các đề thi đã chọn trước đó
 
+        // Hiển thị đề thi theo môn học
         function renderDeThiByMonHoc(maMH) {
-            deThiContainer.innerHTML = '';
+            deThiContainer.innerHTML = ''; // Reset danh sách
 
-            if (!maMH) return;
+            if (!maMH) {
+                deThiContainer.innerHTML = `<div class="text-center ms-3">Vui lòng chọn môn học.</div>`;
+                return;
+            }
 
-            const filtered = allDeThi.filter(dt => dt.maMH == maMH);
+            const filtered = allDeThi.filter(deThi => String(deThi.maMH) === String(maMH));
 
             if (filtered.length === 0) {
-                deThiContainer.innerHTML = `<div class="text-danger text-center ms-3">Không có đề thi nào cho môn học này.</div>`;
+                deThiContainer.innerHTML = `<div class="text-center ms-3">Không có đề thi nào cho môn học này.</div>`;
                 return;
             }
 
             filtered.forEach(deThi => {
-                const checked = oldChecked.includes(String(deThi.maDT)) ? 'checked' : '';
+                const isChecked = checkedDeThiIds.includes(deThi.maDT) || checkedDeThiIds.includes(String(deThi.maDT));
                 const html = `
                     <div class="col-md-4">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox"
-                                   name="de_thi_ids[]"
-                                   value="${deThi.maDT}"
-                                   id="deThi${deThi.maDT}" ${checked}>
+                                name="de_thi_ids[]"
+                                value="${deThi.maDT}"
+                                id="deThi${deThi.maDT}"
+                                ${isChecked ? 'checked' : ''}>
                             <label class="form-check-label" for="deThi${deThi.maDT}">
                                 ${deThi.tenDT}
                             </label>
@@ -154,13 +160,25 @@
             });
         }
 
-        monHocSelect.addEventListener('change', () => {
-            renderDeThiByMonHoc(monHocSelect.value);
+        // Khi chọn môn học
+        monHocSelect.addEventListener('change', function () {
+            const selectedMaMH = this.value;
+            renderDeThiByMonHoc(selectedMaMH);
         });
 
-        // Auto render nếu có sẵn value
-        if (monHocSelect.value) {
-            renderDeThiByMonHoc(monHocSelect.value);
+        // Nếu có đề thi đã chọn => tự động chọn môn học tương ứng và render
+        if (checkedDeThiIds.length > 0) {
+            const firstCheckedDeThi = allDeThi.find(deThi => checkedDeThiIds.includes(deThi.maDT) || checkedDeThiIds.includes(String(deThi.maDT)));
+            if (firstCheckedDeThi) {
+                monHocSelect.value = firstCheckedDeThi.maMH;
+                renderDeThiByMonHoc(firstCheckedDeThi.maMH);
+            }
+        } else {
+            // Nếu không có đề thi nào được chọn, nhưng môn học đang được chọn sẵn thì render theo đó
+            const selectedMaMH = monHocSelect.value;
+            if (selectedMaMH) {
+                renderDeThiByMonHoc(selectedMaMH);
+            }
         }
     });
 </script>
