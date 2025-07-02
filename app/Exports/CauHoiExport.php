@@ -10,8 +10,8 @@ use Illuminate\Support\Collection;
 class CauHoiExport implements FromCollection, WithHeadings
 {
     /**
-     * @return \Illuminate\Support\Collection
-     */
+    * @return \Illuminate\Support\Collection
+    */
     public function collection()
     {
         return new Collection([]);
@@ -26,7 +26,7 @@ class CauHoiExport implements FromCollection, WithHeadings
             'Đáp án D',
             'Đáp án đúng',
             'Độ khó',
-            'Số chương'
+            'Môn học',
         ];
     }
 }
