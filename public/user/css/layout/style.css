@@ -9928,11 +9928,6 @@ h6,
   background: #F14D5D;
 }
 
-.team-carousel.d-flex .team-item {
-  max-width: 300px;
-  margin: 30px;
-}
-
 .testimonial-carousel .owl-item img {
   width: 80px;
   height: 80px;
@@ -10027,11 +10022,4 @@ h6,
 .dropdown-menu li a:hover {
   background-color: #f1f1f1;
   color: #007bff;
-}
-
-/* Responsive cho điện thoại */
-@media (max-width: 768px) {
-  .dropdown-menu {
-    transform: translateX(-10%);
-  }
 }

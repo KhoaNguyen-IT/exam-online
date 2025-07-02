@@ -1978,16 +1978,16 @@
     }
 
     .form-label {
-        flex: none !important;
+        flex: none;
         /* Bỏ chiều rộng cố định */
         width: 100%;
         /* Chiếm toàn bộ chiều rộng */
         margin-right: 0;
-        margin-bottom: 8px !important;
+        margin-bottom: 8px;
         /* Khoảng cách dưới label */
-        text-align: left !important;
+        text-align: left;
         /* Căn trái label trên mobile */
-        padding-right: 0 !important;
+        padding-right: 0;
     }
 
     .form-input {
@@ -1998,10 +1998,6 @@
     .update-profile-button {
         width: 100%;
         /* Nút chiếm toàn bộ chiều rộng trên mobile */
-    }
-
-    .toggle-password {
-        top: 70% !important;
     }
 }
 
