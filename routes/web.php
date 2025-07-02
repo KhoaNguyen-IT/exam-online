@@ -13,7 +13,6 @@ use App\Http\Controllers\KetQuaThiController;
 use App\Http\Controllers\CauHoiController;
 use App\Http\Controllers\DeThiController;
 use App\Http\Controllers\TaiKhoanController as account;
-use App\Http\Controllers\SaoLuuController;
 
 Route::get('/', fn() => redirect()->route('getLogin'));
 Route::get('/login', [AuthenticateController::class, 'getLogin'])->name('getLogin');
@@ -28,11 +27,6 @@ Route::middleware(['auth', 'role:quanTri'])->group(function () {
 
     Route::get('/adminProfile', [account::class, 'getProfileAdmin'])->name('admin.getProfileAdmin');
     Route::put('/updateAdminProfile/{id}', [account::class, 'updateProfile'])->name('admin.updateProfile');
-
-    Route::get('/', [SaoLuuController::class, 'index'])->name('saoLuu.index');
-    Route::post('/create', [SaoLuuController::class, 'create'])->name('saoLuu.create');
-    Route::get('/download/{file}', [SaoLuuController::class, 'download'])->name('saoLuu.download');
-    Route::delete('/delete/{file}', [SaoLuuController::class, 'delete'])->name('saoLuu.delete');
 });
 
 Route::middleware(['auth', 'role:giangVien'])->group(function () {

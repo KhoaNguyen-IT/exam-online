@@ -7,6 +7,7 @@
 @section('content')
     <div class="body-wrapper">
         <div class="container-fluid mt-5">
+            @include('layout.noice')
 
             <div class="d-md-flex align-items-center justify-content-between mb-3">
                 <h4 class="card-title">{{ $viewData['title'] }}</h4>
@@ -23,7 +24,6 @@
 
             <!-- Bảng danh sách kỳ thi -->
             <div class="table-responsive">
-                @include('layout.noice')
                 <table class="table table-striped align-middle" id="kyThiTable">
                     <thead class="table-light">
                         <tr>

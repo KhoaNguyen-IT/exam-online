@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\KyThi;
 use App\Models\DeThi;
+use App\Models\ChiTietKyThi;
 use App\Models\TaiKhoan;
 use App\Models\QuanLyThi;
 use App\Models\MonHoc;
@@ -49,7 +50,7 @@ class KyThiController extends Controller
         $kyThi = KyThi::findOrFail($id);
         $this->viewData['title'] = "Chỉnh sửa Kỳ thi";
         $this->viewData['kyThi'] = $kyThi;
-        $this->viewData['deThi'] = DeThi::select('maDT', 'tenDT', 'maMH', 'maKT')->get();
+        $this->viewData['deThi'] = DeThi::all();
         $this->viewData['monHocList'] = MonHoc::all();
         $this->viewData['deThiList'] = DeThi::where('maKT', $id)->pluck('maDT')->toArray();
 

@@ -39,40 +39,26 @@
             </div>
         </div>
     </div>
-@endsection
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let chuongCount = 1; // bắt đầu từ 1
 
-        const container = document.getElementById('chuong-container');
+    <script>
+        // Thêm dòng nhập chương mới
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('.add-chuong').addEventListener('click', function () {
+                const container = document.getElementById('chuong-container');
+                const newInput = document.createElement('div');
+                newInput.className = 'input-group mb-2';
+                newInput.innerHTML = `
+                        <input type="text" name="chuong[]" class="form-control" placeholder="Tên chương">
+                        <button type="button" class="btn btn-outline-danger remove-chuong">-</button>
+                    `;
+                container.appendChild(newInput);
+            });
 
-        // Set nội dung mặc định cho input đầu tiên
-        const firstInput = container.querySelector('input[name="chuong[]"]');
-        if (firstInput) {
-            firstInput.value = `Chương ${chuongCount}: `;
-        }
-
-        // Thêm chương mới
-        container.addEventListener('click', function (e) {
-            if (e.target.classList.contains('add-chuong')) {
-                chuongCount++;
-
-                const newInputGroup = document.createElement('div');
-                newInputGroup.className = 'input-group mb-2';
-
-                newInputGroup.innerHTML = `
-                    <input type="text" name="chuong[]" class="form-control" value="Chương ${chuongCount}: " placeholder="Tên chương">
-                    <button type="button" class="btn btn-outline-danger remove-chuong">-</button>
-                `;
-
-                container.appendChild(newInputGroup);
-            }
-
-            // Xoá chương
-            if (e.target.classList.contains('remove-chuong')) {
-                e.target.closest('.input-group').remove();
-                chuongCount--;
-            }
+            document.getElementById('chuong-container').addEventListener('click', function (e) {
+                if (e.target.classList.contains('remove-chuong')) {
+                    e.target.closest('.input-group').remove();
+                }
+            });
         });
-    });
-</script>
+    </script>
+@endsection

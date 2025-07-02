@@ -50,39 +50,33 @@
             </div>
         </div>
     </div>
-@endsection
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const container = document.getElementById('chuong-container');
-        let chuongCount = {{ count($viewData['chuong']) }};
 
-        // Xử lý thêm chương mới
-        container.addEventListener('click', function (e) {
-            if (e.target.classList.contains('add-chuong')) {
-                chuongCount++;
-                const newInput = document.createElement('div');
-                newInput.className = 'input-group mb-2';
-                newInput.innerHTML = `
-                    <input type="text" name="chuong[]" class="form-control" value="Chương ${chuongCount}: " placeholder="Tên chương">
-                    <button type="button" class="btn btn-outline-danger remove-chuong">-</button>
-                `;
-                container.appendChild(newInput);
-            }
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('#chuong-container').addEventListener('click', function (e) {
+                if (e.target.classList.contains('add-chuong')) {
+                    const container = document.getElementById('chuong-container');
+                    const newInput = document.createElement('div');
+                    newInput.className = 'input-group mb-2';
+                    newInput.innerHTML = `
+                            <input type="text" name="chuong[]" class="form-control" placeholder="Tên chương">
+                            <button type="button" class="btn btn-outline-danger remove-chuong">-</button>
+                        `;
+                    container.appendChild(newInput);
+                }
 
-            // Xoá chương
-            if (e.target.classList.contains('remove-chuong')) {
-                e.target.closest('.input-group').remove();
+                if (e.target.classList.contains('remove-chuong')) {
+                    e.target.closest('.input-group').remove();
+                }
+            });
+
+            if (!document.querySelector('.add-chuong')) {
+                const addBtn = document.createElement('button');
+                addBtn.type = 'button';
+                addBtn.className = 'btn btn-outline-secondary add-chuong';
+                addBtn.textContent = '+';
+                document.querySelector('#chuong-container .input-group').appendChild(addBtn);
             }
         });
-
-        // Nếu không có nút "+" ban đầu (trường hợp có dữ liệu cũ), thêm nút này vào dòng cuối
-        const lastGroup = container.querySelector('.input-group:last-child');
-        if (lastGroup && !lastGroup.querySelector('.add-chuong')) {
-            const addBtn = document.createElement('button');
-            addBtn.type = 'button';
-            addBtn.className = 'btn btn-outline-secondary add-chuong';
-            addBtn.textContent = '+';
-            lastGroup.appendChild(addBtn);
-        }
-    });
-</script>
+    </script>
+@endsection

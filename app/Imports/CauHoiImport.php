@@ -2,20 +2,14 @@
 namespace App\Imports;
 
 use App\Models\CauHoi;
-use App\Models\Chuong;
 use App\Models\MonHoc;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
+use Illuminate\Support\Str;
 
 class CauHoiImport implements ToModel, WithStartRow
 {
-    protected $maMonHoc;
-
-    public function __construct($maMonHoc)
-    {
-        $this->maMonHoc = $maMonHoc;
-    }
-
     public function startRow(): int
     {
         return 2;
@@ -23,16 +17,24 @@ class CauHoiImport implements ToModel, WithStartRow
 
     public function model(array $row)
     {
-        if (collect($row)->filter(fn($value) => !is_null($value) && trim($value) !== '')->isEmpty()) {
+        // Nếu tất cả các cột đều rỗng thì bỏ qua dòng này
+        if (collect($row)->filter(function ($value) {
+            return !is_null($value) && trim($value) !== '';
+        })->isEmpty()) {
             return null;
         }
 
-        $maMonHoc = $this->maMonHoc;
+        // Lấy tên môn học
+        $tenMonHoc = trim($row[7] ?? '');
 
-        if (!MonHoc::where('maMH', $maMonHoc)->exists()) {
-            throw new \Exception("Mã môn học '{$maMonHoc}' không tồn tại.");
+        // Kiểm tra tên môn học có tồn tại trong bảng mon_hoc không
+        $maMonHoc = MonHoc::where('tenMH', $tenMonHoc)->value('maMH');
+
+        if (!$maMonHoc) {
+            throw new \Exception("Tên môn học '{$tenMonHoc}' không tồn tại trong hệ thống.");
         }
 
+        // Kiểm tra nội dung câu hỏi đã tồn tại chưa
         $noiDung = trim($row[0] ?? '');
         $exists = CauHoi::where('noiDung', $noiDung)
             ->where('maMonHoc', $maMonHoc)
@@ -41,29 +43,6 @@ class CauHoiImport implements ToModel, WithStartRow
         if ($exists) {
             throw new \Exception("Câu hỏi '{$noiDung}' đã tồn tại trong hệ thống.");
         }
-
-        // Xử lý chương từ cột [7]
-        $tenChuongExcel = trim($row[7] ?? '');
-        $maChuong = null;
-
-        //tìm số đầu tiên trong chuỗi
-        if (preg_match('/(\d+)/', $tenChuongExcel, $matches)) {
-            $soChuong = (int) $matches[1];
-
-            // Tìm chương bằng cách tìm tenChuong bắt đầu bằng "Chương <số>"
-            $chuong = Chuong::where('maMH', $maMonHoc)
-                ->where('tenChuong', 'like', "Chương $soChuong%")
-                ->first();
-
-            if (!$chuong) {
-                throw new \Exception("Không tìm thấy chương số {$soChuong} thuộc môn học mã {$maMonHoc}.");
-            }
-
-            $maChuong = $chuong->maChuong;
-        } else {
-            throw new \Exception("Cột chương không hợp lệ: '{$tenChuongExcel}'. Vui lòng nhập dạng 'Chương 1' hoặc chỉ số chương.");
-        }
-
 
         return new CauHoi([
             'noiDung' => $noiDung,
@@ -76,7 +55,6 @@ class CauHoiImport implements ToModel, WithStartRow
             'ngayTao' => now(),
             'maNguoiTao' => auth()->user()->maTK ?? null,
             'maMonHoc' => $maMonHoc,
-            'maChuong' => $maChuong,
         ]);
     }
 }
