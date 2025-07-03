@@ -9,6 +9,7 @@
 @section('content')
     <div class="review-page-wrapper">
         <div class="review-page-container">
+            @if ($viewData['ketQuaThi'] || $viewData['ketQuaThi'])
             <div class="review-sidebar-left review-block">
                 <h4 class="review-sidebar-title">Thông tin đề thi</h4>
                 <div class="review-exam-info">
@@ -246,6 +247,11 @@
                     <button type="button" id="review-next-question" class="review-nav-button">Câu kế tiếp</button>
                 </div>
             </div>
+            @else
+                <div class="text-center text-danger font-weight-bold display-4 w-100" style="margin: 171px 0 172px 0;">
+                    Lỗi hệ thống, vui lòng thử lại sau!
+                </div>
+            @endif
         </div>
     </div>
 
