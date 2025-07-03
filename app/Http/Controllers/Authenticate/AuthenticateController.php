@@ -22,35 +22,25 @@ class AuthenticateController extends Controller
             'password' => $request->matKhau,
         ];
 
-        if(Auth::attempt($credentials))
-        {
+        if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
             Cookie::queue('userName', $user->hoTen, 24 * 60);
             Cookie::queue('userAvatar', $user->anhDaiDien, 24 * 60);
 
-            if($user->vaiTro == 'quanTri')
-            {
-                if($user->doiMK == 1)
-                {
+            if ($user->vaiTro == 'quanTri') {
+                if ($user->doiMK == 1) {
                     return redirect()->route('taikhoan.index')->with('successLogin', 'Xin chào ' . $user->hoTen);
-                }
-                else
-                {
+                } else {
                     return redirect()->route('taikhoan.index')->with('successfulLogin', 'Xin chào ' . $user->hoTen . '\nHãy đổi mật khẩu cho lần đăng nhập đầu tiên');
                 }
-            } 
-            else if ($user->vaiTro == 'giangVien') 
-            {
+            } else if ($user->vaiTro == 'giangVien') {
                 if ($user->doiMK == 1) {
                     return redirect()->route('cauhoi.index')->with('successLogin', 'Xin chào ' . $user->hoTen);
-                } 
-                else {
+                } else {
                     return redirect()->route('cauhoi.index')->with('successfulLogin', 'Xin chào ' . $user->hoTen . '\nHãy đổi mật khẩu cho lần đăng nhập đầu tiên');
                 }
-            } 
-            else if ($user->vaiTro == 'sinhVien') 
-            {
+            } else if ($user->vaiTro == 'sinhVien') {
                 if ($user->doiMK == 1) {
                     return redirect()->route('user.home.index')->with('successLogin', 'Xin chào ' . $user->hoTen);
                 } else {
@@ -61,6 +51,55 @@ class AuthenticateController extends Controller
 
         return back()->with('errors', 'Email hoặc mật khẩu không chính xác!');
     }
+
+    /*public function postLogin(Request $request)
+    {
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->matKhau,
+        ];
+
+        if(Auth::attempt($credentials))
+        {
+            $user = Auth::user();
+
+            return $this->checkVeryfiedEmail($user);
+        }
+
+        return back()->with('errors', 'Email hoặc mật khẩu không chính xác!');
+    }
+
+    public function checkVeryfiedEmail($user)
+    {
+        if ($user->hasVerifiedEmail()) {
+            Cookie::queue('userName', $user->hoTen, 24 * 60);
+            Cookie::queue('userAvatar', $user->anhDaiDien, 24 * 60);
+
+            if ($user->vaiTro == 'quanTri') {
+                if ($user->doiMK == 1) {
+                    return redirect()->route('taikhoan.index')->with('successLogin', 'Xin chào ' . $user->hoTen);
+                } else {
+                    return redirect()->route('taikhoan.index')->with('successfulLogin', 'Xin chào ' . $user->hoTen . '\nHãy đổi mật khẩu cho lần đăng nhập đầu tiên');
+                }
+            } else if ($user->vaiTro == 'giangVien') {
+                if ($user->doiMK == 1) {
+                    return redirect()->route('cauhoi.index')->with('successLogin', 'Xin chào ' . $user->hoTen);
+                } else {
+                    return redirect()->route('cauhoi.index')->with('successfulLogin', 'Xin chào ' . $user->hoTen . '\nHãy đổi mật khẩu cho lần đăng nhập đầu tiên');
+                }
+            } else if ($user->vaiTro == 'sinhVien') {
+                if ($user->doiMK == 1) {
+                    return redirect()->route('user.home.index')->with('successLogin', 'Xin chào ' . $user->hoTen);
+                } else {
+                    return redirect()->route('user.home.index')->with('successfulLogin', 'Xin chào ' . $user->hoTen . '\nHãy đổi mật khẩu cho lần đăng nhập đầu tiên');
+                }
+            }
+        }
+
+        $user->sendEmailVerificationNotification();
+
+        return redirect()->route('getLogin')->with('verifyEmail', 'Email xác minh đã được gửi. Vui lòng kiểm tra hộp thư!');
+    }*/
 
     public function logout()
     {

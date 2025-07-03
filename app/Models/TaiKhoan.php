@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use DateTime;
 use Dom\Text;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Notifications\Notifiable;
 
-class TaiKhoan extends Authenticatable
+class TaiKhoan extends Authenticatable implements MustVerifyEmail
 {
+    use Notifiable;
+
     protected $table = 'tai_khoan';
     protected $primaryKey = 'maTK';
     protected $fillable = [
@@ -20,11 +24,6 @@ class TaiKhoan extends Authenticatable
         'doiMK',
         'ngayTao',
     ];
-
-    public function quyen()
-    {
-        return $this->belongsToMany(PhanQuyen::class, 'phan_quyen_tai_khoan', 'maTK', 'maPQ');
-    }
 
     public function quanLyThis()
     {

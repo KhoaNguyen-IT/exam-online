@@ -33,6 +33,7 @@
 
 @section('content')
     <div class="exam-page-container">
+        @if ($viewData['deThi'] && $viewData['baiLam'] && $viewData['chiTietBaiLams'])
         <div class="exam-sidebar-left">
             <div class="exam-info-section">
                 @if ($viewData['deThi']->kyThi)
@@ -120,5 +121,10 @@
                 </div>
             </div>
         </div>
+        @else
+        <div class="text-center text-danger font-weight-bold display-4 w-100" style="margin: 171px 0 172px 0;">
+            Lỗi hệ thống, vui lòng thử lại sau!
+        </div>
+        @endif
     </div>
 @endsection

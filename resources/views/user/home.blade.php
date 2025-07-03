@@ -24,7 +24,7 @@
 @endsection
 
 @section('content')
-    @if (isset($viewData['danhSachMonHoc']) && count($viewData['danhSachMonHoc']) > 3)
+    @if (isset($viewData['danhSachMonHoc']))
         <!-- Team Start -->
         <div class="container-fluid py-5">
             <div class="container py-5">

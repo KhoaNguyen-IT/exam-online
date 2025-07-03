@@ -13,11 +13,44 @@ use App\Http\Controllers\KetQuaThiController;
 use App\Http\Controllers\CauHoiController;
 use App\Http\Controllers\DeThiController;
 use App\Http\Controllers\TaiKhoanController as account;
+use App\Models\TaiKhoan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', fn() => redirect()->route('getLogin'));
 Route::get('/login', [AuthenticateController::class, 'getLogin'])->name('getLogin');
 Route::post('/login', [AuthenticateController::class, 'postLogin'])->name('postLogin');
 Route::get('/logout', [AuthenticateController::class, 'logout'])->name('logout');
+
+/*Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
+    $user = TaiKhoan::findOrFail($id);
+
+    if (! hash_equals(sha1($user->email), $hash)) {
+        abort(403, 'Link xác minh không hợp lệ');
+    }
+
+    if (! $user->hasVerifiedEmail()) {
+        $user->markEmailAsVerified();
+    }
+
+    Auth::login($user);
+
+    $controller = app(AuthenticateController::class);
+    return $controller->checkVeryfiedEmail($user);
+})->middleware(['signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $user = $request->user();
+
+    if ($user->hasVerifiedEmail()) {
+        $controller = app(AuthenticateController::class);
+        return $controller->checkVeryfiedEmail($user);
+    }
+
+    $user->sendEmailVerificationNotification();
+
+    return back()->with('verifyEmail', 'Đã gửi lại email xác minh. Vui lòng kiểm tra hộp thư!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');*/
 
 Route::middleware(['auth', 'role:quanTri'])->group(function () {
     Route::get('/taikhoan', [account::class, 'index'])->name('taikhoan.index');

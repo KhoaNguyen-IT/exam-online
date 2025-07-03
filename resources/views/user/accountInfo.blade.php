@@ -57,6 +57,7 @@
 @section('content')
     <div class="profile-page-container">
         <div class="profile-card">
+            @if ($viewData['user'])
             <form class="profile-form" action="{{ route('user.accountInfo.update', ['id' => $viewData['user']->maTK]) }}"
                 method="POST" enctype="multipart/form-data">
                 @csrf
@@ -115,6 +116,11 @@
 
                 <button type="submit" class="update-profile-button">Cập nhật</button>
             </form>
+            @else
+                <div class="text-center text-danger font-weight-bold display-4">
+                    Lỗi hệ thống, vui lòng thử lại sau!
+                </div>
+            @endif
         </div>
     </div>
 @endsection
