@@ -32,7 +32,7 @@
                                     value="{{ old('thoiLuong') }}">
                             </div>
                             <div class="col-md-3">
-                                <label><strong>Số câu hỏi cần lấy</strong></label>
+                                <label><strong>Số câu hỏi</strong></label>
                                 <input type="number" name="soLuong" class="form-control" min="1" required
                                     value="{{ old('soLuong') }}">
                             </div>
