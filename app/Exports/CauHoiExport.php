@@ -26,7 +26,7 @@ class CauHoiExport implements FromCollection, WithHeadings
             'Đáp án D',
             'Đáp án đúng',
             'Độ khó',
-            'Số chương'
+            'chương'
         ];
     }
 }
