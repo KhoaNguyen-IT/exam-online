@@ -3,16 +3,16 @@
 use App\Http\Controllers\Authenticate\AuthenticateController;
 use App\Http\Controllers\User\TaiKhoanController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MonHocController;
+use App\Http\Controllers\Admin\MonHocController;
 use App\Http\Controllers\User\BaiLamController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\KetQuaThiController as ketQuaThiUser;
 use App\Http\Controllers\User\DeThiController as deThiUser;
-use App\Http\Controllers\KyThiController;
-use App\Http\Controllers\KetQuaThiController;
-use App\Http\Controllers\CauHoiController;
-use App\Http\Controllers\DeThiController;
-use App\Http\Controllers\TaiKhoanController as account;
+use App\Http\Controllers\Admin\KyThiController;
+use App\Http\Controllers\Admin\KetQuaThiController;
+use App\Http\Controllers\Admin\CauHoiController;
+use App\Http\Controllers\Admin\DeThiController;
+use App\Http\Controllers\Admin\TaiKhoanController as account;
 
 Route::get('/', fn() => redirect()->route('getLogin'));
 Route::get('/login', [AuthenticateController::class, 'getLogin'])->name('getLogin');

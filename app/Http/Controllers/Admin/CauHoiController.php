@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
@@ -11,6 +11,7 @@ use App\Models\Chuong;
 use App\Exports\CauHoiExport;
 use App\Imports\CauHoiImport;
 use Maatwebsite\Excel\Facades\Excel;
+
 class CauHoiController extends Controller
 {
     public $viewData = [];

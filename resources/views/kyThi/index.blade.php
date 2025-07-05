@@ -41,6 +41,8 @@
                                 <td>{{ $kyThi->getMoTa() }}</td>
                                 <td class="text-end">
                                     <a href="{{ route('kythi.show', ['id' => $kyThi->getMaKT()]) }}"
+                                        class="btn btn-sm btn-secondary">Kết quả</a>
+                                    <a href="{{ route('kythi.show', ['id' => $kyThi->getMaKT()]) }}"
                                         class="btn btn-sm btn-primary">Xem</a>
                                     <a href="{{ route('kythi.edit', ['id' => $kyThi->getMaKT()]) }}"
                                         class="btn btn-sm btn-warning">Sửa</a>

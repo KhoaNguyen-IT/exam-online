@@ -15,8 +15,7 @@
                 <div>
                     <a href="{{ route('cauhoi.index') }}" class="btn btn-secondary mb-1">Quay lại</a>
                     <a href="{{ route('cauhoi.exportExcel') }}" class="btn btn-success m-1">Xuất file định dạng</a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#importModal" class="btn btn-success m-1">Nhập danh
-                        sách</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#importModal" class="btn btn-success m-1">Nhập câu hỏi</a>
                     <a href="{{ route('cauhoi.create', ['maMH' => $viewData['monHocChon']->maMH]) }}"
                         class="btn btn-success m-1">Tạo mới</a>
                 </div>
