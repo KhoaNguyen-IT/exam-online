@@ -101,4 +101,18 @@ class TaiKhoanController extends Controller
 
         return back();
     }
+
+    public function updateLastSeenDeThi(string $id)
+    {
+        $taiKhoan = TaiKhoan::find($id);
+
+        if (!$taiKhoan) {
+            return response()->json(null, 404);
+        }
+
+        $taiKhoan->last_seen_de_thi_at = now();
+        $taiKhoan->save();
+
+        return response()->json(null, 204);
+    }
 }

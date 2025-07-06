@@ -22,36 +22,6 @@ Route::get('/login', [AuthenticateController::class, 'getLogin'])->name('getLogi
 Route::post('/login', [AuthenticateController::class, 'postLogin'])->name('postLogin');
 Route::get('/logout', [AuthenticateController::class, 'logout'])->name('logout');
 
-/*Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
-    $user = TaiKhoan::findOrFail($id);
-
-    if (! hash_equals(sha1($user->email), $hash)) {
-        abort(403, 'Link xác minh không hợp lệ');
-    }
-
-    if (! $user->hasVerifiedEmail()) {
-        $user->markEmailAsVerified();
-    }
-
-    Auth::login($user);
-
-    $controller = app(AuthenticateController::class);
-    return $controller->checkVeryfiedEmail($user);
-})->middleware(['signed'])->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $user = $request->user();
-
-    if ($user->hasVerifiedEmail()) {
-        $controller = app(AuthenticateController::class);
-        return $controller->checkVeryfiedEmail($user);
-    }
-
-    $user->sendEmailVerificationNotification();
-
-    return back()->with('verifyEmail', 'Đã gửi lại email xác minh. Vui lòng kiểm tra hộp thư!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');*/
-
 Route::middleware(['auth', 'role:quanTri'])->group(function () {
     Route::get('/taikhoan', [account::class, 'index'])->name('taikhoan.index');
     Route::get('/taikhoan/create', [account::class, 'create'])->name('taikhoan.create');
@@ -103,11 +73,12 @@ Route::middleware(['auth', 'role:giangVien'])->group(function () {
 
 Route::middleware(['auth', 'role:sinhVien'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('user.home.index');
-    Route::get('/about', function(){ return view('user.about'); })->name('user.about');
+    Route::get('/subjectList', [HomeController::class, 'getSubjectList'])->name('user.subjectList');
 
     Route::get('/examList', [deThiUser::class, 'index'])->name('user.examList.index');
     Route::get('/examList/filterId/{id}', [deThiUser::class, 'getKyThiByMaMH'])->name('user.examList.filterMaMH');
     Route::get('/examList/filterName', [deThiUser::class, 'getKyThiByTenMH'])->name('user.examList.filterTenMH');
+    Route::get('/examList/filterStatus/{status}', [deThiUser::class, 'getKyThiBySatus'])->name('user.examList.filterStatus');
 
     Route::get('/test/{id}', [BaiLamController::class, 'index'])->name('user.test.index');
     Route::post('/test/{id}', [BaiLamController::class, 'nopBai'])->name('user.test.nopBai');
@@ -119,4 +90,5 @@ Route::middleware(['auth', 'role:sinhVien'])->group(function () {
 
     Route::get('/accountInfo', [TaiKhoanController::class, 'index'])->name('user.accountInfo.index');
     Route::put('/updateAccountInfo/{id}', [TaiKhoanController::class, 'update'])->name('user.accountInfo.update');
+    Route::put('/updateLastSeenDeThi/{id}', [TaiKhoanController::class, 'updateLastSeenDeThi'])->name('user.updateLastSeenDeThi');
 });

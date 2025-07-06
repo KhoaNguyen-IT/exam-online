@@ -12,8 +12,8 @@
                 <a href="{{ route('user.home.index') }}"
                     class="nav-item nav-link {{ Route::currentRouteNamed('user.home.index') ? 'active' : '' }}">Trang
                     chủ</a>
-                <a href="{{ route('user.about') }}"
-                    class="nav-item nav-link {{ Route::currentRouteNamed('user.about') ? 'active' : '' }}">Giới thiệu</a>
+                <a href="{{ route('user.subjectList') }}"
+                    class="nav-item nav-link {{ Route::currentRouteNamed('user.subjectList') ? 'active' : '' }}">Môn học</a>
                 <a href="{{ route('user.examList.index') }}"
                     class="nav-item nav-link {{ Route::currentRouteNamed('user.examList.index') ? 'active' : '' }}">Bài
                     thi
@@ -23,20 +23,38 @@
                     sử
                     làm bài</a>
             </div>
-            <ul class="user-profile-dropdown">
-                @if (request()->cookie('userAvatar'))
-                    <img src="{{ asset('storage/' . request()->cookie('userAvatar')) }}"
-                        alt="Ảnh đại diện" class="profile-avatar">
-                @else
-                    <img src="{{ asset('user/images/img_user.jpg') }}"
-                        alt="Ảnh đại diện" class="profile-avatar">
-                @endif
-            
-                <ul class="dropdown-menu">
-                    <li><a href="{{ route('user.accountInfo.index') }}"><i class="fas fa-info-circle"></i> Thông tin tài khoản</a></li>
-                    <li><a href="{{ route('logout') }}" id="logout-link"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
+
+            <div class="d-flex align-items-center">
+                <ul class="navbar-nav align-items-center mr-3" style="font-size: 1.5rem;">
+                    {{-- Chuông thông báo --}}
+                    <li class="nav-item position-relative" style="list-style: none;">
+                        <a href="javascript:void(0);" id="notification-bell" onclick="showNotificationModal()">
+                            <i class="fas fa-bell fa-lg text-warning"></i>
+                            @if (isset($deThiMoi) && $deThiMoi > 0)
+                                <span id="notification-count" class="badge badge-danger"
+                                      style="position: absolute; top: -5px; right: -10px; font-size: 10px; border-radius: 50px;">
+                                    {{ $deThiMoi }}
+                                </span>
+                            @endif
+                        </a>
+                    </li>
                 </ul>
-            </ul>            
+
+                <ul class="user-profile-dropdown">
+                    @if (request()->cookie('userAvatar'))
+                        <img src="{{ asset('storage/' . request()->cookie('userAvatar')) }}"
+                            alt="Ảnh đại diện" class="profile-avatar">
+                    @else
+                        <img src="{{ asset('user/images/img_user.jpg') }}"
+                            alt="Ảnh đại diện" class="profile-avatar">
+                    @endif
+                
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('user.accountInfo.index') }}"><i class="fas fa-info-circle"></i> Thông tin tài khoản</a></li>
+                        <li><a href="{{ route('logout') }}" id="logout-link"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
+                    </ul>
+                </ul>
+            </div>        
         </div>
     </nav>
 </div>
@@ -65,4 +83,10 @@
             });
         });
     });
+
+    // Cập nhật khi sinh viên đã xem thông báo
+    window.appConfig = {
+        updateLastSeenDeThiUrl: '{{ url("updateLastSeenDeThi/" . Auth::user()->maTK) }}',
+        csrfToken: '{{ csrf_token() }}'
+    };
 </script>

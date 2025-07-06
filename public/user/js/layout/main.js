@@ -185,3 +185,28 @@ function updateDateTime() {
     setInterval(updateDateTime, 60000);
   }, msToNextMinute);
 
+
+
+function showNotificationModal() {
+    $('#notificationModal').modal('show');
+
+    fetch(window.appConfig.updateLastSeenDeThiUrl, {
+        method: 'PUT',
+        headers: {
+            'X-CSRF-TOKEN': window.appConfig.csrfToken
+        }
+    })
+    .then(response => {
+        if (response.status === 204) {
+            let badge = document.getElementById('notification-count');
+            if (badge) badge.remove();
+        } else {
+            return response.json().then(data => {
+                alert(data.message || 'Có lỗi xảy ra');
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+    });            
+}
