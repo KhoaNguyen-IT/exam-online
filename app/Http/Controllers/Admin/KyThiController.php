@@ -44,6 +44,21 @@ class KyThiController extends Controller
         return view('kyThi.detail', ['viewData' => $this->viewData]);
     }
 
+    public function showKetQua($id)
+    {
+        $kyThi = KyThi::findOrFail($id);
+
+        $this->viewData['title'] = "Kết quả Kỳ thi";
+        $this->viewData['kyThi'] = $kyThi;
+
+        // Lấy danh sách sinh viên thuộc kỳ thi
+        $ketQuaList = QuanLyThi::where('maKT', $id)->get();
+
+        $this->viewData['sinhVienList'] = $ketQuaList;
+
+        return view('ketQuaThi.dsSinhVien', ['viewData' => $this->viewData]);
+    }
+
     public function edit($id)
     {
         $kyThi = KyThi::findOrFail($id);

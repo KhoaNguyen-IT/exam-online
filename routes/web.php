@@ -44,9 +44,10 @@ Route::middleware(['auth', 'role:giangVien'])->group(function () {
     Route::get('/kythi/{id}/edit', [KyThiController::class, 'edit'])->name('kythi.edit');
     Route::put('/kythi/{id}', [KyThiController::class, 'updateKyThi'])->name('kythi.update');
     Route::get('/ky-thi/export-excel', [KyThiController::class, 'exportExcel'])->name('kythi.exportExcel');
+    Route::get('/kythi/{id}/ketqua', [KyThiController::class, 'showKetQua'])->name('kythi.ketqua');
 
     Route::get('/ketquathi', [KetQuaThiController::class, 'index'])->name('ketquathi.index');
-    Route::get('/ket-qua-thi/export-excel', [KetQuaThiController::class, 'exportExcel'])->name('ketQuaThi.exportExcel');
+    Route::get('/ket-qua-thi/export/{maKT}', [KetQuaThiController::class, 'exportExcel'])->name('ketQuaThi.exportExcel');
 
     Route::get('/cauhoi', [CauHoiController::class, 'index'])->name('cauhoi.index');
     Route::get('/cauhoi/create', [CauHoiController::class, 'create'])->name('cauhoi.create');

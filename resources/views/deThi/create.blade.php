@@ -35,6 +35,9 @@
                                 <label><strong>Số câu hỏi</strong></label>
                                 <input type="number" name="soLuong" class="form-control" min="1" required
                                     value="{{ old('soLuong') }}">
+                                <small id="tongCauHoiText" class="text-muted">
+                                    Tổng số câu đã chọn trong ma trận: <span id="tongCauHoiValue">0</span>
+                                </small>
                             </div>
                         </div>
 
@@ -51,21 +54,41 @@
                             </select>
                         </div>
 
-                        <!-- Danh sách chương (ẩn/hiện theo môn học) -->
+                        <!-- Bảng chọn số câu hỏi theo chương và độ khó -->
                         <div class="mb-3">
-                            <label><strong>Chọn các chương</strong></label>
-                            <div class="row">
-                                @foreach($viewData['chuong'] as $chuong)
-                                    <div class="col-md-4 chuong-item" data-mamh="{{ $chuong->maMH }}" style="display: none;">
-                                        <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="chuong_ids[]" value="{{ $chuong->maChuong }}"
-                                            id="chuong{{ $chuong->maChuong }}" {{ in_array($chuong->maChuong, old('chuong_ids', [])) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="chuong{{ $chuong->maChuong }}">
-                                                {{ $chuong->tenChuong }}
-                                            </label>
-                                        </div>
-                                    </div>
-                                @endforeach
+                            <label><strong>Ma trận</strong></label>
+                            <div class="table-responsive">
+                                <table class="table table-striped align-middle" id="maTranTable">
+                                    <thead class="table-light text-center">
+                                        <tr>
+                                            <th>Chương</th>
+                                            <th>Dễ</th>
+                                            <th>Trung Bình</th>
+                                            <th>Khó</th>
+                                            <th>Tổng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="chuongMatrixBody">
+                                        @foreach($viewData['chuong'] as $chuong)
+                                            <tr class="chuong-row" data-mamh="{{ $chuong->maMH }}" style="display: none;">
+                                                <td class="text-start">
+                                                    <input type="hidden" name="chuong_ids[]" value="{{ $chuong->maChuong }}">
+                                                    {{ $chuong->tenChuong }}
+                                                </td>
+                                                @foreach(['de' => 'Dễ', 'trung_binh' => 'Trung Bình', 'kho' => 'Khó'] as $levelKey => $label)
+                                                    <td class="text-center">
+                                                        <input type="number" name="matrix[{{ $chuong->maChuong }}][{{ $levelKey }}]"
+                                                            class="form-control matrix-input text-end"
+                                                            value="{{ old("matrix.{$chuong->maChuong}.{$levelKey}", 0) }}" min="0">
+                                                    </td>
+                                                @endforeach
+                                                <td class="text-center">
+                                                    <span class="total-count fw-bold text-primary">0</span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
@@ -77,7 +100,7 @@
 
                         <!-- Submit -->
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary">Lưu đề thi</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -85,35 +108,3 @@
         </div>
     </div>
 @endsection
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const monHocSelect = document.getElementById('monHocSelect');
-        const chuongItems = document.querySelectorAll('.chuong-item');
-
-        monHocSelect.addEventListener('change', function () {
-            const selectedMaMH = this.value;
-            chuongItems.forEach(item => {
-                const checkbox = item.querySelector('input[type="checkbox"]');
-                if (item.dataset.mamh === selectedMaMH) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                    checkbox.checked = false;
-                }
-            });
-        });
-
-        // Hiển thị lại chương đã chọn nếu có old input
-        if (monHocSelect.value) {
-            const selectedMaMH = monHocSelect.value;
-            chuongItems.forEach(item => {
-                const checkbox = item.querySelector('input[type="checkbox"]');
-                if (item.dataset.mamh === selectedMaMH) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-    });
-</script>

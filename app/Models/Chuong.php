@@ -23,4 +23,9 @@ class Chuong extends Model
     {
         return $this->hasMany(CauHoi::class, 'maChuong', 'maChuong');
     }
+
+    public function getTenChuong()
+    {
+        return $this->tenChuong;
+    }
 }
