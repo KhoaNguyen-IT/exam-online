@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
 use App\Models\KetQuaThi;
 use App\Models\NhanXet;
 use Carbon\Carbon;
