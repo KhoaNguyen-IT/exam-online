@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
@@ -11,6 +11,7 @@ use App\Models\Chuong;
 use App\Exports\CauHoiExport;
 use App\Imports\CauHoiImport;
 use Maatwebsite\Excel\Facades\Excel;
+
 class CauHoiController extends Controller
 {
     public $viewData = [];
@@ -20,6 +21,7 @@ class CauHoiController extends Controller
             $maMH = $request->query('maMH');
             $this->viewData['monHocChon'] = MonHoc::find($maMH);
             $this->viewData['cauHoi'] = CauHoi::where('maMonHoc', $maMH)->with(['taiKhoan', 'monHoc'])->get();
+            $this->viewData['chuongList'] = Chuong::where('maMH', $maMH)->get();
             return view('cauHoi.dsTheoMon', ['viewData' => $this->viewData]);
         }
 
@@ -73,7 +75,7 @@ class CauHoiController extends Controller
             'dapAnC' => 'required|string',
             'dapAnD' => 'required|string',
             'dapAnDung' => 'required|in:A,B,C,D',
-            'doKho' => 'required|in:Dễ,Trung bình,Khó',
+            'doKho' => 'required|in:Dễ,Trung Bình,Khó',
             'maChuong' => 'required|exists:chuong,maChuong',
         ], [
             'required' => 'Trường :attribute không được để trống.',
@@ -82,6 +84,17 @@ class CauHoiController extends Controller
         ]);
 
         $cauHoi = CauHoi::findOrFail($id);
+
+        //Kiểm tra trùng nội dung trong toàn bảng
+        $isDuplicate = CauHoi::whereRaw('LOWER(TRIM(noiDung)) = ?', [strtolower(trim($request->input('noiDung')))])
+            ->where('maCH', '!=', $id)
+            ->exists();
+
+        if ($isDuplicate) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Nội dung câu hỏi đã tồn tại.');
+        }
 
         // Cập nhật các trường của chi tiết câu hỏi
         $cauHoi->setNoiDung($request->input('noiDung'));
@@ -116,6 +129,15 @@ class CauHoiController extends Controller
             'exists' => 'Giá trị :attribute không tồn tại trong hệ thống.',
         ]);
 
+        //Kiểm tra trùng nội dung
+        $isDuplicate = CauHoi::whereRaw('LOWER(TRIM(noiDung)) = ?', [strtolower(trim($request->input('noiDung')))])->exists();
+
+        if ($isDuplicate) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Câu hỏi với nội dung này đã tồn tại.');
+        }
+
         $cauHoi = new CauHoi();
         $cauHoi->setNoiDung($request->input('noiDung'));
         $cauHoi->setA($request->input('dapAnA'));
@@ -125,11 +147,13 @@ class CauHoiController extends Controller
         $cauHoi->setDung($request->input('dapAnDung'));
         $cauHoi->setDoKho($request->input('doKho'));
         $cauHoi->setMaMonHoc($request->input('maMonHoc'));
-        $cauHoi->maChuong = $request->input('maChuong');
+        $cauHoi->setMaChuong($request->input('maChuong'));
         $cauHoi->setMaNguoiTao(auth()->user()->maTK);
-        $cauHoi->setNgayTao(now());        $cauHoi->save();
+        $cauHoi->setNgayTao(now());
+        $cauHoi->save();
 
-        return redirect()->route('cauhoi.index', ['maMH' => $request->input('maMonHoc')])->with('success', 'Thêm câu hỏi mới thành công!');
+        return redirect()->route('cauhoi.index', ['maMH' => $request->input('maMonHoc')])
+            ->with('success', 'Thêm câu hỏi mới thành công!');
     }
 
     public function exportExcel()

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const nguoiTaoInput = document.getElementById('nguoiTaoFilter');
+    const chuongSelect = document.getElementById('chuongFilter'); // Thay đổi ở đây
     const doKhoSelect = document.getElementById('doKhoFilter');
     const ngayTaoInput = document.getElementById('ngayTaoFilter');
     const tableBody = document.getElementById('tableBody');
@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
     noResultRow.id = 'noResultRow';
 
     function filterRows() {
-        const keywordNguoiTao = nguoiTaoInput.value.toLowerCase();
-        const selectedDoKho = doKhoSelect.value;
+        const selectedChuong = chuongSelect.value.toLowerCase(); // Lọc theo chương
+        const selectedDoKho = doKhoSelect.value.toLowerCase();
         const selectedNgayTao = ngayTaoInput.value;
 
         let visibleCount = 0;
@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', function () {
         rows.forEach(row => {
             const rowDoKho = row.dataset.dokho;
             const rowNgayTao = row.dataset.ngaytao;
-            const rowNguoiTao = row.dataset.nguoitao;
+            const rowChuong = row.querySelector('td:nth-child(3)').textContent.toLowerCase(); // Lấy chương
 
+            const matchChuong = !selectedChuong || rowChuong === selectedChuong;
             const matchDoKho = !selectedDoKho || rowDoKho === selectedDoKho;
             const matchNgayTao = !selectedNgayTao || rowNgayTao === selectedNgayTao;
-            const matchNguoiTao = !keywordNguoiTao || rowNguoiTao.includes(keywordNguoiTao);
 
-            const match = matchDoKho && matchNgayTao && matchNguoiTao;
+            const match = matchChuong && matchDoKho && matchNgayTao;
             row.style.display = match ? '' : 'none';
 
             if (match) visibleCount++;
@@ -38,7 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    nguoiTaoInput.addEventListener('input', filterRows);
+    // Gán sự kiện lọc
+    chuongSelect.addEventListener('change', filterRows);
     doKhoSelect.addEventListener('change', filterRows);
     ngayTaoInput.addEventListener('change', filterRows);
 });

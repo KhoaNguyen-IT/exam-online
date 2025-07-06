@@ -10,7 +10,10 @@
 
             <div class="d-md-flex align-items-center justify-content-between mb-3">
                 <h4 class="card-title">{{ $viewData['title'] }}</h4>
-                <a href="{{ route('ketQuaThi.exportExcel') }}" class="btn btn-success">Xuất danh sách</a>
+                <a href="{{ route('ketQuaThi.exportExcel', ['maKT' => $viewData['kyThi']->getMaKT()]) }}"
+                    class="btn btn-success">
+                    Xuất danh sách
+                </a>
             </div>
 
             <!-- Tìm kiếm tên sinh viên -->
@@ -32,8 +35,8 @@
                         @forelse($viewData['sinhVienList'] as $index => $sinhVien)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td class="ho-ten">{{ $sinhVien->hoTen }}</td>
-                                <td>{{ $sinhVien->email }}</td>
+                                <td class="ho-ten">{{ $sinhVien->taiKhoan->hoTen }}</td>
+                                <td>{{ $sinhVien->taiKhoan->email }}</td>
                                 <td class="text-end">
                                     <a href="{{ route('ketquathi.index', ['maTK' => $sinhVien->maTK]) }}"
                                         class="btn btn-sm btn-primary">Xem kết quả</a>

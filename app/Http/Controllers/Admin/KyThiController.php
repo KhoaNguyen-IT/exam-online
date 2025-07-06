@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\KyThi;
@@ -42,6 +42,21 @@ class KyThiController extends Controller
         $this->viewData['deThiList'] = DeThi::where('maKT', $id)->get();
 
         return view('kyThi.detail', ['viewData' => $this->viewData]);
+    }
+
+    public function showKetQua($id)
+    {
+        $kyThi = KyThi::findOrFail($id);
+
+        $this->viewData['title'] = "Kết quả Kỳ thi";
+        $this->viewData['kyThi'] = $kyThi;
+
+        // Lấy danh sách sinh viên thuộc kỳ thi
+        $ketQuaList = QuanLyThi::where('maKT', $id)->get();
+
+        $this->viewData['sinhVienList'] = $ketQuaList;
+
+        return view('ketQuaThi.dsSinhVien', ['viewData' => $this->viewData]);
     }
 
     public function edit($id)

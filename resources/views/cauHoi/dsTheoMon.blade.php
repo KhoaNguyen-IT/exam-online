@@ -15,8 +15,8 @@
                 <div>
                     <a href="{{ route('cauhoi.index') }}" class="btn btn-secondary mb-1">Quay lại</a>
                     <a href="{{ route('cauhoi.exportExcel') }}" class="btn btn-success m-1">Xuất file định dạng</a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#importModal" class="btn btn-success m-1">Nhập danh
-                        sách</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#importModal" class="btn btn-success m-1">Nhập câu
+                        hỏi</a>
                     <a href="{{ route('cauhoi.create', ['maMH' => $viewData['monHocChon']->maMH]) }}"
                         class="btn btn-success m-1">Tạo mới</a>
                 </div>
@@ -25,7 +25,12 @@
             <!-- Bộ lọc -->
             <div class="row mb-3">
                 <div class="col-md-4">
-                    <input type="text" id="nguoiTaoFilter" class="form-control" placeholder="Tìm theo người tạo...">
+                    <select id="chuongFilter" class="form-select">
+                        <option value="">-- Lọc theo chương --</option>
+                        @foreach($viewData['chuongList'] as $chuong)
+                            <option value="{{ $chuong->getTenChuong() }}">{{ $chuong->getTenChuong() }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <select id="doKhoFilter" class="form-select">
@@ -48,7 +53,7 @@
                         <tr>
                             <th>Nội dung</th>
                             <th>Độ khó</th>
-                            <th>Người tạo</th>
+                            <th>Chương</th>
                             <th>Ngày tạo</th>
                             <th>Hành động</th>
                         </tr>
@@ -60,7 +65,7 @@
                                 data-nguoitao="{{ strtolower($cauHoi->taiKhoan->hoTen) }}">
                                 <td>{{ $cauHoi->getNoiDung() }}</td>
                                 <td>{{ ucfirst($cauHoi->getDoKho()) }}</td>
-                                <td>{{ $cauHoi->taiKhoan->hoTen }}</td>
+                                <td>{{ $cauHoi->chuong->getTenChuong()}}</td>
                                 <td>{{ \Carbon\Carbon::parse($cauHoi->ngayTao)->format('d/m/Y') }}</td>
                                 <td>
                                     <a href="{{ route('cauhoi.show', ['id' => $cauHoi->maCH]) }}"
