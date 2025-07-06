@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
 use App\Models\DeThi;
 use App\Models\MonHoc;
 use Illuminate\Http\Request;

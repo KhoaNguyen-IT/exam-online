@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
 use App\Models\BaiLam;
 use App\Models\ChiTietBaiLam;
 use App\Models\DeThi;

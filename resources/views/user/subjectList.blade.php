@@ -19,7 +19,7 @@
 @endsection
 
 @section('content')
-    @if (isset($viewData['danhSachMonHoc']))
+    @if (isset($viewData['danhSachMonHoc']) && $viewData['danhSachMonHoc']->isNotEmpty())
         <!-- Team Start -->
         <div class="container-fluid py-5">
             <div class="container py-5">
