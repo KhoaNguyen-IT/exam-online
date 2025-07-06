@@ -31,23 +31,12 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link justify-content-between" href="{{ route('ketquathi.index') }}" aria-expanded="false">
-                        <div class="d-flex align-items-center gap-3">
-                            <span class="d-flex">
-                                <i class="ti ti-aperture"></i>
-                            </span>
-                            <span class="hide-menu">Quản lý kết quả thi</span>
-                        </div>
-
-                    </a>
-                </li>
-                <li class="sidebar-item">
                     <a class="sidebar-link justify-content-between" href="{{ route('kythi.index') }}" aria-expanded="false">
                         <div class="d-flex align-items-center gap-3">
                             <span class="d-flex">
                                 <i class="ti ti-aperture"></i>
                             </span>
-                            <span class="hide-menu">Quản lý kỳ thi</span>
+                            <span class="hide-menu">Quản lý thi</span>
                         </div>
 
                     </a>

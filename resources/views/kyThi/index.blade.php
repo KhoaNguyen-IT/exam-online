@@ -11,7 +11,7 @@
             <div class="d-md-flex align-items-center justify-content-between mb-3">
                 <h4 class="card-title">{{ $viewData['title'] }}</h4>
                 <div>
-                    <a href="{{ route('kythi.exportExcel') }}" class="btn btn-success me-2">Xuất file định dạng</a>
+                    <a href="{{ route('kythi.exportExcel') }}" class="btn btn-success me-2">Xuất file định dạng danh sách sinh viên</a>
                     <a href="{{ route('kythi.create') }}" class="btn btn-success">Tạo mới</a>
                 </div>
             </div>
@@ -40,6 +40,8 @@
                                 <td class="ten-kt">{{ $kyThi->getTenKT() }}</td>
                                 <td>{{ $kyThi->getMoTa() }}</td>
                                 <td class="text-end">
+                                    <a href="{{ route('kythi.ketqua', ['id' => $kyThi->getMaKT()]) }}"
+                                        class="btn btn-sm btn-secondary">Kết quả</a>
                                     <a href="{{ route('kythi.show', ['id' => $kyThi->getMaKT()]) }}"
                                         class="btn btn-sm btn-primary">Xem</a>
                                     <a href="{{ route('kythi.edit', ['id' => $kyThi->getMaKT()]) }}"

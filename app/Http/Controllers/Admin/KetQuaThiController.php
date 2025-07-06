@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\KetQuaThi;
 use App\Models\TaiKhoan;
+use App\Models\KyThi;
 use App\Exports\KetQuaThiExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -29,14 +31,18 @@ class KetQuaThiController extends Controller
         return view('ketQuaThi.dsSinhVien', ['viewData' => $this->viewData]);
     }
 
-    public function exportExcel()
+    public function exportExcel($maKT)
     {
         try {
-            return Excel::download(new KetQuaThiExport, 'ket_qua_thi.xlsx');
+            $kyThi = KyThi::findOrFail($maKT);
+            $tenKT = Str::slug($kyThi->getTenKT());
+
+            $fileName = 'ket_qua_thi_' . $tenKT . '.xlsx';
+
+            return Excel::download(new KetQuaThiExport($maKT), $fileName);
         } catch (\Exception $e) {
-            // Ghi log lỗi
             \Log::error('Export Excel Error: ' . $e->getMessage());
-            // Hiển thị lỗi ra màn hình (chỉ nên dùng khi debug)
+
             return response()->json([
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()

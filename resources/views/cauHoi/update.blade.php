@@ -29,15 +29,10 @@
                                         <div class="col-md-6 mb-3 d-flex align-items-center">
                                             <label for="maMonHoc" class="me-2 mb-0" style="min-width: 80px;"><strong>Môn
                                                     học:</strong></label>
-                                            <select id="maMonHoc" name="maMonHoc" class="form-select flex-grow-1"
-                                                style="min-width: 220px; max-width: 260px;">
-                                                <option value="">-- Chọn --</option>
-                                                @foreach($viewData['monHoc'] as $monHoc)
-                                                    <option value="{{ $monHoc->maMH }}" {{ $viewData['chiTietCauHoi']->maMonHoc == $monHoc->maMH ? 'selected' : '' }}>
-                                                        {{ $monHoc->tenMH }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                            <input type="text" id="tenMonHoc" name="tenMonHoc" class="form-control" 
+                                                value="{{ optional($viewData['monHoc']->firstWhere('maMH', $viewData['chiTietCauHoi']->maMonHoc))->tenMH }}" 
+                                                readonly>
+                                            <input type="hidden" name="maMonHoc" value="{{ $viewData['chiTietCauHoi']->maMonHoc }}">
                                         </div>
                                         <div class="col-md-6 mb-3 d-flex align-items-center">
                                             <label for="maChuong" class="me-2 mb-0"
