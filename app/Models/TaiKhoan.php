@@ -5,13 +5,9 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use DateTime;
 use Dom\Text;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Notifications\Notifiable;
 
-class TaiKhoan extends Authenticatable implements MustVerifyEmail
+class TaiKhoan extends Authenticatable
 {
-    use Notifiable;
-
     protected $table = 'tai_khoan';
     protected $primaryKey = 'maTK';
     protected $fillable = [
@@ -23,6 +19,7 @@ class TaiKhoan extends Authenticatable implements MustVerifyEmail
         'vaiTro',
         'doiMK',
         'ngayTao',
+        'last_seen_de_thi_at',
     ];
 
     public function quanLyThis()
@@ -90,6 +87,14 @@ class TaiKhoan extends Authenticatable implements MustVerifyEmail
     public function setNgayTao($ngayTao)
     {
         $this->ngayTao = $ngayTao;
+    }
+    public function getLastSeenDeThiAt()
+    {
+        return $this->last_seen_de_thi_at;
+    }
+    public function setLastSeenDeThiAt($lsdt)
+    {
+        $this->last_seen_de_thi_at = $lsdt;
     }
     public function getMaPQ()
     {

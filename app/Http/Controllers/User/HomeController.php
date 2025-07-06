@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\DeThi;
 use App\Models\MonHoc;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -13,7 +15,17 @@ class HomeController extends Controller
     public function index()
     {
         $this->viewData['title'] = 'Trang chủ | Trắc nghiệm';
-        $monHocs = MonHoc::all();
+
+        return view('user.home')->with('viewData', $this->viewData);
+    }
+
+    public function getSubjectList()
+    {
+        $userId = Auth::user()->maTK;
+
+        $monHocs = MonHoc::whereHas('deThis.kyThi.quanLyThis', function ($q) use ($userId) {
+            $q->where('maTK', $userId);
+        })->get();
 
         $monHocLogos = [
             // Ngôn ngữ lập trình
@@ -82,10 +94,11 @@ class HomeController extends Controller
             $danhSachLogoMonHoc[$monHoc->maMH] = $this->ganLogoChoMonHoc($monHoc->tenMH, $monHocLogos);
         }
 
+        $this->viewData['title'] = 'Trang môn học | Trắc nghiệm';
         $this->viewData['danhSachMonHoc'] = $monHocs;
         $this->viewData['danhSachLogoMonHoc'] = $danhSachLogoMonHoc;
 
-        return view('user.home')->with('viewData', $this->viewData);
+        return view('user.subjectList')->with('viewData', $this->viewData);
     }
 
     function ganLogoChoMonHoc($tenMonHoc, $monHocLogos)

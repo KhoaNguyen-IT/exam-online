@@ -23,3 +23,28 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdownToggle = document.getElementById('status-select-btn');
+    const dropdown = dropdownToggle?.parentElement;
+
+    if (dropdownToggle && dropdown) {
+        dropdownToggle.addEventListener('click', function (event) {
+            event.stopPropagation();
+            dropdown.classList.toggle('show');
+            dropdownToggle.setAttribute('aria-expanded', dropdown.classList.contains('show'));
+        });
+
+        const dropdownMenu = dropdown.querySelector('.dropdown-menu-status');
+        dropdownMenu.addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+
+        document.addEventListener('click', function () {
+            dropdown.classList.remove('show');
+            dropdownToggle.setAttribute('aria-expanded', 'false');
+        });
+    }
+});
+

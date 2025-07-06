@@ -10,7 +10,7 @@
             <div class="col-md-6 text-center text-md-right">
                 <p class="m-0"> 
                     <a class="text-white" href="{{ route('user.home.index') }}">Trang chủ</a> | 
-                    <a class="text-white" href="{{ route('user.about') }}">Giới thiệu</a> | 
+                    <a class="text-white" href="{{ route('user.subjectList') }}">Môn học</a> | 
                     <a class="text-white" href="{{ route('user.examList.index') }}">Bài thi kiểm tra</a> | 
                     <a class="text-white" href="{{ route('user.testHistory.getTestHistory') }}">Lịch sử làm bài</a>
                 </p>
