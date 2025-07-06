@@ -19,6 +19,7 @@ class TaiKhoan extends Authenticatable
         'vaiTro',
         'doiMK',
         'ngayTao',
+        'last_seen_de_thi_at',
     ];
 
     public function quanLyThis()
@@ -86,6 +87,14 @@ class TaiKhoan extends Authenticatable
     public function setNgayTao($ngayTao)
     {
         $this->ngayTao = $ngayTao;
+    }
+    public function getLastSeenDeThiAt()
+    {
+        return $this->last_seen_de_thi_at;
+    }
+    public function setLastSeenDeThiAt($lsdt)
+    {
+        $this->last_seen_de_thi_at = $lsdt;
     }
     public function getMaPQ()
     {

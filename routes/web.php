@@ -13,6 +13,9 @@ use App\Http\Controllers\Admin\KetQuaThiController;
 use App\Http\Controllers\Admin\CauHoiController;
 use App\Http\Controllers\Admin\DeThiController;
 use App\Http\Controllers\Admin\TaiKhoanController as account;
+use App\Models\TaiKhoan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', fn() => redirect()->route('getLogin'));
 Route::get('/login', [AuthenticateController::class, 'getLogin'])->name('getLogin');
@@ -71,11 +74,12 @@ Route::middleware(['auth', 'role:giangVien'])->group(function () {
 
 Route::middleware(['auth', 'role:sinhVien'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('user.home.index');
-    Route::get('/about', function(){ return view('user.about'); })->name('user.about');
+    Route::get('/subjectList', [HomeController::class, 'getSubjectList'])->name('user.subjectList');
 
     Route::get('/examList', [deThiUser::class, 'index'])->name('user.examList.index');
     Route::get('/examList/filterId/{id}', [deThiUser::class, 'getKyThiByMaMH'])->name('user.examList.filterMaMH');
     Route::get('/examList/filterName', [deThiUser::class, 'getKyThiByTenMH'])->name('user.examList.filterTenMH');
+    Route::get('/examList/filterStatus/{status}', [deThiUser::class, 'getKyThiBySatus'])->name('user.examList.filterStatus');
 
     Route::get('/test/{id}', [BaiLamController::class, 'index'])->name('user.test.index');
     Route::post('/test/{id}', [BaiLamController::class, 'nopBai'])->name('user.test.nopBai');
@@ -87,4 +91,5 @@ Route::middleware(['auth', 'role:sinhVien'])->group(function () {
 
     Route::get('/accountInfo', [TaiKhoanController::class, 'index'])->name('user.accountInfo.index');
     Route::put('/updateAccountInfo/{id}', [TaiKhoanController::class, 'update'])->name('user.accountInfo.update');
+    Route::put('/updateLastSeenDeThi/{id}', [TaiKhoanController::class, 'updateLastSeenDeThi'])->name('user.updateLastSeenDeThi');
 });

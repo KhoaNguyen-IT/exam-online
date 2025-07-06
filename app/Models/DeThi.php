@@ -105,4 +105,9 @@ class DeThi extends Model
     {
         return $this->belongsToMany(CauHoi::class, 'chi_tiet_de_thi', 'maDT', 'maCH');
     }
+
+    public function baiLams()
+    {
+        return $this->hasMany(BaiLam::class, 'maDT', 'maDT');
+    }
 }
