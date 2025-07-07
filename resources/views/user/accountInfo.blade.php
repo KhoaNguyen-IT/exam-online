@@ -123,4 +123,34 @@
             @endif
         </div>
     </div>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Xử lý tìm kiếm bằng tên môn học và chuyển đến vị trí danh sách kỳ thi
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash === '#applyFilter') {
+                const section = document.getElementById('applyFilter');
+                if (section) {
+                    section.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+
+        @if (session('notFoundTenMH'))
+            // Nếu URL đang có #applyFilter thì xóa đi sau khi load
+            if (window.location.hash === '#applyFilter') {
+                history.replaceState(null, '', window.location.pathname + window.location.search);
+            }
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Thông báo',
+                text: @json(session('notFoundTenMH')),
+            });
+        @endif
+    </script>
 @endsection
