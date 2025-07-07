@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Imports\TaiKhoanImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TaiKhoanController extends Controller
 {
@@ -135,5 +137,19 @@ class TaiKhoanController extends Controller
         }
 
         return back();
+    }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        try {
+            Excel::import(new TaiKhoanImport, $request->file('file'));
+            return back()->with('success', 'Import tài khoản thành công!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Lỗi khi import: ' . $e->getMessage());
+        }
     }
 }
