@@ -27,6 +27,7 @@ Route::middleware(['auth', 'role:quanTri'])->group(function () {
     Route::get('/taikhoan/create', [account::class, 'create'])->name('taikhoan.create');
     Route::post('/taikhoan/store', [account::class, 'addTaiKhoan'])->name('taikhoan.store');
     Route::get('/taikhoan/{id}', [account::class, 'show'])->name('taikhoan.show');
+    Route::post('/import-tai-khoan', [account::class, 'importExcel'])->name('taiKhoan.import');
 
     Route::get('/adminProfile', [account::class, 'getProfileAdmin'])->name('admin.getProfileAdmin');
     Route::put('/updateAdminProfile/{id}', [account::class, 'updateProfile'])->name('admin.updateProfile');
