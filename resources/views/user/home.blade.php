@@ -6,13 +6,13 @@
     <!-- Header Start -->
     <div class="jumbotron jumbotron-fluid position-relative overlay-bottom" style="margin-bottom: 90px;">
         <div class="container text-center my-5 py-5">
-            <h1 class="display-3 mt-4 mb-4" 
+            <h1 class="display-3 mt-4 mb-4"
                 style="
                     color: #fff500; 
                     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black;">
-                    Hệ thống
+                Hệ thống
             </h1>
-            <h1 class="display-1 mb-5" 
+            <h1 class="display-1 mb-5"
                 style="
                     color: #fff500; 
                     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black">
@@ -104,8 +104,8 @@
                                 giúp sinh viên củng cố kiến thức qua kết quả bài thi.</p>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <p style="color: var(--gray);"><i class="fas fa-cogs me-2"
-                                    style="color: var(--success);"></i> Quản lý chuyên nghiệp: Dễ dàng kiểm soát, theo
+                            <p style="color: var(--gray);"><i class="fas fa-cogs me-2" style="color: var(--success);"></i>
+                                Quản lý chuyên nghiệp: Dễ dàng kiểm soát, theo
                                 dõi và tổng hợp dữ liệu thi.</p>
                         </div>
                     </div>

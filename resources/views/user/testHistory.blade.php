@@ -47,14 +47,16 @@
                         @endif
 
                         @if (!empty($baiLam->maKQT))
-                            <a href="{{ route('user.testDetail.index', ['id' => $baiLam->maKQT]) }}" class="detail-exam-button">
+                            <a href="{{ route('user.testDetail.index', ['id' => $baiLam->maKQT]) }}"
+                                class="detail-exam-button">
                                 Xem chi tiết
                             </a>
                         @endif
                     </div>
                 @endforeach
             @else
-                <div class="text-center text-white p-5" style="border-radius: 15px; font-size: 1.5em; font-weight: 600; margin: 1.8rem; background-image: linear-gradient(90.57deg, #3e65fe, #d23cff);">
+                <div class="text-center text-white p-5"
+                    style="border-radius: 15px; font-size: 1.5em; font-weight: 600; margin: 1.8rem; background-image: linear-gradient(90.57deg, #3e65fe, #d23cff);">
                     Không có bài thi nào được bạn hoàn thành
                 </div>
             @endif
