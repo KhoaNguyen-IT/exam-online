@@ -26,8 +26,8 @@ class DeThiController extends Controller
         $deThis = DeThi::with(['kyThi', 'monHoc'])
             ->whereHas('kyThi', function ($query) use ($userId) {
                 $query->whereHas('quanLyThis', function ($q) use ($userId) {
-                        $q->where('maTK', $userId);
-                    });
+                    $q->where('maTK', $userId);
+                });
             })
             ->paginate(4);
 
@@ -56,6 +56,7 @@ class DeThiController extends Controller
         }
 
         $this->viewData['title'] = 'Trang bài thi kiểm tra | Trắc nghiệm';
+        $this->viewData['noticeNotFound'] = 'Không có bài thi trong thời gian này';
         $this->viewData['monHocs'] = $monHocs;
         $this->viewData['deThis'] = $deThis;
 
@@ -74,10 +75,9 @@ class DeThiController extends Controller
 
         $deThis = DeThi::where('maMH', $id)
             ->whereHas('kyThi', function ($query) use ($userId) {
-                $query->whereHas('quanLyThis', function ($q) use ($userId) 
-                    {
-                        $q->where('maTK', $userId);
-                    });
+                $query->whereHas('quanLyThis', function ($q) use ($userId) {
+                    $q->where('maTK', $userId);
+                });
             })
             ->with(['kyThi', 'monHoc'])
             ->paginate(4);
@@ -107,6 +107,7 @@ class DeThiController extends Controller
         }
 
         $this->viewData['title'] = 'Trang bài thi kiểm tra | Trắc nghiệm';
+        $this->viewData['noticeNotFound'] = 'Môn học này hiện tại không có bài thi';
         $this->viewData['monHocs'] = $monHocs;
         $this->viewData['monHocSelected'] = $monHocSelected;
         $this->viewData['deThis'] = $deThis;
@@ -137,10 +138,9 @@ class DeThiController extends Controller
 
         $deThis = DeThi::where('maMH', $monHoc->maMH)
             ->whereHas('kyThi', function ($query) use ($userId) {
-                $query->whereHas('quanLyThis', function ($q) use ($userId) 
-                    {
-                        $q->where('maTK', $userId);
-                    });
+                $query->whereHas('quanLyThis', function ($q) use ($userId) {
+                    $q->where('maTK', $userId);
+                });
             })
             ->with(['monHoc', 'kyThi'])
             ->paginate(4);
@@ -170,6 +170,7 @@ class DeThiController extends Controller
         }
 
         $this->viewData['title'] = 'Trang bài thi kiểm tra | Trắc nghiệm';
+        $this->viewData['noticeNotFound'] = 'Môn học này hiện tại không có bài thi';
         $this->viewData['monHocs'] = $monHocs;
         $this->viewData['monHocSelected'] = $monHocSelected;
         $this->viewData['deThis'] = $deThis;
@@ -198,6 +199,7 @@ class DeThiController extends Controller
 
         if ($status === 'da-mo') {
             $statusSelected = 'Đã mở';
+            $noticeNotFound = 'Không có bài thi đã mở';
 
             $deThisQuery->whereHas('kyThi', function ($q) use ($now) {
                 $q->where('ngayThi', '<=', $now)
@@ -209,17 +211,22 @@ class DeThiController extends Controller
                 });
         } elseif ($status === 'chua-mo') {
             $statusSelected = 'Chưa mở';
+            $noticeNotFound = 'Không có bài thi chưa mở';
+
             $deThisQuery->whereHas('kyThi', function ($q) use ($now) {
                 $q->where('ngayThi', '>', $now);
             });
         } elseif ($status === 'da-hoan-thanh') {
             $statusSelected = 'Đã hoàn thành';
+            $noticeNotFound = 'Không có bài thi đã hoàn thành';
+
             $deThisQuery->whereHas('baiLams', function ($q) use ($userId) {
                 $q->where('maTK', $userId)
                     ->where('trangThai', 'Đã hoàn thành');
             });
         } elseif ($status === 'da-dong') {
             $statusSelected = 'Đã đóng';
+            $noticeNotFound = 'Không có bài thi đã đóng';
 
             $deThisQuery->whereHas('kyThi', function ($q) use ($now) {
                 $q->whereRaw('? > DATE_ADD(ngayThi, INTERVAL de_thi.thoiLuongPhut MINUTE)', [$now]);
@@ -250,6 +257,7 @@ class DeThiController extends Controller
         }
 
         $this->viewData['title'] = 'Trang bài thi kiểm tra | Trắc nghiệm';
+        $this->viewData['noticeNotFound'] = $noticeNotFound;
         $this->viewData['monHocs'] = $monHocs;
         $this->viewData['statusSelected'] = $statusSelected;
         $this->viewData['deThis'] = $deThis;

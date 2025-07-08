@@ -25,7 +25,8 @@
 @section('content')
     <div class="exam-list-page-container">
         <div class="section-title text-center position-relative mb-5">
-            <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2 h5" id="applyFilter">Danh Sách Các Bài Thi Kiểm Tra
+            <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2 h5" id="applyFilter">Danh Sách
+                Các Bài Thi Kiểm Tra
             </h6>
         </div>
 
@@ -37,7 +38,8 @@
                         {{ $viewData['monHocSelected'] ?? 'Tất cả' }}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="subject-select-btn">
-                        <li><a class="dropdown-item" href="{{ route('user.examList.index') }}#applyFilter" data-value="all">Tất
+                        <li><a class="dropdown-item" href="{{ route('user.examList.index') }}#applyFilter"
+                                data-value="all">Tất
                                 cả</a></li>
                         @foreach ($viewData['monHocs'] as $mh)
                             <li><a class="dropdown-item"
@@ -47,7 +49,7 @@
                     </ul>
                 </div>
             </div>
-    
+
             <div class="filter-section">
                 <label for="status-select" class="filter-label">Trạng thái:</label>
                 <div class="custom-dropdown">
@@ -55,16 +57,22 @@
                         {{ $viewData['statusSelected'] ?? 'Tất cả' }}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="status-select-btn">
-                        <li><a class="dropdown-item" href="{{ route('user.examList.index') }}#applyFilter" data-value="all">Tất
-                            cả</a></li>
-                        <li><a class="dropdown-item" href="{{ route('user.examList.filterStatus', ['status' => 'da-mo']) }}">Đã mở</a></li>
-                        <li><a class="dropdown-item" href="{{ route('user.examList.filterStatus', ['status' => 'chua-mo']) }}">Chưa mở</a></li>
-                        <li><a class="dropdown-item" href="{{ route('user.examList.filterStatus', ['status' => 'da-hoan-thanh']) }}">Đã hoàn thành</a></li>
-                        <li><a class="dropdown-item" href="{{ route('user.examList.filterStatus', ['status' => 'da-dong']) }}">Đã đóng</a></li>
+                        <li><a class="dropdown-item" href="{{ route('user.examList.index') }}#applyFilter"
+                                data-value="all">Tất
+                                cả</a></li>
+                        <li><a class="dropdown-item"
+                                href="{{ route('user.examList.filterStatus', ['status' => 'da-mo']) }}">Đã mở</a></li>
+                        <li><a class="dropdown-item"
+                                href="{{ route('user.examList.filterStatus', ['status' => 'chua-mo']) }}">Chưa mở</a></li>
+                        <li><a class="dropdown-item"
+                                href="{{ route('user.examList.filterStatus', ['status' => 'da-hoan-thanh']) }}">Đã hoàn
+                                thành</a></li>
+                        <li><a class="dropdown-item"
+                                href="{{ route('user.examList.filterStatus', ['status' => 'da-dong']) }}">Đã đóng</a></li>
                     </ul>
                 </div>
             </div>
-        </div>        
+        </div>
 
         <div class="exam-items-list">
             @if ($viewData['deThis']->isNotEmpty())
@@ -73,7 +81,8 @@
                         <h3 class="exam-name">{{ $deThi->tenDT }}</h3>
                         <p>Môn học: {{ $deThi->tenMH }}</p>
                         <p>Thời lượng: {{ $deThi->thoiLuongPhut }} phút</p>
-                        <p>Ngày thi: {{ \Carbon\Carbon::parse($deThi->ngayThi)->format('d/m/Y - H \g\i\ờ i \p\h\ú\t') }}</p>
+                        <p>Ngày thi: {{ \Carbon\Carbon::parse($deThi->ngayThi)->format('d/m/Y - H \g\i\ờ i \p\h\ú\t') }}
+                        </p>
 
                         @if (now()->lt($deThi->thoiGianBatDau))
                             <div class="exam-status not-open">Chưa mở</div>
@@ -82,7 +91,8 @@
                                 <div class="exam-status completed">Đã hoàn thành</div>
                             @else
                                 <div class="exam-status open">Đã mở</div>
-                                <a href="{{ route('user.test.index', ['id' => $deThi->maDT]) }}" class="start-exam-button">Bắt
+                                <a href="{{ route('user.test.index', ['id' => $deThi->maDT]) }}"
+                                    class="start-exam-button">Bắt
                                     đầu
                                     làm bài</a>
                             @endif
@@ -96,9 +106,10 @@
                     </div>
                 @endforeach
             @else
-                <div class="text-center text-white" style="border-radius: 15px; font-size: 1.5em; font-weight: 600; padding: 2.55rem;
+                <div class="text-center text-white"
+                    style="border-radius: 15px; font-size: 1.5em; font-weight: 600; padding: 2.55rem;
                 background-image: linear-gradient(90.57deg, #3e65fe, #d23cff);">
-                    Không có bài thi trong thời gian này
+                    {{ $viewData['noticeNotFound'] ?? 'Không có bài thi trong thời gian này' }}
                 </div>
             @endif
 

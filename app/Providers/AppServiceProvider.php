@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\DeThi;
+use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -32,23 +33,28 @@ class AppServiceProvider extends ServiceProvider
             }
 
             $user = Auth::user();
+            $now = Carbon::now();
 
-            $deThiQuery = DeThi::with('kyThi')
+            $deThisMoiList = DeThi::with(['kyThi', 'monHoc'])
                 ->whereHas('kyThi', function ($q) use ($user) {
                     $q->whereHas('quanLyThis', function ($q2) use ($user) {
                         $q2->where('maTK', $user->maTK);
                     });
                 })
+                ->whereHas('kyThi', function ($q) use ($now) {
+                    $q->whereRaw("DATE_ADD(ngayThi, INTERVAL de_thi.thoiLuongPhut MINUTE) > ?", [$now]);
+                })
                 ->whereDoesntHave('baiLams', function ($q) use ($user) {
                     $q->where('maTK', $user->maTK);
-                });
+                })
+                ->get();
 
+            $deThiMoi = 0;
             if ($user->last_seen_de_thi_at) {
-                $deThiQuery->where('created_at', '>', $user->last_seen_de_thi_at);
+                $deThiMoi = $deThisMoiList->where('created_at', '>', $user->last_seen_de_thi_at)->count();
+            } else {
+                $deThiMoi = $deThisMoiList->count();
             }
-
-            $deThisMoiList = $deThiQuery->get();
-            $deThiMoi = $deThisMoiList->count();
 
             $view->with('deThiMoi', $deThiMoi)
                 ->with('deThisMoiList', $deThisMoiList);

@@ -7,9 +7,11 @@
             </div>
         </div>
         <div class="col-lg-6 text-center text-lg-right">
-            <form action="{{ route('user.examList.filterTenMH') }}#applyFilter" method="get" class="d-inline-block w-auto">
+            <form action="{{ route('user.examList.filterTenMH') }}#applyFilter" method="get"
+                class="d-inline-block w-auto">
                 <div class="input-group input-group-sm">
-                    <input type="text" name="kyThiTheoTenMonHoc" class="form-control" style="width: 200px;" placeholder="Tìm môn học..." required>
+                    <input type="text" name="kyThiTheoTenMonHoc" class="form-control" style="width: 200px;"
+                        placeholder="Tìm môn học..." required>
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-secondary">
                             <i class="fas fa-search"></i>

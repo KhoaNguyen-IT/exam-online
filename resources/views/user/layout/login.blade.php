@@ -80,13 +80,16 @@
     <script src="{{ asset('user/vendor/login/select2/select2.min.js') }}"></script>
     <!--===============================================================================================-->
     <script src="{{ asset('user/vendor/login/tilt/tilt.jquery.min.js') }}"></script>
+
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $('.js-tilt').tilt({
             scale: 1.1
         })
     </script>
+
     <script>
         @if (session('errors'))
             Swal.fire({
@@ -104,29 +107,6 @@
             });
         @endif
     </script>
-
-    @if (session('verifyEmail'))
-        <script>
-            Swal.fire({
-                icon: 'info',
-                title: 'Xác minh email',
-                html: @json(str_replace('\n', '<br>', session('verifyEmail'))),
-                showCloseButton: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                allowEnterKey: false,
-                confirmButtonText: 'Gửi lại email xác minh',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('resendForm').submit();
-                }
-            });
-        </script>
-
-        <form id="resendForm" method="POST" action="{{ route('verification.send') }}" style="display:none;">
-            @csrf
-        </form>
-    @endif
 
     <!--===============================================================================================-->
     <script src="{{ asset('user/js/login/main.js') }}"></script>
