@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quan_ly_thi', function (Blueprint $table) {
-            $table->unsignedBigInteger('maKT');
+        Schema::create('ket_qua_thi', function (Blueprint $table) {
+            $table->id('maKQT');
             $table->unsignedBigInteger('maTK');
-
-            $table->foreign('maKT')->references('maKT')->on('ky_thi')->onDelete('cascade');
-            $table->foreign('maTK')->references('maTK')->on('tai_khoan')->onDelete('cascade');
-            
+            $table->unsignedBigInteger('maDT');
+            $table->double('diemSo');
+            $table->integer('tongSoCau');
+            $table->integer('soCauDung');
+            $table->dateTime('ngayThi')->nullable();
             $table->timestamps();
+
+            $table->foreign('maTK')->references('maTK')->on('tai_khoan')->onDelete('cascade');
+            $table->foreign('maDT')->references('maDT')->on('de_thi')->onDelete('cascade');
         });
     }
 
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quan_ly_thi');
+        Schema::dropIfExists('ket_qua_thi');
     }
 };

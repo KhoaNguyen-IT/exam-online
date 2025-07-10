@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chuong', function (Blueprint $table) {
-            $table->id('maChuong');
-            $table->string('tenChuong');
-            $table->unsignedBigInteger('maMH');
+        Schema::create('ky_thi', function (Blueprint $table) {
+            $table->id('maKT');
+            $table->string('tenKT', 255)->nullable();
+            $table->text('moTa')->nullable();
+            $table->dateTime('ngayThi')->nullable();
             $table->timestamps();
-
-            $table->foreign('maMH')->references('maMH')->on('mon_hoc')->onDelete('cascade');
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chuong');
+        Schema::dropIfExists('ky_thi');
     }
 };
