@@ -6,6 +6,8 @@ use App\Models\DeThi;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +27,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
+
+        $target = storage_path('app/public');
+        $link = public_path('storage');
+        if (!is_link($link)) {
+            try {
+                File::link($target, $link);
+            } catch (\Exception $e) {
+                Log::warning("Không thể tạo symlink 'storage': " . $e->getMessage());
+            }
+        }
 
         View::composer('*', function ($view) {
             if (!Auth::check() || !Auth::user()->maTK) {
