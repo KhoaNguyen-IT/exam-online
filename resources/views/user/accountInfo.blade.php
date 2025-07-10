@@ -79,7 +79,7 @@
                     <div class="form-group-row">
                         <label for="full-name" class="form-label">Họ tên:</label>
                         <input type="text" id="full-name" name="hoTen" value="{{ $viewData['user']->hoTen }}"
-                            class="form-input">
+                            class="form-input" spellcheck="false">
                     </div>
 
                     <div class="form-group-row">
