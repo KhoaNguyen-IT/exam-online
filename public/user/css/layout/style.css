@@ -529,7 +529,6 @@ mark,
 .img-fluid {
   max-width: 100%;
   height: 270px;
-  object-fit: cover;
 }
 
 .img-thumbnail {
