@@ -120,6 +120,7 @@ class DeThiController extends Controller
                 if ($soLuongYeuCau > 0) {
                     $questions = CauHoi::where('maChuong', $chuongID)
                         ->where('doKho', $label)
+                        ->inRandomOrder()
                         ->take($soLuongYeuCau)
                         ->get();
 
